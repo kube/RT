@@ -3,7 +3,19 @@ RayTracer
 ###March 2014 @ 42
 > "Vers l'infini, et au-delà."
 
-##Camera
+##Compilation
+We do not have a libft at the moment, but all needed functions are included in this repo :
+```
+https://github.com/kubekhrm/libft
+```
+Clone it at root of the project to be able to compile the project :
+```sh
+git clone https://github.com/kubekhrm/libft.git
+```
+**DO NOT add a libft in the git repository, it will make it easier for us to add functionnalities.**
+
+##What is working?
+###Camera
 
 ||Working?|
 |----|------:|
@@ -11,7 +23,7 @@ RayTracer
 |Rotation|.|
 |Move|.|
 
-##Light
+###Light
 
 ||Working?|
 |----|------:|
@@ -19,7 +31,7 @@ RayTracer
 |Rotation|✓| *Beware when angle > 360*
 |Move|.|
 
-##Textures
+###Textures
 
 ||Working?|
 |----|------:|
@@ -27,7 +39,7 @@ RayTracer
 |Rotation|.|
 |Move|.|
 
-##Obj Rendering
+###Obj Rendering
 
 ||Working?|
 |----|------:|
