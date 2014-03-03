@@ -54,6 +54,9 @@ $(NAME) : $(OBJECTS)
 	@$(CC) $(OBJECTS) $(INCLUDEFOLDERS) $(LIBFOLDERS) $(LIBS) $(CFLAGS) -o $(NAME)
 	@echo " $(OK_COLOR)Successful ✓$(NO_COLOR)"
 
+getlibs :
+	git clone https://github.com/kubekhrm/libft.git
+
 updatelibs :
 	@echo "$(SILENT_COLOR)Searching LibFt updates...$(NO_COLOR)"
 	@cd libft/ && git pull
