@@ -1,21 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt.c                                               :+:      :+:    :+:   */
+/*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/02 17:17:35 by cfeijoo          ###   ########.fr       */
+/*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
+/*   Updated: 2014/03/02 17:58:11 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_print.h>
-#include <ft_math.h>
+#ifndef RT_H
+# define RT_H
 
-int			main(void)
+# include <camera.h>
+
+# define VIEWPLANE_PLOT 1000
+
+/*
+**	Environment
+*/
+
+typedef struct				s_env
 {
-	ft_putendl("Raytracer");
-	ft_putendl("Nothing works.");
-	return (0);
-}
+	void					*mlx;
+	void					*win;
+	void					*img;
+	int						bpp;
+	int						size_line;
+	int						endian;
+	int						*data;
+
+	t_camera				camera;
+	unsigned int			view_width;
+	unsigned int			view_height;
+
+	t_object				**objects;
+}							t_env;
+
+#endif

@@ -8,6 +8,65 @@
 # - Can override properties from attached matter
 # - If no specified matter, use DEFAULT matter
 
+
+# Position and Transformation
+# x
+# y
+# z
+# rotX
+# rotY
+# rotZ
+
+
+# Specific Properties
+
+# radius
+# aperture
+# width
+# height
+# depth
+# faces
+
+
+# Matter Properties
+# color
+# opacity
+# texture
+# reflection
+# refraction
+# refract_index
+# ambient
+# diffuse
+# specular
+
+struct matter
+{
+    name
+    # Matter Properties
+}
+
+charge_matiere(matter, objet);
+
+struct cercle
+{
+    type
+    + struct : properties
+        # Pos & Transform
+        # Matter Properties
+
+    # Specific Properties
+}
+
+struct
+{
+    type
+    + struct : properties
+        # Pos & Transform
+        # Matter Properties
+
+    # Specific Properties
+}
+
 # Scene Description
 scene:
     camera:
@@ -32,9 +91,32 @@ scene:
         texture: "./textures/iron.xpm"
         reflection: 0.3
         refraction: 0.0
+        refract_index: 1.2
         ambient: 1.0
         diffuse: 0.8
         specular: 0.8
+
+    matter:
+        name: "glass"
+        texture: "./textures/glass.xpm"
+        reflection: 0.2
+        refraction: 0.8
+
+    matter:
+        name: "grass"
+        texture: "./textures/grass.xpm"
+        reflection: 0.0
+        refraction: 0.0
+
+    matter:
+        name: "wood"
+        texture: "./textures/wood.xpm"
+        opacity: 1.0
+        reflection: 0.0
+        refraction: 0.0
+        ambient: 0.07
+        diffuse: 1.0
+        specular: 0.01
 
     matter:
         name: "sky"
