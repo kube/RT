@@ -12,14 +12,9 @@
 
 #ifndef RT_H
 # define RT_H
-
 # include <camera.h>
-
+# include <keyboard.h>
 # define VIEWPLANE_PLOT 1000
-
-/*
-**	Environment
-*/
 
 typedef struct				s_env
 {
@@ -35,7 +30,12 @@ typedef struct				s_env
 	unsigned int			view_width;
 	unsigned int			view_height;
 
-	t_object				**objects;
+	t_pressedkeys			pressed_keys;
 }							t_env;
+
+void		init_pressed_keys(t_pressedkeys *keys);
+int		keypress_hook(int keycode, t_pressedkeys *keys);
+void		check_pressed_keys(t_env *env, t_pressedkeys *keys);
+int		keyrelease_hook(int keycode, t_pressedkeys *keys);
 
 #endif

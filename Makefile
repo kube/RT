@@ -11,7 +11,7 @@
 # **************************************************************************** #
 NAME = rt
 
-INCLUDEFOLDERS = -I./includes/ -I./libft/includes/
+INCLUDEFOLDERS = -I./includes/ -I./libft/includes/ -I/opt/X11/include/X11/
 LIBFOLDERS = -L./libft/ -L/usr/X11/lib/ -L/usr/X11/include
 LIBS =  -lmlx -lXext -lX11 -lft
 
@@ -21,12 +21,16 @@ CFLAGS = -Wall -Werror -Wextra
 SOURCES_FOLDER = sources/
 OBJECTS_FOLDER = objects/
 
-SOURCES =	\
-			rt.c			\
+SOURCES =	rt.c									\
+			camera/camera_transformations.c		\
+			camera/camera_init.c					\
+			keyboard.c							\
 
 OBJECTS =	$(SOURCES:.c=.o)
 
-OBJECTS := $(addprefix $(OBJECTS_FOLDER),$(OBJECTS))
+OBJECTS = $(SOURCES:.c=.o)
+OBJECTS := $(subst /,__,$(OBJECTS))
+OBJECTS := $(addprefix $(OBJECTS_FOLDER), $(OBJECTS))
 SOURCES := $(addprefix $(SOURCES_FOLDER),$(SOURCES))
 
 # Colors
@@ -40,10 +44,10 @@ SILENT_COLOR =	\x1b[30;01m
 
 all: complibs $(NAME)
 
-$(OBJECTS) : $(SOURCES)
-	@$(CC) -c $< $(INCLUDEFOLDERS) $(CFLAGS) -o $@
+$(OBJECTS_FOLDER)%.o:
+	@$(CC) -c $(subst .o,.c,$(subst $(OBJECTS_FOLDER),$(SOURCES_FOLDER),$(subst __,/,$@))) $(INCLUDEFOLDERS) $(CFLAGS) $(MACROS) -o $@
 	@printf "$(OK_COLOR)✓ $(NO_COLOR)"
-	@echo "$<"
+	@echo "$(subst .o,.c,$(subst $(OBJECTS_FOLDER),$(SOURCES_FOLDER),$(subst __,/,$@)))"
 
 $(NAME) : $(OBJECTS)
 	@printf "$(SILENT_COLOR)Compiling $(NAME)...$(NO_COLOR)"
@@ -55,7 +59,7 @@ updatelibs :
 	@cd libft/ && git pull
 
 complibs :
-	@make -C libft/ usemath all
+	@make -C libft/ usemath nothing addmath addconvert addstrings addcolors re
 
 clean :
 	@rm -f $(OBJECTS)
@@ -64,6 +68,6 @@ clean :
 fclean : clean
 	@rm -f $(NAME)
 	@echo "$(SILENT_COLOR)$(NAME) : Cleaned Program$(NO_COLOR)"
-	@make -C "libft/" fclean
+	# @make -C "libft/" fclean
 
 re : fclean all

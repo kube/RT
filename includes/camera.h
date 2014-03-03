@@ -12,6 +12,7 @@
 
 #ifndef CAMERA_H
 # define CAMERA_H
+# include <ft_math.h>
 
 typedef struct						s_camera
 {
@@ -26,5 +27,8 @@ void	cam_rot_x(t_camera *camera, float angle);
 void	cam_rot_y(t_camera *camera, float angle);
 void	cam_translate(t_camera *camera, float x, float y, float z);
 void	cam_move_to(t_camera *camera, float x, float y, float z);
+
+void	init_cam(t_camera *cam, float x, float y, float z);
+void	init_cam_angle(t_camera *cam, float y, float z);
 
 #endif
