@@ -13,7 +13,7 @@ NAME = rt
 
 INCLUDEFOLDERS = -I./includes/ -I./libft/includes/ -I/opt/X11/include/X11/
 LIBFOLDERS = -L./libft/ -L/usr/X11/lib/ -L/usr/X11/include
-LIBS =  -lmlx -lXext -lX11 -lft
+LIBS =  -lmlx -lXext -lX11 -lft -lm
 
 CC = clang
 CFLAGS = -Wall -Werror -Wextra
@@ -41,6 +41,10 @@ WARN_COLOR =	\x1b[33;01m
 SILENT_COLOR =	\x1b[30;01m
 
 .PHONY: all re clean fclean
+
+linux :
+	@$(eval INCLUDEFOLDERS := -I./includes/ -I./libft/includes/ -I/usr/X11/include/ -I/usr/include/X11)
+	@$(eval LIBFOLDERS := -L./libft/ -L/usr/X11/lib/ -L/usr/X11/include)
 
 all: complibs $(NAME)
 
