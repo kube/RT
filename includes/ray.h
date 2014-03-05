@@ -9,6 +9,8 @@ typedef struct						s_ray
 	unsigned int					recursivity;
 	float							intensity;
 	t_color							color;
+	t_object						*closest;
+	float							inter_t;
 }									t_ray;
 
 #endif
