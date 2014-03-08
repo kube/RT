@@ -21,6 +21,8 @@
 #include <ray.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+
 /*
 ** This is just for development, render dimensions will be parsed in File
 */
@@ -77,6 +79,8 @@ static int			throw_view_plane(t_env *env)
 	/*
 	** This function will be bettered with vector operations added in LibFt
 	*/
+	env->block_events = 1;
+	printf("THROW_VIEW_PLANE\n");
 
 	i = 0;
 	j = 0;
@@ -99,7 +103,6 @@ static int			throw_view_plane(t_env *env)
 	ray.direction.y += (env->camera.z_axis.y / VIEWPLANE_PLOT) * env->view_height / 2;
 	ray.direction.z += (env->camera.z_axis.z / VIEWPLANE_PLOT) * env->view_height / 2;
 
-	env->block_events = 1;
 	while (j < env->view_height)
 	{
 		i = 0;
@@ -133,13 +136,15 @@ static int			throw_view_plane(t_env *env)
 
 	return (0);
 }
+
 static int			view_loop(t_env *env)
 {
-	if (!env->block_events)
+	if (!env->block_events && is_one_key_pressed(&env->pressed_keys))
 	{
-		clear(env);
 		check_pressed_keys(env, &env->pressed_keys);
 		throw_view_plane(env);
+		(void)clear;
+		clear(env);
 	}
 	return (0);
 }
@@ -188,7 +193,7 @@ int					main(void)
 	init_cam_angle(&env.camera, 0, 0);
 	init_pressed_keys(&env.pressed_keys);
 
-	mlx_expose_hook(env.win, view_loop, &env);
+	mlx_expose_hook(env.win, throw_view_plane, &env);
 	mlx_hook(env.win, KeyPress, KeyPressMask, keypress_hook, &env.pressed_keys);
 	mlx_hook(env.win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env.pressed_keys);
 	mlx_loop_hook(env.mlx, view_loop, &env);

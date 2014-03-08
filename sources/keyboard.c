@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keyboard.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
+/*   Updated: 2014/03/08 16:22:41 by cfeijoo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <rt.h>
 #include <math.h>
 #include <stdlib.h>
-
-#include <stdio.h>
+#include <string.h>
 
 void		init_pressed_keys(t_pressedkeys *keys)
 {
@@ -31,22 +42,34 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 	return (0);
 }
 
+int			is_one_key_pressed(t_pressedkeys *keys)
+{
+	int		i;
+	int		*key;
+
+	i = 0;
+	key = (int*)keys;
+	while ((size_t)key - (size_t)(keys) < sizeof(*keys))
+	{
+		if (*key)
+			return (1);
+		key++;
+	}
+	return (0);
+}
+
 void		check_pressed_keys(t_env *env, t_pressedkeys *keys)
 {
 	if (env->block_events)
-	{
-		printf("block_events\n");
 		return ;
-	}
-
 	if (keys->up)
-		cam_rot_y(&env->camera, KEYBOARD_PLOT);
-	if (keys->down)
 		cam_rot_y(&env->camera, -KEYBOARD_PLOT);
+	if (keys->down)
+		cam_rot_y(&env->camera, KEYBOARD_PLOT);
 	if (keys->left)
-		cam_rot_z(&env->camera, -KEYBOARD_PLOT);
-	if (keys->right)
 		cam_rot_z(&env->camera, KEYBOARD_PLOT);
+	if (keys->right)
+		cam_rot_z(&env->camera, -KEYBOARD_PLOT);
 	if (keys->p_up)
 		cam_rot_x(&env->camera, -KEYBOARD_PLOT);
 	if (keys->p_down)
