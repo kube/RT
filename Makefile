@@ -6,7 +6,7 @@
 #    By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/08 12:27:41 by lbinet           ###   ########.fr        #
+#    Updated: 2014/03/08 18:53:48 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -16,7 +16,7 @@ LIBFOLDERS = -L./libft/ -L/usr/X11/lib/ -L/usr/X11/include
 LIBS =  -lmlx -lXext -lX11 -lft -lm
 
 CC = clang
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -O3
 
 SOURCES_FOLDER = sources/
 OBJECTS_FOLDER = objects/

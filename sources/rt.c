@@ -176,7 +176,14 @@ int					main(void)
 	env.objects->next->next->normal.y = 0;
 	env.objects->next->next->normal.z = 1;
 	env.objects->next->next->color.color = 0xFF0000FF;
-	env.objects->next->next->next = NULL;
+	env.objects->next->next->next = malloc(sizeof(t_object));
+	env.objects->next->next->next->type = 1;
+	env.objects->next->next->next->origin.x = -10;
+	env.objects->next->next->next->origin.y = 0;
+	env.objects->next->next->next->origin.z = 0;
+	env.objects->next->next->next->radius = 1.5;
+	env.objects->next->next->next->color.color = 0xFFF5E3C4;
+	env.objects->next->next->next->next = NULL;
 
 	env.view_width = RENDER_WIDTH;
 	env.view_height = RENDER_HEIGHT;
