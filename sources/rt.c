@@ -6,7 +6,7 @@
 /*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/08 15:15:50 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/08 17:31:25 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int			throw_view_plane(t_env *env)
 
 	ray.origin.x = env->camera.origin.x;
 	ray.origin.y = env->camera.origin.y;
-	ray.origin.y = env->camera.origin.z;
+	ray.origin.z = env->camera.origin.z;
 
 	// INIT t AND closest ON RAY
 
@@ -91,13 +91,13 @@ static int			throw_view_plane(t_env *env)
 	ray.direction.y = env->camera.x_axis.y;
 	ray.direction.z = env->camera.x_axis.z;
 
-	ray.direction.x -= (env->camera.y_axis.x / VIEWPLANE_PLOT) * env->view_width / 2;
-	ray.direction.y -= (env->camera.y_axis.y / VIEWPLANE_PLOT) * env->view_width / 2;
-	ray.direction.z -= (env->camera.y_axis.z / VIEWPLANE_PLOT) * env->view_width / 2;
+	ray.direction.x += (env->camera.y_axis.x / VIEWPLANE_PLOT) * env->view_width / 2;
+	ray.direction.y += (env->camera.y_axis.y / VIEWPLANE_PLOT) * env->view_width / 2;
+	ray.direction.z += (env->camera.y_axis.z / VIEWPLANE_PLOT) * env->view_width / 2;
 
-	ray.direction.x -= (env->camera.z_axis.x / VIEWPLANE_PLOT) * env->view_height / 2;
-	ray.direction.y -= (env->camera.z_axis.y / VIEWPLANE_PLOT) * env->view_height / 2;
-	ray.direction.z -= (env->camera.z_axis.z / VIEWPLANE_PLOT) * env->view_height / 2;
+	ray.direction.x += (env->camera.z_axis.x / VIEWPLANE_PLOT) * env->view_height / 2;
+	ray.direction.y += (env->camera.z_axis.y / VIEWPLANE_PLOT) * env->view_height / 2;
+	ray.direction.z += (env->camera.z_axis.z / VIEWPLANE_PLOT) * env->view_height / 2;
 
 	env->block_events = 1;
 	while (j < env->view_height)
@@ -110,21 +110,21 @@ static int			throw_view_plane(t_env *env)
 			tmp.y = (float)j;
 			throw_ray(env, &ray);
 			if (ray.inter_t != INFINITY)
-				pixel_to_image(env, tmp, 0xFFFFFFFF);
+				pixel_to_image(env, tmp, ray.closest->color.color);
 			// END TREAT RAY
-			ray.direction.x += (env->camera.y_axis.x / VIEWPLANE_PLOT);
-			ray.direction.y += (env->camera.y_axis.y / VIEWPLANE_PLOT);
-			ray.direction.z += (env->camera.y_axis.z / VIEWPLANE_PLOT);
+			ray.direction.x -= (env->camera.y_axis.x / VIEWPLANE_PLOT);
+			ray.direction.y -= (env->camera.y_axis.y / VIEWPLANE_PLOT);
+			ray.direction.z -= (env->camera.y_axis.z / VIEWPLANE_PLOT);
 			i++;
 		}
-		ray.direction.x += (env->camera.z_axis.x / VIEWPLANE_PLOT);
-		ray.direction.y += (env->camera.z_axis.y / VIEWPLANE_PLOT);
-		ray.direction.z += (env->camera.z_axis.z / VIEWPLANE_PLOT);
+		ray.direction.x -= (env->camera.z_axis.x / VIEWPLANE_PLOT);
+		ray.direction.y -= (env->camera.z_axis.y / VIEWPLANE_PLOT);
+		ray.direction.z -= (env->camera.z_axis.z / VIEWPLANE_PLOT);
 
 		// BACK TO ZERO ON Y-AXIS
-		ray.direction.x -= (env->camera.y_axis.x / VIEWPLANE_PLOT) * env->view_width;
-		ray.direction.y -= (env->camera.y_axis.y / VIEWPLANE_PLOT) * env->view_width;
-		ray.direction.z -= (env->camera.y_axis.z / VIEWPLANE_PLOT) * env->view_width;
+		ray.direction.x += (env->camera.y_axis.x / VIEWPLANE_PLOT) * env->view_width;
+		ray.direction.y += (env->camera.y_axis.y / VIEWPLANE_PLOT) * env->view_width;
+		ray.direction.z += (env->camera.y_axis.z / VIEWPLANE_PLOT) * env->view_width;
 		j++;
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
@@ -154,7 +154,24 @@ int					main(void)
 	env.objects->origin.y = 0;
 	env.objects->origin.z = 0;
 	env.objects->radius = 2;
-	env.objects->next = NULL;
+	env.objects->color.color = 0xFFFFFFFF;
+	env.objects->next = malloc(sizeof(t_object));
+	env.objects->next->type = 1;
+	env.objects->next->origin.x = 9;
+	env.objects->next->origin.y = -1;
+	env.objects->next->origin.z = 1.5;
+	env.objects->next->radius = 1;
+	env.objects->next->color.color = 0xFFFF00FF;
+	env.objects->next->next = malloc(sizeof(t_object));
+	env.objects->next->next->type = 2;
+	env.objects->next->next->origin.x = 0;
+	env.objects->next->next->origin.y = 0;
+	env.objects->next->next->origin.z = -1;
+	env.objects->next->next->normal.x = 0;
+	env.objects->next->next->normal.y = 0;
+	env.objects->next->next->normal.z = 1;
+	env.objects->next->next->color.color = 0xFF0000FF;
+	env.objects->next->next->next = NULL;
 
 	env.view_width = RENDER_WIDTH;
 	env.view_height = RENDER_HEIGHT;

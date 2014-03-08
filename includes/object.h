@@ -6,7 +6,7 @@
 /*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:01:22 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/07 16:44:54 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/08 17:08:16 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,16 @@ typedef struct				s_object
 {
 	int						type;
 	t_point					origin;
-	float					rotX;
-	float					rotY;
-	float					rotZ;
+	union
+	{
+		struct
+		{
+			float			rotX;
+			float			rotY;
+			float			rotZ;
+		};
+		t_vector			normal;
+	};
 	t_color					color;
 	float					opacity;
 	float					ambient;

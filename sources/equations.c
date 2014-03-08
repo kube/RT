@@ -6,7 +6,7 @@
 /*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 19:30:09 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/08 12:14:24 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/08 17:28:19 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,23 @@ float		sphere_equation(t_object *sphere, t_ray *ray)
 	else if (det >= 0 && (-b + sqrt(det)) > (-b - sqrt(det)))
 		res = (-b - sqrt(det)) / (2 * a);
 	if (res > 0)
+		return (res);
+	return (INFINITY);
+}
+
+float		plane_equation(t_object *plane, t_ray *ray)
+{
+	float	n;
+	float	d;
+	float	res;
+
+	n = plane->normal.x * (plane->origin.x - ray->origin.x)
+		+ plane->normal.y * (plane->origin.y - ray->origin.y)
+		+ plane->normal.z * (plane->origin.z - ray->origin.z);
+	d = plane->normal.x * ray->direction.x
+		+ plane->normal.y * ray->direction.y
+		+ plane->normal.z * ray->direction.z;
+	if ((res = n / d) > 0)
 		return (res);
 	return (INFINITY);
 }
