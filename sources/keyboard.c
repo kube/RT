@@ -2,6 +2,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+
 void		init_pressed_keys(t_pressedkeys *keys)
 {
 	keys->up = 0;
@@ -12,7 +14,7 @@ void		init_pressed_keys(t_pressedkeys *keys)
 	keys->p_down = 0;
 }
 
-int		keypress_hook(int keycode, t_pressedkeys *keys)
+int			keypress_hook(int keycode, t_pressedkeys *keys)
 {
 	if (keycode == 65307)
 		exit(0);
@@ -31,21 +33,27 @@ int		keypress_hook(int keycode, t_pressedkeys *keys)
 
 void		check_pressed_keys(t_env *env, t_pressedkeys *keys)
 {
+	if (env->block_events)
+	{
+		printf("block_events\n");
+		return ;
+	}
+
 	if (keys->up)
-		cam_rot_z(&env->camera, M_PI / 20);
+		cam_rot_y(&env->camera, KEYBOARD_PLOT);
 	if (keys->down)
-		cam_rot_z(&env->camera, -M_PI / 20);
+		cam_rot_y(&env->camera, -KEYBOARD_PLOT);
 	if (keys->left)
-		cam_rot_y(&env->camera, M_PI / 20);
+		cam_rot_z(&env->camera, -KEYBOARD_PLOT);
 	if (keys->right)
-		cam_rot_y(&env->camera, -M_PI / 20);
+		cam_rot_z(&env->camera, KEYBOARD_PLOT);
 	if (keys->p_up)
-		cam_rot_x(&env->camera, -M_PI / 20);
+		cam_rot_x(&env->camera, -KEYBOARD_PLOT);
 	if (keys->p_down)
-		cam_rot_x(&env->camera, M_PI / 20);
+		cam_rot_x(&env->camera, KEYBOARD_PLOT);
 }
 
-int		keyrelease_hook(int keycode, t_pressedkeys *keys)
+int			keyrelease_hook(int keycode, t_pressedkeys *keys)
 {
 	if (keycode == 65363)
 		keys->right = 0;

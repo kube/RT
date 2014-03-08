@@ -2,6 +2,8 @@
 # define KEYBOARD_H
 # include <rt.h>
 
+# define KEYBOARD_PLOT M_PI / 900
+
 typedef struct			s_pressedkeys
 {
 	int					up;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
+#    By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/02 17:37:14 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/08 12:27:41 by lbinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -21,10 +21,12 @@ CFLAGS = -Wall -Werror -Wextra
 SOURCES_FOLDER = sources/
 OBJECTS_FOLDER = objects/
 
-SOURCES =	rt.c									\
+SOURCES =	rt.c								\
 			camera/camera_transformations.c		\
-			camera/camera_init.c					\
+			camera/camera_init.c				\
 			keyboard.c							\
+			ray_throw.c							\
+			equations.c
 
 OBJECTS =	$(SOURCES:.c=.o)
 
@@ -42,11 +44,11 @@ SILENT_COLOR =	\x1b[30;01m
 
 .PHONY: all re clean fclean
 
+all: complibs $(NAME)
+
 linux :
 	@$(eval INCLUDEFOLDERS := -I./includes/ -I./libft/includes/ -I/usr/X11/include/ -I/usr/include/X11)
 	@$(eval LIBFOLDERS := -L./libft/ -L/usr/X11/lib/ -L/usr/X11/include)
-
-all: complibs $(NAME)
 
 $(OBJECTS_FOLDER)%.o:
 	@$(CC) -c $(subst .o,.c,$(subst $(OBJECTS_FOLDER),$(SOURCES_FOLDER),$(subst __,/,$@))) $(INCLUDEFOLDERS) $(CFLAGS) $(MACROS) -o $@

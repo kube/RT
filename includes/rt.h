@@ -6,7 +6,7 @@
 /*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/05 18:17:11 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/08 12:54:50 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RT_H
 # include <camera.h>
 # include <keyboard.h>
+# include <object.h>
 # define VIEWPLANE_PLOT 1000
 
 typedef struct				s_env
@@ -31,6 +32,8 @@ typedef struct				s_env
 	unsigned int			view_height;
 	t_object				*objects;
 	t_pressedkeys			pressed_keys;
+
+	int						block_events;
 }							t_env;
 
 void	init_pressed_keys(t_pressedkeys *keys);
