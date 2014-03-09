@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/09 03:11:37 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/09 17:03:09 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ t_matter	*new_matter(char *name);
 void		load_matter_object(t_object *object, t_matter *matter);
 void		add_object(t_env *env, t_object *object);
 t_object	*new_object(int type);
+void		remove_object(t_env *env, t_object *object);
 
 #endif

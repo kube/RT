@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   equations.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 19:30:09 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/08 17:28:19 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/09 16:37:14 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <ray.h>
 #include <object.h>
 #include <math.h>
+
+#include <stdio.h>
 
 float		sphere_equation(t_object *sphere, t_ray *ray)
 {

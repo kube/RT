@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:22:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/09 03:00:19 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/09 15:34:58 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ t_matter		*new_matter(char *name)
 	matter->opacity = 1.0;
 	matter->color.color = 0xFFFFFFFF;
 	matter->refract_index = 1.0;
-	matter->next = NULL;
+	matter->next = 0;
 	return (matter);
 }

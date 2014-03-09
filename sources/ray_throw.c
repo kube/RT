@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_throw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/08 18:18:47 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/09 16:35:44 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@
 
 static float	intersection(t_object *obj, t_ray *ray)
 {
-	if (obj->type == 1)
+	/*
+	**	Should use functions tabled here (Better performance)
+	*/
+
+	if (obj->type == 0)
 		return (sphere_equation(obj, ray));
-	if (obj->type == 2)
+	else if (obj->type == 1)
 		return (plane_equation(obj, ray));
 	/*if (obj->type == 3)
 		return (cylinder_equation(obj, ray));
@@ -35,6 +39,7 @@ void			throw_ray(t_env *env, t_ray *ray)
 	t_object	*obj;
 
 	obj = env->objects;
+
 	ray->inter_t = INFINITY;
 	ray->closest = NULL;
 	while (obj)

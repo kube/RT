@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/09 03:15:46 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/09 17:09:04 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 /*
 ** This is just for development, render dimensions will be parsed in File
 */
-#define RENDER_WIDTH 2000
-#define RENDER_HEIGHT 1600
+#define RENDER_WIDTH 1000
+#define RENDER_HEIGHT 800
 
 
 static void			pixel_to_image(t_env *env, t_point a, int color)
@@ -80,7 +80,6 @@ static int			throw_view_plane(t_env *env)
 	** This function will be bettered with vector operations added in LibFt
 	*/
 	env->block_events = 1;
-	printf("THROW_VIEW_PLANE\n");
 
 	i = 0;
 	j = 0;
@@ -101,6 +100,7 @@ static int			throw_view_plane(t_env *env)
 	ray.direction.y += (env->camera.z_axis.y / VIEWPLANE_PLOT) * env->view_height / 2;
 	ray.direction.z += (env->camera.z_axis.z / VIEWPLANE_PLOT) * env->view_height / 2;
 
+
 	while (j < env->view_height)
 	{
 		i = 0;
@@ -109,7 +109,9 @@ static int			throw_view_plane(t_env *env)
 			// TREAT RAY HERE
 			tmp.x = (float)i;
 			tmp.y = (float)j;
+			
 			throw_ray(env, &ray);
+
 			if (ray.inter_t != INFINITY)
 				pixel_to_image(env, tmp, ray.closest->color.color);
 			// END TREAT RAY
@@ -141,7 +143,6 @@ static int			view_loop(t_env *env)
 	{
 		check_pressed_keys(env, &env->pressed_keys);
 		env->block_events = 1;
-		(void)clear;
 		clear(env);
 		throw_view_plane(env);
 		env->block_events = 0;
@@ -151,6 +152,8 @@ static int			view_loop(t_env *env)
 
 static void			create_test_objects(t_env *env)
 {
+	env->objects = NULL;
+
 	add_object(env, new_object(OBJ_SPHERE));
 	env->objects->origin.x = 10;
 	env->objects->radius = 2;
@@ -166,11 +169,68 @@ static void			create_test_objects(t_env *env)
 	add_object(env, new_object(OBJ_PLANE));
 	env->objects->origin.z = -1;
 	env->objects->normal.z = 1;
+	env->objects->color.color = 0xFF0904FA;
 
 	add_object(env, new_object(OBJ_SPHERE));
 	env->objects->origin.x = -10;
 	env->objects->radius = 1.5;
 	env->objects->color.color = 0xFFF5E3C4;
+}
+
+static t_ray		get_ray_from_point(t_env *env, int i, int j)
+{
+	t_ray			ray;
+
+	ray.origin.x = env->camera.origin.x;
+	ray.origin.y = env->camera.origin.y;
+	ray.origin.z = env->camera.origin.z;
+
+	ray.direction.x = env->camera.x_axis.x;
+	ray.direction.y = env->camera.x_axis.y;
+	ray.direction.z = env->camera.x_axis.z;
+
+	ray.direction.x += (env->camera.y_axis.x / VIEWPLANE_PLOT) * env->view_width / 2;
+	ray.direction.y += (env->camera.y_axis.y / VIEWPLANE_PLOT) * env->view_width / 2;
+	ray.direction.z += (env->camera.y_axis.z / VIEWPLANE_PLOT) * env->view_width / 2;
+
+	ray.direction.x += (env->camera.z_axis.x / VIEWPLANE_PLOT) * env->view_height / 2;
+	ray.direction.y += (env->camera.z_axis.y / VIEWPLANE_PLOT) * env->view_height / 2;
+	ray.direction.z += (env->camera.z_axis.z / VIEWPLANE_PLOT) * env->view_height / 2;
+
+	/*
+	**	Move to good point
+	*/
+
+	ray.direction.x -= (env->camera.y_axis.x / VIEWPLANE_PLOT) * i;
+	ray.direction.y -= (env->camera.y_axis.y / VIEWPLANE_PLOT) * i;
+	ray.direction.z -= (env->camera.y_axis.z / VIEWPLANE_PLOT) * i;
+	
+	ray.direction.x -= (env->camera.z_axis.x / VIEWPLANE_PLOT) * j;
+	ray.direction.y -= (env->camera.z_axis.y / VIEWPLANE_PLOT) * j;
+	ray.direction.z -= (env->camera.z_axis.z / VIEWPLANE_PLOT) * j;
+
+	return (ray);
+}
+
+static int			buttonpress_hook(int button, int x, int y, t_env *env)
+{
+	t_ray			ray;
+
+	printf("Pressed Button %d at %d, %d\n", button, x, y);
+	if (env->pressed_keys.del)
+	{
+		ray = get_ray_from_point(env, x, y);
+		throw_ray(env, &ray);
+
+		if (ray.inter_t != INFINITY)
+		{
+			printf("Removing %p\n", ray.closest);
+			remove_object(env, ray.closest);
+			printf("Removed %p\n", ray.closest);
+		}
+		throw_view_plane(env);
+	}
+	return (0);
 }
 
 int					main(void)
@@ -197,6 +257,7 @@ int					main(void)
 	mlx_expose_hook(env.win, throw_view_plane, &env);
 	mlx_hook(env.win, KeyPress, KeyPressMask, keypress_hook, &env.pressed_keys);
 	mlx_hook(env.win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env.pressed_keys);
+	mlx_hook(env.win, ButtonPress, ButtonPressMask, buttonpress_hook, &env);
 	mlx_loop_hook(env.mlx, view_loop, &env);
 	mlx_loop(env.mlx);
 

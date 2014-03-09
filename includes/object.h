@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:01:22 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/09 03:11:01 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/09 17:09:05 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 # include <ft_math.h>
 # include <ft_colors.h>
+
+# define OBJ_SPHERE		0
+# define OBJ_PLANE		1
+# define OBJ_CONE		2
+# define OBJ_CYLINDER	3
 
 typedef struct				s_object
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/09 02:50:41 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/09 17:08:46 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,23 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ft_memory.h>
 
 #include <stdio.h>
 
 void		init_pressed_keys(t_pressedkeys *keys)
 {
-	keys->up = 0;
-	keys->down = 0;
-	keys->left = 0;
-	keys->right = 0;
-	keys->p_up = 0;
-	keys->p_down = 0;
-	keys->num_plus = 0;
-	keys->num_minus = 0;
-	keys->w = 0;
-	keys->a = 0;
-	keys->s = 0;
-	keys->d = 0;
+	ft_bzero(keys, sizeof(*keys));
 }
 
 int			keypress_hook(int keycode, t_pressedkeys *keys)
 {
+	/*
+	**	Use allocated table here with Callbacks, Better Performance, Less lines
+	*/
+
+	printf("%d\n", keycode);
+
 	if (keycode == 65307)
 		exit(0);
 	else if (keycode == 65363)
@@ -59,6 +55,8 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 		keys->s = 1;
 	else if (keycode == 100)
 		keys->d = 1;
+	else if (keycode == 65535)
+		keys->del = 1;
 	return (0);
 }
 
@@ -66,6 +64,10 @@ int			is_one_key_pressed(t_pressedkeys *keys)
 {
 	int		i;
 	int		*key;
+
+	/*
+	**	Maybe would be better with a mask ?
+	*/
 
 	i = 0;
 	key = (int*)keys;
@@ -80,6 +82,12 @@ int			is_one_key_pressed(t_pressedkeys *keys)
 
 void		check_pressed_keys(t_env *env, t_pressedkeys *keys)
 {
+	/*
+	**	Use dedicated Key Structure with Callback ?
+	**	(Better Perfomance, Less Lines)
+	**	Maybe do this in is_one_key_pressed function
+	*/
+
 	if (env->block_events)
 		return ;
 	if (keys->up)
@@ -110,6 +118,10 @@ void		check_pressed_keys(t_env *env, t_pressedkeys *keys)
 
 int			keyrelease_hook(int keycode, t_pressedkeys *keys)
 {
+	/*
+	**	Use allocated table here with Callbacks, Better Performance, Less lines
+	*/
+	
 	if (keycode == 65363)
 		keys->right = 0;
 	else if (keycode == 65361)
@@ -132,5 +144,7 @@ int			keyrelease_hook(int keycode, t_pressedkeys *keys)
 		keys->s = 0;
 	else if (keycode == 100)
 		keys->d = 0;
+	else if (keycode == 65535)
+		keys->del = 0;
 	return (0);
 }
