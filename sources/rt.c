@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/08 17:31:25 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/09 03:15:46 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 /*
 ** This is just for development, render dimensions will be parsed in File
 */
-#define RENDER_WIDTH 1024
-#define RENDER_HEIGHT 768
+#define RENDER_WIDTH 2000
+#define RENDER_HEIGHT 1600
 
 
 static void			pixel_to_image(t_env *env, t_point a, int color)
@@ -89,8 +89,6 @@ static int			throw_view_plane(t_env *env)
 	ray.origin.y = env->camera.origin.y;
 	ray.origin.z = env->camera.origin.z;
 
-	// INIT t AND closest ON RAY
-
 	ray.direction.x = env->camera.x_axis.x;
 	ray.direction.y = env->camera.x_axis.y;
 	ray.direction.z = env->camera.x_axis.z;
@@ -142,53 +140,48 @@ static int			view_loop(t_env *env)
 	if (!env->block_events && is_one_key_pressed(&env->pressed_keys))
 	{
 		check_pressed_keys(env, &env->pressed_keys);
-		throw_view_plane(env);
+		env->block_events = 1;
 		(void)clear;
 		clear(env);
+		throw_view_plane(env);
+		env->block_events = 0;
 	}
 	return (0);
+}
+
+static void			create_test_objects(t_env *env)
+{
+	add_object(env, new_object(OBJ_SPHERE));
+	env->objects->origin.x = 10;
+	env->objects->radius = 2;
+	env->objects->color.color = 0xFFFFFFFF;
+
+	add_object(env, new_object(OBJ_SPHERE));
+	env->objects->origin.x = 9;
+	env->objects->origin.y = -1;
+	env->objects->origin.z = 1.5;
+	env->objects->radius = 1;
+	env->objects->color.color = 0xFFFF00FF;
+
+	add_object(env, new_object(OBJ_PLANE));
+	env->objects->origin.z = -1;
+	env->objects->normal.z = 1;
+
+	add_object(env, new_object(OBJ_SPHERE));
+	env->objects->origin.x = -10;
+	env->objects->radius = 1.5;
+	env->objects->color.color = 0xFFF5E3C4;
 }
 
 int					main(void)
 {
 	t_env			env;
 
-	env.objects = malloc(sizeof(t_object));
-	env.objects->type = 1;
-	env.objects->origin.x = 10;
-	env.objects->origin.y = 0;
-	env.objects->origin.z = 0;
-	env.objects->radius = 2;
-	env.objects->color.color = 0xFFFFFFFF;
-	env.objects->next = malloc(sizeof(t_object));
-	env.objects->next->type = 1;
-	env.objects->next->origin.x = 9;
-	env.objects->next->origin.y = -1;
-	env.objects->next->origin.z = 1.5;
-	env.objects->next->radius = 1;
-	env.objects->next->color.color = 0xFFFF00FF;
-	env.objects->next->next = malloc(sizeof(t_object));
-	env.objects->next->next->type = 2;
-	env.objects->next->next->origin.x = 0;
-	env.objects->next->next->origin.y = 0;
-	env.objects->next->next->origin.z = -1;
-	env.objects->next->next->normal.x = 0;
-	env.objects->next->next->normal.y = 0;
-	env.objects->next->next->normal.z = 1;
-	env.objects->next->next->color.color = 0xFF0000FF;
-	env.objects->next->next->next = malloc(sizeof(t_object));
-	env.objects->next->next->next->type = 1;
-	env.objects->next->next->next->origin.x = -10;
-	env.objects->next->next->next->origin.y = 0;
-	env.objects->next->next->next->origin.z = 0;
-	env.objects->next->next->next->radius = 1.5;
-	env.objects->next->next->next->color.color = 0xFFF5E3C4;
-	env.objects->next->next->next->next = NULL;
-
 	env.view_width = RENDER_WIDTH;
 	env.view_height = RENDER_HEIGHT;
 
 	env.block_events = 0;
+	env.matters = NULL;
 
 	env.mlx = mlx_init();
 	env.win = mlx_new_window(env.mlx, env.view_width, env.view_height, "RT");
@@ -198,6 +191,7 @@ int					main(void)
 
 	init_cam(&env.camera, 0, 0, 0);
 	init_cam_angle(&env.camera, 0, 0);
+	create_test_objects(&env);
 	init_pressed_keys(&env.pressed_keys);
 
 	mlx_expose_hook(env.win, throw_view_plane, &env);

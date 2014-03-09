@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/08 16:22:41 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/09 02:50:41 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,14 @@ void		init_pressed_keys(t_pressedkeys *keys)
 	keys->p_down = 0;
 	keys->num_plus = 0;
 	keys->num_minus = 0;
+	keys->w = 0;
+	keys->a = 0;
+	keys->s = 0;
+	keys->d = 0;
 }
 
 int			keypress_hook(int keycode, t_pressedkeys *keys)
 {
-	printf("%d\n", keycode);
 	if (keycode == 65307)
 		exit(0);
 	else if (keycode == 65363)
@@ -103,7 +106,6 @@ void		check_pressed_keys(t_env *env, t_pressedkeys *keys)
 		cam_translate_vector(&env->camera, &env->camera.x_axis, -0.3);
 	if (keys->d)
 		cam_translate_vector(&env->camera, &env->camera.y_axis, -0.3);
-
 }
 
 int			keyrelease_hook(int keycode, t_pressedkeys *keys)

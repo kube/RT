@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+         #
+#    By: kube <kube@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/08 18:53:48 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/09 03:01:11 by kube             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -26,6 +26,8 @@ SOURCES =	rt.c								\
 			camera/camera_init.c				\
 			keyboard.c							\
 			ray_throw.c							\
+			object/creation.c					\
+			matter.c							\
 			equations.c
 
 OBJECTS =	$(SOURCES:.c=.o)
@@ -68,7 +70,7 @@ updatelibs :
 	@cd libft/ && git pull
 
 complibs :
-	@make -C libft/ usemath nothing addmath addconvert addstrings addcolors re
+	@make -C libft/ usemath nothing addmath addconvert addmemory addstrings addcolors re
 
 clean :
 	@rm -f $(OBJECTS)
