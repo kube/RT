@@ -26,6 +26,7 @@ void	cam_rot_z(t_camera *camera, float angle);
 void	cam_rot_x(t_camera *camera, float angle);
 void	cam_rot_y(t_camera *camera, float angle);
 void	cam_translate(t_camera *camera, float x, float y, float z);
+void	cam_translate_vector(t_camera *camera, t_vector *v, float coeff);
 void	cam_move_to(t_camera *camera, float x, float y, float z);
 
 void	init_cam(t_camera *cam, float x, float y, float z);

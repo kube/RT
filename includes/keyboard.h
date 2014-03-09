@@ -12,6 +12,12 @@ typedef struct			s_pressedkeys
 	int					right;
 	int					p_up;
 	int					p_down;
+	int					num_plus;
+	int					num_minus;
+	int					w;
+	int					a;
+	int					s;
+	int					d;
 }						t_pressedkeys;
 
 int			is_one_key_pressed(t_pressedkeys *keys);
