@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/09 17:09:04 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/11 01:01:51 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <X.h>
 #include <rt.h>
 #include <ray.h>
+#include <parser.h>
 #include <stdlib.h>
 
 #include <stdio.h>
@@ -233,10 +234,15 @@ static int			buttonpress_hook(int button, int x, int y, t_env *env)
 	return (0);
 }
 
-int					main(void)
+int					main(int argc, char **argv)
 {
 	t_env			env;
 
+	if (argc == 2)
+	{
+		parse_file(argv[1]);
+		return (0);
+	}
 	env.view_width = RENDER_WIDTH;
 	env.view_height = RENDER_HEIGHT;
 

@@ -39,36 +39,14 @@
 # diffuse
 # specular
 
-struct matter
-{
-    name
-    # Matter Properties
-}
-
-charge_matiere(matter, objet);
-
-struct cercle
-{
-    type
-    + struct : properties
-        # Pos & Transform
-        # Matter Properties
-
-    # Specific Properties
-}
-
-struct
-{
-    type
-    + struct : properties
-        # Pos & Transform
-        # Matter Properties
-
-    # Specific Properties
-}
 
 # Scene Description
 scene:
+    name: "Trinity"
+    width: 1200
+    height: 800
+
+    # Camera
     camera:
         x: 0
         y: 50

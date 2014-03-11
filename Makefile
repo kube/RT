@@ -6,7 +6,7 @@
 #    By: kube <kube@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/09 03:01:11 by kube             ###   ########.fr        #
+#    Updated: 2014/03/11 01:08:35 by kube             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -24,11 +24,12 @@ OBJECTS_FOLDER = objects/
 SOURCES =	rt.c								\
 			camera/camera_transformations.c		\
 			camera/camera_init.c				\
+			object/creation.c					\
+			scene_parser/parser.c				\
 			keyboard.c							\
 			ray_throw.c							\
-			object/creation.c					\
 			matter.c							\
-			equations.c
+			equations.c							\
 
 OBJECTS =	$(SOURCES:.c=.o)
 
@@ -70,7 +71,7 @@ updatelibs :
 	@cd libft/ && git pull
 
 complibs :
-	@make -C libft/ usemath nothing addmath addconvert addmemory addstrings addcolors re
+	@make -C libft/ usemath nothing addmath addconvert addprint addinput addmemory addstrings addcolors re
 
 clean :
 	@rm -f $(OBJECTS)
