@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phong_lightning.c                                  :+:      :+:    :+:   */
+/*   phong_shading.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/12 01:42:23 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/12 02:22:56 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void		diffuse_lightning(t_env *env, t_ray *ray)
 	}
 }
 
-void			phong_lightning(t_env *env, t_ray *ray)
+void			phong_shading(t_env *env, t_ray *ray)
 {
 	ambient_lightning(ray);
 	diffuse_lightning(env, ray);

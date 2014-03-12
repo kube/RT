@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/11 23:29:19 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/12 02:23:22 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct						s_ray
 }									t_ray;
 
 void		throw_ray(t_env *env, t_ray *ray);
-void		phong_lightning(t_env *env, t_ray *ray);
+void		phong_shading(t_env *env, t_ray *ray);
 
 float		sphere_equation(t_object *sphere, t_ray *ray);
 float		plane_equation(t_object *plane, t_ray *ray);

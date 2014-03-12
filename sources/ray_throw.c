@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_throw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/11 19:18:00 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/12 02:23:58 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ void			throw_ray(t_env *env, t_ray *ray)
 		obj = obj->next;
 	}
 	if (ray->inter_t != INFINITY)
-		phong_lightning(env, ray);
+		phong_shading(env, ray);
 }
