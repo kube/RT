@@ -19,16 +19,17 @@ git clone https://github.com/kubekhrm/libft.git
 
 ||Working?|
 |----|------:|
-|Camera|✓|
-|Rotation|.|
-|Move|.|
+|View Plane|✓|
+|Move|✓|
+|Rotation|Buggy|
 
 ###Light
 
 ||Working?|
 |----|------:|
-|Light|.|
-|Rotation|✓| *Beware when angle > 360*
+|Ambient|✓|
+|Diffuse|✓|
+|Specular|Almost|
 |Move|.|
 
 ###Textures
@@ -37,7 +38,6 @@ git clone https://github.com/kubekhrm/libft.git
 |----|------:|
 |Light|.|
 |Rotation|.|
-|Move|.|
 
 ###Obj Rendering
 
@@ -56,3 +56,9 @@ NOT WORKING FOR THE MOMENT, SO USE HARD-CODED OBJECTS
 |Light|.|
 |Rotation|.|
 |Move|.|
+
+
+###To integrate
+|To export PPM to JPEG files :|
+|---------|
+|https://github.com/Sveder/PPM-to-JPG/blob/master/ppm_to_jpg.py|

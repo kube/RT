@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/12 02:41:44 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/12 14:10:57 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ static void			create_test_objects(t_env *env)
 	env->objects->color.color = 0xFFFFFFFF;
 	env->objects->ambient = 0.1;
 	env->objects->diffuse = 0.8;
+	env->objects->specular = 0.9;
 
 	add_object(env, new_object(OBJ_SPHERE));
 	env->objects->origin.x = 9;
@@ -189,6 +190,7 @@ static void			create_test_objects(t_env *env)
 	env->objects->color.color = 0xFFFF0AFF;
 	env->objects->ambient = 0.1;
 	env->objects->diffuse = 0.8;
+	env->objects->specular = 0.9;
 
 	add_object(env, new_object(OBJ_PLANE));
 	env->objects->origin.z = -1;
@@ -196,6 +198,7 @@ static void			create_test_objects(t_env *env)
 	env->objects->color.color = 0xFF0904FA;
 	env->objects->ambient = 0.1;
 	env->objects->diffuse = 0.8;
+	env->objects->specular = 0.9;
 
 	add_object(env, new_object(OBJ_SPHERE));
 	env->objects->origin.x = -10;
@@ -203,6 +206,7 @@ static void			create_test_objects(t_env *env)
 	env->objects->color.color = 0x000000FF;
 	env->objects->ambient = 0.1;
 	env->objects->diffuse = 0.8;
+	env->objects->specular = 0.9;
 
 	env->lights = (t_light *)malloc(sizeof(t_light));
 	env->lights->type = 0;
