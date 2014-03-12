@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:01:22 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/09 17:09:05 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/11 23:58:48 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 # define OBJ_SPHERE		0
 # define OBJ_PLANE		1
-# define OBJ_CONE		2
-# define OBJ_CYLINDER	3
+# define OBJ_CYLINDER	2
+# define OBJ_CONE		3
 
 typedef struct				s_object
 {
@@ -50,5 +50,33 @@ typedef struct				s_object
 	};
 	struct s_object			*next;
 }							t_object;
+
+typedef union				u_light_color
+{
+	struct
+	{
+		float				red;
+		float				green;
+		float				blue;
+	};
+	struct
+	{
+		float				r;
+		float				g;
+		float				b;
+	};
+}							t_light_color;
+
+typedef struct				s_light
+{
+	int						type;
+	t_point					origin;
+	float					intensity;
+
+	t_vector				direction;
+	float					aperture;
+	t_light_color			color;
+	struct s_light			*next;
+}							t_light;
 
 #endif

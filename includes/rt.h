@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/09 17:03:09 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/12 00:00:25 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <object.h>
 # include <matter.h>
 # define VIEWPLANE_PLOT 1000
+# define DIAPHRAGM 1000000
 
 typedef struct				s_env
 {
@@ -28,11 +29,14 @@ typedef struct				s_env
 	int						endian;
 	int						*data;
 
+	float					diaphragm;
+
 	t_camera				camera;
 	unsigned int			view_width;
 	unsigned int			view_height;
 	t_matter				*matters;
 	t_object				*objects;
+	t_light					*lights;
 	t_pressedkeys			pressed_keys;
 
 	int						block_events;

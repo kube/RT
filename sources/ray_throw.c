@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_throw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/09 16:35:44 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/11 19:18:00 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static float	intersection(t_object *obj, t_ray *ray)
 	**	Should use functions tabled here (Better performance)
 	*/
 
-	if (obj->type == 0)
+	if (obj->type == OBJ_SPHERE)
 		return (sphere_equation(obj, ray));
-	else if (obj->type == 1)
+	else if (obj->type == OBJ_PLANE)
 		return (plane_equation(obj, ray));
-	/*if (obj->type == 3)
+	/*if (obj->type == OBJ_CYLINDER)
 		return (cylinder_equation(obj, ray));
-	if (obj->type == 4)
+	if (obj->type == OBJ_CONE)
 		return (cone_equation(obj, ray));*/
 	return (INFINITY);
 }
@@ -50,4 +50,6 @@ void			throw_ray(t_env *env, t_ray *ray)
 		tmp_t = INFINITY;
 		obj = obj->next;
 	}
+	if (ray->inter_t != INFINITY)
+		phong_lightning(env, ray);
 }

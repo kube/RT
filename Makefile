@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kube <kube@student.42.fr>                  +#+  +:+       +#+         #
+#    By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/11 01:08:35 by kube             ###   ########.fr        #
+#    Updated: 2014/03/11 19:20:18 by lbinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -30,6 +30,7 @@ SOURCES =	rt.c								\
 			ray_throw.c							\
 			matter.c							\
 			equations.c							\
+			phong_lightning.c					\
 
 OBJECTS =	$(SOURCES:.c=.o)
 

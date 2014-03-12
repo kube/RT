@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/11 01:01:51 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/12 02:01:50 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,23 @@ static void			clear(t_env *env)
 	}
 }
 
+static float		min_float(float a, float b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+static int			light_diaphragm(t_ray *ray, float diaphragm)
+{
+	t_color 		color;
+
+	color.red = (unsigned char)(min_float((ray->color.red / diaphragm), 1.0) * 255);
+	color.blue = (unsigned char)(min_float((ray->color.blue / diaphragm), 1.0) * 255);
+	color.green = (unsigned char)(min_float((ray->color.green / diaphragm), 1.0) * 255);
+	return (color.color);
+}
+
 static int			throw_view_plane(t_env *env)
 {
 	unsigned int	i;
@@ -114,7 +131,9 @@ static int			throw_view_plane(t_env *env)
 			throw_ray(env, &ray);
 
 			if (ray.inter_t != INFINITY)
-				pixel_to_image(env, tmp, ray.closest->color.color);
+			{
+				pixel_to_image(env, tmp, light_diaphragm(&ray, env->diaphragm));
+			}
 			// END TREAT RAY
 			ray.direction.x -= (env->camera.y_axis.x / VIEWPLANE_PLOT);
 			ray.direction.y -= (env->camera.y_axis.y / VIEWPLANE_PLOT);
@@ -159,23 +178,64 @@ static void			create_test_objects(t_env *env)
 	env->objects->origin.x = 10;
 	env->objects->radius = 2;
 	env->objects->color.color = 0xFFFFFFFF;
+	env->objects->ambient = 0.1;
+	env->objects->diffuse = 0.8;
 
 	add_object(env, new_object(OBJ_SPHERE));
 	env->objects->origin.x = 9;
 	env->objects->origin.y = -1;
 	env->objects->origin.z = 1.5;
 	env->objects->radius = 1;
-	env->objects->color.color = 0xFFFF00FF;
+	env->objects->color.color = 0xFFFF0AFF;
+	env->objects->ambient = 0.1;
+	env->objects->diffuse = 0.8;
 
 	add_object(env, new_object(OBJ_PLANE));
 	env->objects->origin.z = -1;
 	env->objects->normal.z = 1;
 	env->objects->color.color = 0xFF0904FA;
+	env->objects->ambient = 0.1;
+	env->objects->diffuse = 0.8;
 
 	add_object(env, new_object(OBJ_SPHERE));
 	env->objects->origin.x = -10;
 	env->objects->radius = 1.5;
-	env->objects->color.color = 0xFFF5E3C4;
+	env->objects->color.color = 0x000000FF;
+	env->objects->ambient = 0.1;
+	env->objects->diffuse = 0.8;
+
+	env->lights = (t_light *)malloc(sizeof(t_light));
+	env->lights->type = 0;
+	env->lights->origin.x = 0;
+	env->lights->origin.y = 10;
+	env->lights->origin.z = 5;
+	env->lights->intensity = 1.0;
+	env->lights->color.red = 1.0;
+	env->lights->color.green = 1.0;
+	env->lights->color.blue = 1.0;
+
+	env->lights->next = NULL;
+
+	// env->lights->next = (t_light *)malloc(sizeof(t_light));
+	// env->lights->next->type = 0;
+	// env->lights->next->origin.x = 10;
+	// env->lights->next->origin.y = -10;
+	// env->lights->next->origin.z = 2;
+	// env->lights->next->intensity = 1.0;
+	// env->lights->next->color.red = 1.0;
+	// env->lights->next->color.green = 0.0;
+	// env->lights->next->color.blue = 0.0;
+
+	// env->lights->next->next = (t_light *)malloc(sizeof(t_light));
+	// env->lights->next->next->type = 0;
+	// env->lights->next->next->origin.x = 15;
+	// env->lights->next->next->origin.y = -10;
+	// env->lights->next->next->origin.z = 10;
+	// env->lights->next->next->intensity = 1.0;
+	// env->lights->next->next->color.red = 0.0;
+	// env->lights->next->next->color.green = 0.0;
+	// env->lights->next->next->color.blue = 1.0;
+	// env->lights->next->next->next = NULL;
 }
 
 static t_ray		get_ray_from_point(t_env *env, int i, int j)
@@ -238,16 +298,20 @@ int					main(int argc, char **argv)
 {
 	t_env			env;
 
-	if (argc == 2)
+	(void)argc;
+	(void)argv;
+	/*if (argc == 2)
 	{
 		parse_file(argv[1]);
 		return (0);
-	}
+	}*/
 	env.view_width = RENDER_WIDTH;
 	env.view_height = RENDER_HEIGHT;
 
 	env.block_events = 0;
 	env.matters = NULL;
+
+	env.diaphragm = 2.0;
 
 	env.mlx = mlx_init();
 	env.win = mlx_new_window(env.mlx, env.view_width, env.view_height, "RT");

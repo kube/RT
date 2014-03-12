@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   equations.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 19:30:09 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/09 16:37:14 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/11 19:04:18 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,26 @@
 #include <object.h>
 #include <math.h>
 
-#include <stdio.h>
+static float	positive_smallest(float a, float b)
+{
+	if (a < 0)
+	{
+		if (b > 0)
+			return (b);
+		return (INFINITY);
+	}
+	if (b < 0)
+	{
+		if (a > 0)
+			return (a);
+		return (INFINITY);
+	}
+	if (a < b)
+		return (a);
+	return (b);
+}
 
-float		sphere_equation(t_object *sphere, t_ray *ray)
+float			sphere_equation(t_object *sphere, t_ray *ray)
 {
 	float	a;
 	float	b;
@@ -36,13 +53,12 @@ float		sphere_equation(t_object *sphere, t_ray *ray)
 		+ (ray->origin.z - sphere->origin.z)
 		* (ray->origin.z - sphere->origin.z) - sphere->radius * sphere->radius;
 	det = b * b - 4 * a * c;
-	res = 0;
-	if (det >= 0 && (-b + sqrt(det)) < (-b - sqrt(det)))
-		res = (-b + sqrt(det)) / (2 * a);
-	else if (det >= 0 && (-b + sqrt(det)) > (-b - sqrt(det)))
-		res = (-b - sqrt(det)) / (2 * a);
-	if (res > 0)
+	if (det >= 0)
+	{
+		res = positive_smallest((-b + sqrt(det)) / (2 * a),
+				(-b - sqrt(det)) / (2 * a));
 		return (res);
+	}
 	return (INFINITY);
 }
 

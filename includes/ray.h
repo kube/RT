@@ -6,7 +6,7 @@
 /*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/07 16:44:50 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/11 23:29:19 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ typedef struct						s_ray
 	t_vector						direction;
 	unsigned int					recursivity;
 	float							intensity;
-	t_color							color;
+	t_light_color					color;
+	t_color							f_color;
 	t_object						*closest;
 	float							inter_t;
 }									t_ray;
 
 void		throw_ray(t_env *env, t_ray *ray);
+void		phong_lightning(t_env *env, t_ray *ray);
+
 float		sphere_equation(t_object *sphere, t_ray *ray);
 float		plane_equation(t_object *plane, t_ray *ray);
 float		cylinder_equation(t_object *cylinder, t_ray * ray);
