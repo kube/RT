@@ -6,15 +6,13 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:12:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/09 17:08:46 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/12 02:37:33 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <ft_memory.h>
 #include <stdlib.h>
-
-#include <stdio.h>
 
 void			load_matter_object(t_object *object, t_matter *matter)
 {
@@ -31,22 +29,23 @@ void			load_matter_object(t_object *object, t_matter *matter)
 void			remove_object(t_env *env, t_object *object)
 {
 	t_object	*current;
+	t_object	*previous;
 
+	previous = NULL;
 	current = env->objects;
-	if (current == object)
+	while (current)
 	{
-		env->objects = object;
-		free(object);
-		return ;
+		if (current == object)
+		{
+			if (previous)
+				previous->next = current->next;
+			else
+				env->objects = current->next;
+			free(object);
+		}
+		previous = current;
+		current = current->next;
 	}
-	while (current->next)
-	{
-		if (current->next == object)
-			current->next = current->next->next;
-		else
-			current = current->next;
-	}
-	free(object);
 }
 
 void			add_object(t_env *env, t_object *object)

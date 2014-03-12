@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/12 02:01:50 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/12 02:41:44 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,26 +216,26 @@ static void			create_test_objects(t_env *env)
 
 	env->lights->next = NULL;
 
-	// env->lights->next = (t_light *)malloc(sizeof(t_light));
-	// env->lights->next->type = 0;
-	// env->lights->next->origin.x = 10;
-	// env->lights->next->origin.y = -10;
-	// env->lights->next->origin.z = 2;
-	// env->lights->next->intensity = 1.0;
-	// env->lights->next->color.red = 1.0;
-	// env->lights->next->color.green = 0.0;
-	// env->lights->next->color.blue = 0.0;
+	env->lights->next = (t_light *)malloc(sizeof(t_light));
+	env->lights->next->type = 0;
+	env->lights->next->origin.x = 10;
+	env->lights->next->origin.y = -10;
+	env->lights->next->origin.z = 2;
+	env->lights->next->intensity = 1.0;
+	env->lights->next->color.red = 1.0;
+	env->lights->next->color.green = 0.0;
+	env->lights->next->color.blue = 0.0;
 
-	// env->lights->next->next = (t_light *)malloc(sizeof(t_light));
-	// env->lights->next->next->type = 0;
-	// env->lights->next->next->origin.x = 15;
-	// env->lights->next->next->origin.y = -10;
-	// env->lights->next->next->origin.z = 10;
-	// env->lights->next->next->intensity = 1.0;
-	// env->lights->next->next->color.red = 0.0;
-	// env->lights->next->next->color.green = 0.0;
-	// env->lights->next->next->color.blue = 1.0;
-	// env->lights->next->next->next = NULL;
+	env->lights->next->next = (t_light *)malloc(sizeof(t_light));
+	env->lights->next->next->type = 0;
+	env->lights->next->next->origin.x = 15;
+	env->lights->next->next->origin.y = -10;
+	env->lights->next->next->origin.z = 10;
+	env->lights->next->next->intensity = 1.0;
+	env->lights->next->next->color.red = 0.0;
+	env->lights->next->next->color.green = 0.0;
+	env->lights->next->next->color.blue = 1.0;
+	env->lights->next->next->next = NULL;
 }
 
 static t_ray		get_ray_from_point(t_env *env, int i, int j)
@@ -298,20 +298,18 @@ int					main(int argc, char **argv)
 {
 	t_env			env;
 
-	(void)argc;
-	(void)argv;
-	/*if (argc == 2)
+	if (argc == 2)
 	{
 		parse_file(argv[1]);
 		return (0);
-	}*/
+	}
 	env.view_width = RENDER_WIDTH;
 	env.view_height = RENDER_HEIGHT;
 
 	env.block_events = 0;
 	env.matters = NULL;
 
-	env.diaphragm = 2.0;
+	env.diaphragm = 1.0;
 
 	env.mlx = mlx_init();
 	env.win = mlx_new_window(env.mlx, env.view_width, env.view_height, "RT");

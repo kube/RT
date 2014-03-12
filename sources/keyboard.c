@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/09 17:08:46 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/12 02:38:54 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 	**	Use allocated table here with Callbacks, Better Performance, Less lines
 	*/
 
-	printf("%d\n", keycode);
+	// printf("%d\n", keycode);
 
 	if (keycode == 65307)
 		exit(0);

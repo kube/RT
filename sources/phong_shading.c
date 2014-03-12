@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/12 02:22:56 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/12 02:44:11 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,6 @@
 #include <object.h>
 #include <ft_math.h>
 #include <math.h>
-
-#include <stdio.h>
-
-// static float	min(float a, float b)
-// {
-// 	if (a > b)
-// 		return b;
-// 	return a;
-// }
 
 static void		ambient_lightning(t_ray *ray)
 {
@@ -55,10 +46,10 @@ static void		diffuse_lightning(t_env *env, t_ray *ray)
 		light_vector.z = current_light->origin.z - intersection.z;
 		normalize_vector(&light_vector);
 		lambert = fmax(vect_dot(&normal, &light_vector), 0);
-		// lambert *= lambert;
-		ray->color.red += lambert * 1.0;//((float)ray->closest->color.red * ray->closest->diffuse * current_light->color.red * current_light->intensity / 255.0);
-		ray->color.green += lambert * 1.0;//((float)ray->closest->color.green * ray->closest->diffuse * current_light->color.green * current_light->intensity / 255.0);
-		ray->color.blue += lambert * 1.0;	//((float)ray->closest->color.blue * ray->closest->diffuse * current_light->color.blue * current_light->intensity / 255.0);
+		lambert *= lambert * lambert;
+		ray->color.red += lambert * ((float)ray->closest->color.red * ray->closest->diffuse * current_light->color.red * current_light->intensity / 255.0);
+		ray->color.green += lambert * ((float)ray->closest->color.green * ray->closest->diffuse * current_light->color.green * current_light->intensity / 255.0);
+		ray->color.blue += lambert * ((float)ray->closest->color.blue * ray->closest->diffuse * current_light->color.blue * current_light->intensity / 255.0);
 		current_light = current_light->next;
 	}
 }
@@ -67,7 +58,4 @@ void			phong_shading(t_env *env, t_ray *ray)
 {
 	ambient_lightning(ray);
 	diffuse_lightning(env, ray);
-	// ray->f_color.red = min(ray->color.red * 255 / DIAPHRAGM, 255);
-	// ray->f_color.green = min(ray->color.green * 255 / DIAPHRAGM, 255);
-	// ray->f_color.blue = min(ray->color.blue * 255 / DIAPHRAGM, 255);
 }
