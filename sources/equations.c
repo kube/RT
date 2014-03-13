@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   equations.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 19:30:09 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/11 19:04:18 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/13 19:08:40 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,46 @@ static float	positive_smallest(float a, float b)
 	return (b);
 }
 
+static float	sphere_equation_det(t_object *sphere, t_ray *ray, float *a, float *b)
+{
+	t_vector	ray_direction;
+	t_point		ray_origin;
+	t_point		sphere_origin;
+	float		radius;
+	float		c;
+
+	ray_direction = ray->direction;
+	ray_origin = ray->origin;
+	sphere_origin = sphere->origin;
+	radius = sphere->radius;
+	*a = ray_direction.x * ray_direction.x + ray_direction.y
+		* ray_direction.y + ray_direction.z * ray_direction.z;
+	*b = 2 * (ray_direction.x * (ray_origin.x - sphere_origin.x)
+		+ ray_direction.y * (ray_origin.y - sphere_origin.y)
+			+ ray_direction.z * (ray_origin.z - sphere_origin.z));
+	c = (ray_origin.x - sphere_origin.x) * (ray_origin.x - sphere_origin.x)
+		+ (ray_origin.y - sphere_origin.y)
+		* (ray_origin.y - sphere_origin.y)
+		+ (ray_origin.z - sphere_origin.z)
+		* (ray_origin.z - sphere_origin.z) - radius * radius;
+	return (c);
+}
+
 float			sphere_equation(t_object *sphere, t_ray *ray)
 {
+	float	res;
 	float	a;
 	float	b;
 	float	c;
 	float	det;
-	float	res;
 
-	a = ray->direction.x * ray->direction.x + ray->direction.y
-		* ray->direction.y + ray->direction.z * ray->direction.z;
-	b = 2 * (ray->direction.x * (ray->origin.x - sphere->origin.x)
-		+ ray->direction.y * (ray->origin.y - sphere->origin.y)
-			+ ray->direction.z * (ray->origin.z - sphere->origin.z));
-	c = (ray->origin.x - sphere->origin.x) * (ray->origin.x - sphere->origin.x)
-		+ (ray->origin.y - sphere->origin.y)
-		* (ray->origin.y - sphere->origin.y)
-		+ (ray->origin.z - sphere->origin.z)
-		* (ray->origin.z - sphere->origin.z) - sphere->radius * sphere->radius;
+	c = sphere_equation_det(sphere, ray, &a, &b);
 	det = b * b - 4 * a * c;
-	if (det >= 0)
+	if (det	>= 0)
 	{
-		res = positive_smallest((-b + sqrt(det)) / (2 * a),
-				(-b - sqrt(det)) / (2 * a));
+		det = sqrt(det);
+		res = positive_smallest((-b + det) / (2 * a),
+				(-b - det) / (2 * a));
 		return (res);
 	}
 	return (INFINITY);

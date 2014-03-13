@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/13 03:42:31 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/13 20:04:44 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <mouse.h>
 
 #include <stdio.h>
+#include <time.h>
 
 /*
 ** This is just for development, render dimensions will be parsed in File
@@ -59,6 +60,22 @@ static int			light_diaphragm(t_ray *ray, float diaphragm)
 	return (color.color);
 }
 
+static void				get_fps()
+{
+	static int			i = 0;
+	static float		last_put = 0;
+	float				time_ms;
+
+	i++;
+	time_ms = ((float)clock() / (float)CLOCKS_PER_SEC);
+	if (time_ms - last_put > 1)
+	{
+		printf("%d FPS\n", i);
+		last_put = time_ms;
+		i = 0;
+	}
+}
+
 int					throw_view_plane(t_env *env)
 {
 	unsigned int	i;
@@ -69,10 +86,10 @@ int					throw_view_plane(t_env *env)
 	/*
 	** This function will be bettered with vector operations added in LibFt
 	*/
-	// env->block_events = 1;
-
 	i = 0;
 	j = 0;
+
+	env->block_events = 1;
 
 	ray.origin.x = env->camera.origin.x;
 	ray.origin.y = env->camera.origin.y;
@@ -100,11 +117,13 @@ int					throw_view_plane(t_env *env)
 			tmp.x = (float)i;
 			tmp.y = (float)j;
 			
-			throw_ray(env, &ray);
+			throw_ray(env, &ray, !env->pressed_keys.shift);
 
-			if (ray.inter_t != INFINITY)
+			if (ray.inter_t != INFINITY && !env->pressed_keys.shift)
 				pixel_to_image(env, tmp, light_diaphragm(&ray, env->diaphragm));
-			else
+			else if (ray.inter_t != INFINITY)
+				pixel_to_image(env, tmp, ray.closest->color.color);
+			else if (!env->pressed_keys.no_clean)
 				pixel_to_image(env, tmp, env->background_color);
 			// END TREAT RAY
 			ray.direction.x -= (env->camera.y_axis.x / VIEWPLANE_PLOT);
@@ -124,7 +143,9 @@ int					throw_view_plane(t_env *env)
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 
-	// env->block_events = 0;
+	env->block_events = 0;
+
+	get_fps();
 
 	return (0);
 }
@@ -175,6 +196,7 @@ t_ray				get_ray_from_point(t_env *env, int i, int j)
 	ray.direction.y -= (env->camera.z_axis.y / VIEWPLANE_PLOT) * j;
 	ray.direction.z -= (env->camera.z_axis.z / VIEWPLANE_PLOT) * j;
 
+
 	return (ray);
 }
 
@@ -215,6 +237,15 @@ static void			create_test_objects(t_env *env)
 	env->objects->ambient = 0.1;
 	env->objects->diffuse = 0.8;
 	env->objects->specular = 0.9;
+
+	add_object(env, new_object(OBJ_SPHERE));
+	env->objects->radius = 150;
+	env->objects->color.color = 0xFF2F5FFF;
+	env->objects->ambient = 0.8;
+	env->objects->diffuse = 0.4;
+	env->objects->specular = 0.2;
+
+
 
 	env->lights = (t_light *)malloc(sizeof(t_light));
 	env->lights->type = 0;

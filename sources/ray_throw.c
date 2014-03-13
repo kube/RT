@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/12 02:23:58 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/13 19:36:27 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static float	intersection(t_object *obj, t_ray *ray)
 	return (INFINITY);
 }
 
-void			throw_ray(t_env *env, t_ray *ray)
+void			throw_ray(t_env *env, t_ray *ray, int calculate_light)
 {
 	float		tmp_t;
 	t_object	*obj;
@@ -50,6 +50,6 @@ void			throw_ray(t_env *env, t_ray *ray)
 		tmp_t = INFINITY;
 		obj = obj->next;
 	}
-	if (ray->inter_t != INFINITY)
+	if (calculate_light && ray->inter_t != INFINITY)
 		phong_shading(env, ray);
 }
