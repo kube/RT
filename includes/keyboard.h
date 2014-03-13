@@ -19,6 +19,7 @@ typedef struct			s_pressedkeys
 	int					s;
 	int					d;
 	int					del;
+	int					specular_enabled;
 }						t_pressedkeys;
 
 int			is_one_key_pressed(t_pressedkeys *keys);

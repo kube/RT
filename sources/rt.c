@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/13 02:53:11 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/13 03:42:31 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int					throw_view_plane(t_env *env)
 	/*
 	** This function will be bettered with vector operations added in LibFt
 	*/
-	env->block_events = 1;
+	// env->block_events = 1;
 
 	i = 0;
 	j = 0;
@@ -124,7 +124,7 @@ int					throw_view_plane(t_env *env)
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 
-	env->block_events = 0;
+	// env->block_events = 0;
 
 	return (0);
 }
@@ -262,6 +262,11 @@ int					main(int argc, char **argv)
 	env.view_width = RENDER_WIDTH;
 	env.view_height = RENDER_HEIGHT;
 	env.block_events = 0;
+
+
+	env.selected_object = NULL;
+	env.pressed_mouse = 0;
+
 	env.background_color = 0xFF000000;
 	env.diaphragm = 1.0;
 	env.matters = NULL;
@@ -281,6 +286,8 @@ int					main(int argc, char **argv)
 	mlx_hook(env.win, KeyPress, KeyPressMask, keypress_hook, &env.pressed_keys);
 	mlx_hook(env.win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env.pressed_keys);
 	mlx_hook(env.win, ButtonPress, ButtonPressMask, buttonpress_hook, &env);
+	mlx_hook(env.win, ButtonRelease, ButtonReleaseMask, buttonrelease_hook, &env);
+	mlx_hook(env.win, MotionNotify, PointerMotionMask, motionnotify_hook, &env);
 	mlx_loop_hook(env.mlx, view_loop, &env);
 	mlx_loop(env.mlx);
 

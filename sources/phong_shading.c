@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/12 14:26:12 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/13 03:43:36 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ void			phong_shading(t_env *env, t_ray *ray)
 {
 	ambient_lighting(ray);
 	diffuse_lighting(env, ray);
-	specular_lighting(env, ray);
+	if (env->pressed_keys.specular_enabled)
+		specular_lighting(env, ray);
 }
