@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/12 00:00:25 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/13 02:50:40 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_H
 # define RT_H
+
 # include <camera.h>
 # include <keyboard.h>
 # include <object.h>
 # include <matter.h>
+
 # define VIEWPLANE_PLOT 1000
-# define DIAPHRAGM 1000000
 
 typedef struct				s_env
 {
@@ -31,6 +32,7 @@ typedef struct				s_env
 
 	float					diaphragm;
 
+	int						background_color;
 	t_camera				camera;
 	unsigned int			view_width;
 	unsigned int			view_height;
@@ -41,6 +43,8 @@ typedef struct				s_env
 
 	int						block_events;
 }							t_env;
+
+int			throw_view_plane(t_env *env);
 
 void		init_pressed_keys(t_pressedkeys *keys);
 int			keypress_hook(int keycode, t_pressedkeys *keys);

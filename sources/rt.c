@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/12 14:10:57 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/13 02:53:11 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@
 #include <ray.h>
 #include <parser.h>
 #include <stdlib.h>
+#include <mouse.h>
 
 #include <stdio.h>
 
 /*
 ** This is just for development, render dimensions will be parsed in File
 */
-#define RENDER_WIDTH 1000
-#define RENDER_HEIGHT 800
+#define RENDER_WIDTH	1000
+#define RENDER_HEIGHT	800
 
 
 static void			pixel_to_image(t_env *env, t_point a, int color)
@@ -39,35 +40,6 @@ static void			pixel_to_image(t_env *env, t_point a, int color)
 	if (i < env->view_width * env->view_height && (int)a.y >= 0 && (int)a.x >= 0
 		&& (unsigned int)a.x < env->view_width)
 		env->data[i] = color;
-}
-
-/*static void			trace_color(t_env *env, unsigned int i, unsigned int j,
-								t_ray *ray)
-{
-	float			length;
-	t_point			a;
-
-	a.x = i;
-	a.y = j;
-	length = sqrt(ray->direction.x * ray->direction.x + ray->direction.y
-		* ray->direction.y + ray->direction.z * ray->direction.z) - 1;
-	pixel_to_image(env, a, blend_colors(0xFFFFFFFF, 0xFFFE25ED, length, COLOR_BLEND_OVER));
-}*/
-
-static void			clear(t_env *env)
-{
-	int				i;
-	int				end;
-	int				*data;
-
-	i = 0;
-	end = env->view_width * env->view_height;
-	data = env->data;
-	while (i < end)
-	{
-		data[i] = 0;
-		i++;
-	}
 }
 
 static float		min_float(float a, float b)
@@ -87,7 +59,7 @@ static int			light_diaphragm(t_ray *ray, float diaphragm)
 	return (color.color);
 }
 
-static int			throw_view_plane(t_env *env)
+int					throw_view_plane(t_env *env)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -131,9 +103,9 @@ static int			throw_view_plane(t_env *env)
 			throw_ray(env, &ray);
 
 			if (ray.inter_t != INFINITY)
-			{
 				pixel_to_image(env, tmp, light_diaphragm(&ray, env->diaphragm));
-			}
+			else
+				pixel_to_image(env, tmp, env->background_color);
 			// END TREAT RAY
 			ray.direction.x -= (env->camera.y_axis.x / VIEWPLANE_PLOT);
 			ray.direction.y -= (env->camera.y_axis.y / VIEWPLANE_PLOT);
@@ -163,11 +135,47 @@ static int			view_loop(t_env *env)
 	{
 		check_pressed_keys(env, &env->pressed_keys);
 		env->block_events = 1;
-		clear(env);
 		throw_view_plane(env);
 		env->block_events = 0;
 	}
 	return (0);
+}
+
+t_ray				get_ray_from_point(t_env *env, int i, int j)
+{
+	t_ray			ray;
+
+	/*
+	**	Simplify all this stuff
+	*/
+	ray.origin.x = env->camera.origin.x;
+	ray.origin.y = env->camera.origin.y;
+	ray.origin.z = env->camera.origin.z;
+
+	ray.direction.x = env->camera.x_axis.x;
+	ray.direction.y = env->camera.x_axis.y;
+	ray.direction.z = env->camera.x_axis.z;
+
+	ray.direction.x += (env->camera.y_axis.x / VIEWPLANE_PLOT) * env->view_width / 2;
+	ray.direction.y += (env->camera.y_axis.y / VIEWPLANE_PLOT) * env->view_width / 2;
+	ray.direction.z += (env->camera.y_axis.z / VIEWPLANE_PLOT) * env->view_width / 2;
+
+	ray.direction.x += (env->camera.z_axis.x / VIEWPLANE_PLOT) * env->view_height / 2;
+	ray.direction.y += (env->camera.z_axis.y / VIEWPLANE_PLOT) * env->view_height / 2;
+	ray.direction.z += (env->camera.z_axis.z / VIEWPLANE_PLOT) * env->view_height / 2;
+
+	/*
+	**	Move to good point
+	*/
+	ray.direction.x -= (env->camera.y_axis.x / VIEWPLANE_PLOT) * i;
+	ray.direction.y -= (env->camera.y_axis.y / VIEWPLANE_PLOT) * i;
+	ray.direction.z -= (env->camera.y_axis.z / VIEWPLANE_PLOT) * i;
+	
+	ray.direction.x -= (env->camera.z_axis.x / VIEWPLANE_PLOT) * j;
+	ray.direction.y -= (env->camera.z_axis.y / VIEWPLANE_PLOT) * j;
+	ray.direction.z -= (env->camera.z_axis.z / VIEWPLANE_PLOT) * j;
+
+	return (ray);
 }
 
 static void			create_test_objects(t_env *env)
@@ -242,62 +250,6 @@ static void			create_test_objects(t_env *env)
 	env->lights->next->next->next = NULL;
 }
 
-static t_ray		get_ray_from_point(t_env *env, int i, int j)
-{
-	t_ray			ray;
-
-	ray.origin.x = env->camera.origin.x;
-	ray.origin.y = env->camera.origin.y;
-	ray.origin.z = env->camera.origin.z;
-
-	ray.direction.x = env->camera.x_axis.x;
-	ray.direction.y = env->camera.x_axis.y;
-	ray.direction.z = env->camera.x_axis.z;
-
-	ray.direction.x += (env->camera.y_axis.x / VIEWPLANE_PLOT) * env->view_width / 2;
-	ray.direction.y += (env->camera.y_axis.y / VIEWPLANE_PLOT) * env->view_width / 2;
-	ray.direction.z += (env->camera.y_axis.z / VIEWPLANE_PLOT) * env->view_width / 2;
-
-	ray.direction.x += (env->camera.z_axis.x / VIEWPLANE_PLOT) * env->view_height / 2;
-	ray.direction.y += (env->camera.z_axis.y / VIEWPLANE_PLOT) * env->view_height / 2;
-	ray.direction.z += (env->camera.z_axis.z / VIEWPLANE_PLOT) * env->view_height / 2;
-
-	/*
-	**	Move to good point
-	*/
-
-	ray.direction.x -= (env->camera.y_axis.x / VIEWPLANE_PLOT) * i;
-	ray.direction.y -= (env->camera.y_axis.y / VIEWPLANE_PLOT) * i;
-	ray.direction.z -= (env->camera.y_axis.z / VIEWPLANE_PLOT) * i;
-	
-	ray.direction.x -= (env->camera.z_axis.x / VIEWPLANE_PLOT) * j;
-	ray.direction.y -= (env->camera.z_axis.y / VIEWPLANE_PLOT) * j;
-	ray.direction.z -= (env->camera.z_axis.z / VIEWPLANE_PLOT) * j;
-
-	return (ray);
-}
-
-static int			buttonpress_hook(int button, int x, int y, t_env *env)
-{
-	t_ray			ray;
-
-	printf("Pressed Button %d at %d, %d\n", button, x, y);
-	if (env->pressed_keys.del)
-	{
-		ray = get_ray_from_point(env, x, y);
-		throw_ray(env, &ray);
-
-		if (ray.inter_t != INFINITY)
-		{
-			printf("Removing %p\n", ray.closest);
-			remove_object(env, ray.closest);
-			printf("Removed %p\n", ray.closest);
-		}
-		throw_view_plane(env);
-	}
-	return (0);
-}
-
 int					main(int argc, char **argv)
 {
 	t_env			env;
@@ -309,11 +261,10 @@ int					main(int argc, char **argv)
 	}
 	env.view_width = RENDER_WIDTH;
 	env.view_height = RENDER_HEIGHT;
-
 	env.block_events = 0;
-	env.matters = NULL;
-
+	env.background_color = 0xFF000000;
 	env.diaphragm = 1.0;
+	env.matters = NULL;
 
 	env.mlx = mlx_init();
 	env.win = mlx_new_window(env.mlx, env.view_width, env.view_height, "RT");

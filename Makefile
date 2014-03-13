@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/12 02:39:40 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/13 02:42:28 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -26,6 +26,7 @@ SOURCES =	rt.c								\
 			camera/camera_init.c				\
 			object/creation.c					\
 			scene_parser/parser.c				\
+			mouse/mouse.c						\
 			keyboard.c							\
 			ray_throw.c							\
 			matter.c							\
