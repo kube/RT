@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/13 20:04:44 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/14 15:14:06 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 /*
 ** This is just for development, render dimensions will be parsed in File
 */
-#define RENDER_WIDTH	1000
-#define RENDER_HEIGHT	800
+#define RENDER_WIDTH	1100
+#define RENDER_HEIGHT	670
 
 
 static void			pixel_to_image(t_env *env, t_point a, int color)
@@ -210,7 +210,7 @@ static void			create_test_objects(t_env *env)
 	env->objects->color.color = 0xFFFFFFFF;
 	env->objects->ambient = 0.1;
 	env->objects->diffuse = 0.8;
-	env->objects->specular = 0.9;
+	env->objects->specular = 0.1;
 
 	add_object(env, new_object(OBJ_SPHERE));
 	env->objects->origin.x = 9;
@@ -220,7 +220,7 @@ static void			create_test_objects(t_env *env)
 	env->objects->color.color = 0xFFFF0AFF;
 	env->objects->ambient = 0.1;
 	env->objects->diffuse = 0.8;
-	env->objects->specular = 0.9;
+	env->objects->specular = 0.4;
 
 	add_object(env, new_object(OBJ_PLANE));
 	env->objects->origin.z = -1;
@@ -228,7 +228,7 @@ static void			create_test_objects(t_env *env)
 	env->objects->color.color = 0xFF0904FA;
 	env->objects->ambient = 0.1;
 	env->objects->diffuse = 0.8;
-	env->objects->specular = 0.9;
+	env->objects->specular = 0.4;
 
 	add_object(env, new_object(OBJ_SPHERE));
 	env->objects->origin.x = -10;
@@ -236,7 +236,7 @@ static void			create_test_objects(t_env *env)
 	env->objects->color.color = 0x000000FF;
 	env->objects->ambient = 0.1;
 	env->objects->diffuse = 0.8;
-	env->objects->specular = 0.9;
+	env->objects->specular = 0.4;
 
 	add_object(env, new_object(OBJ_SPHERE));
 	env->objects->radius = 150;
@@ -274,7 +274,7 @@ static void			create_test_objects(t_env *env)
 	env->lights->next->next->origin.x = 15;
 	env->lights->next->next->origin.y = -10;
 	env->lights->next->next->origin.z = 10;
-	env->lights->next->next->intensity = 1.0;
+	env->lights->next->next->intensity = 4.0;
 	env->lights->next->next->color.red = 0.0;
 	env->lights->next->next->color.green = 0.0;
 	env->lights->next->next->color.blue = 1.0;

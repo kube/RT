@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/14 04:01:57 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/14 15:10:42 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <ft_math.h>
 #include <ft_memory.h>
 #include <math.h>
-
-#include <stdio.h>
 
 static t_point	get_point_from_ray_intersection(t_ray *ray, float t)
 {
@@ -95,12 +93,12 @@ static float	phong_lighting(t_env *env, t_ray *ray)
 			**	Specular (Faster to treat it here)
 			**	(Sorry for Lambert)
 			*/
-			if (env->pressed_keys.specular_enabled && lambert > 0.94)
+			if (lambert > 0.97)
 			{
-				lambert = pow(lambert, 900);
-				ray->color.red += lambert * ((float)ray->closest->color.red * ray->closest->specular * current_light->color.red * current_light->intensity / 255.0);
-				ray->color.green += lambert * ((float)ray->closest->color.green * ray->closest->specular * current_light->color.green * current_light->intensity / 255.0);
-				ray->color.blue += lambert * ((float)ray->closest->color.blue * ray->closest->specular * current_light->color.blue * current_light->intensity / 255.0);
+				lambert = pow(lambert, 650);
+				ray->color.red += lambert * (ray->closest->specular * current_light->color.red * current_light->intensity);
+				ray->color.green += lambert * (ray->closest->specular * current_light->color.green * current_light->intensity);
+				ray->color.blue += lambert * (ray->closest->specular * current_light->color.blue * current_light->intensity);
 			}
 		}
 		current_light = current_light->next;

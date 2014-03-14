@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/14 03:52:20 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/14 14:56:14 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 		keys->del = 1;
 	else if (keycode == 65505)
 		keys->shift = 1;
-	else if (keycode == 61)
-		keys->specular_enabled = 1 - keys->specular_enabled;
 	else if (keycode == 96)
 		keys->no_clean = 1;
 	return (0);
