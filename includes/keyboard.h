@@ -19,7 +19,6 @@ typedef struct			s_pressedkeys
 	int					s;
 	int					d;
 	int					del;
-	int					no_clean;
 	int					shift;
 }						t_pressedkeys;
 

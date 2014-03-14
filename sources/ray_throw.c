@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/13 19:36:27 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/14 16:51:01 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void			throw_ray(t_env *env, t_ray *ray, int calculate_light)
 	float		tmp_t;
 	t_object	*obj;
 
-	obj = env->objects;
+	obj = env->scene->objects;
 
 	ray->inter_t = INFINITY;
 	ray->closest = NULL;

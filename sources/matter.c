@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:22:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/09 15:34:58 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/14 16:51:22 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_matter		*get_matter(t_env *env, char *name)
 {
 	t_matter	*current;
 
-	current = env->matters;
+	current = env->scene->matters;
 	while (current)
 	{
 		if (ft_strequ(current->name, name))
@@ -32,8 +32,8 @@ void			add_matter(t_env *env, t_matter *matter)
 {
 	if (!get_matter(env, matter->name))
 	{
-		matter->next = env->matters;
-		env->matters = matter;
+		matter->next = env->scene->matters;
+		env->scene->matters = matter;
 	}
 }
 

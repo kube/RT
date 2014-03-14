@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/14 15:10:42 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/14 17:23:17 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static float	phong_lighting(t_env *env, t_ray *ray)
 	normal.y = intersection.y - ray->closest->origin.y;
 	normal.z = intersection.z - ray->closest->origin.z;
 	normalize_vector(&normal);
-	current_light = env->lights;
+	current_light = env->scene->lights;
 	while (current_light)
 	{
 		if (is_point_exposed_to_light(env, intersection, current_light))
@@ -84,21 +84,24 @@ static float	phong_lighting(t_env *env, t_ray *ray)
 			light_vector.y = current_light->origin.y - intersection.y;
 			light_vector.z = current_light->origin.z - intersection.z;
 			normalize_vector(&light_vector);
-			lambert = fmax(vect_dot(&normal, &light_vector), 0);
+			lambert = vect_dot(&normal, &light_vector);
 			lambert *= lambert * lambert;
-			ray->color.red += lambert * ((float)ray->closest->color.red * ray->closest->diffuse * current_light->color.red * current_light->intensity / 255.0);
-			ray->color.green += lambert * ((float)ray->closest->color.green * ray->closest->diffuse * current_light->color.green * current_light->intensity / 255.0);
-			ray->color.blue += lambert * ((float)ray->closest->color.blue * ray->closest->diffuse * current_light->color.blue * current_light->intensity / 255.0);
-			/*
-			**	Specular (Faster to treat it here)
-			**	(Sorry for Lambert)
-			*/
-			if (lambert > 0.97)
+			if (lambert > 0)
 			{
-				lambert = pow(lambert, 650);
-				ray->color.red += lambert * (ray->closest->specular * current_light->color.red * current_light->intensity);
-				ray->color.green += lambert * (ray->closest->specular * current_light->color.green * current_light->intensity);
-				ray->color.blue += lambert * (ray->closest->specular * current_light->color.blue * current_light->intensity);
+				ray->color.red += lambert * ((float)ray->closest->color.red * ray->closest->diffuse * current_light->color.red * current_light->intensity / 255.0);
+				ray->color.green += lambert * ((float)ray->closest->color.green * ray->closest->diffuse * current_light->color.green * current_light->intensity / 255.0);
+				ray->color.blue += lambert * ((float)ray->closest->color.blue * ray->closest->diffuse * current_light->color.blue * current_light->intensity / 255.0);
+				/*
+				**	Specular (Faster to treat it here)
+				**	(Sorry for Lambert)
+				*/
+				if (lambert > 0.97)
+				{
+					lambert = pow(lambert, 650);
+					ray->color.red += lambert * (ray->closest->specular * current_light->color.red * current_light->intensity);
+					ray->color.green += lambert * (ray->closest->specular * current_light->color.green * current_light->intensity);
+					ray->color.blue += lambert * (ray->closest->specular * current_light->color.blue * current_light->intensity);
+				}
 			}
 		}
 		current_light = current_light->next;
