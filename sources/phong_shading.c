@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/13 22:06:24 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/14 02:56:34 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,18 @@ static int		is_point_exposed_to_light(t_env *env, t_point point, t_light *light)
 	t_ray		ray;
 	float		distance_to_light;
 
-	ft_memcpy(&ray.origin, &point, sizeof(t_point));
+	// ft_memcpy(&ray.origin, &point, sizeof(t_point));
 
+	ray.origin.x = point.x;
+	ray.origin.y = point.y;
+	ray.origin.z = point.z;
+	
 	/* ERROR CAN BE HERE, SWAP LIGHT.ORIGIN AND RAY.ORIGIN */
 	ray.direction.x = light->origin.x - ray.origin.x;
 	ray.direction.y = light->origin.y - ray.origin.y;
 	ray.direction.z = light->origin.z - ray.origin.z;
-	distance_to_light = vect_norm(&ray.direction);
 	normalize_vector(&ray.direction);
+	distance_to_light = vect_norm(&ray.direction);
 	throw_ray(env, &ray, 0);
 	if (ray.inter_t <= distance_to_light)
 		return (0);
