@@ -6,12 +6,13 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/13 20:00:20 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/14 04:23:07 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <ray.h>
+#include <ft_math.h>
 #include <math.h>
 #include <stdlib.h>
 
@@ -55,6 +56,7 @@ int				buttonrelease_hook(int button, int x, int y, t_env *env)
 
 int				motionnotify_hook(int x, int y, t_env *env)
 {
+	float		move_coeff;
 	/*
 	**	Should check time to reduce lag
 	*/
@@ -62,8 +64,9 @@ int				motionnotify_hook(int x, int y, t_env *env)
 	{
 		if (env->selected_object)
 		{
-			vector_add((t_vector*)&(env->selected_object->origin), &env->camera.y_axis, (env->last_mouse_x - x) * 0.1);
-			vector_add((t_vector*)&(env->selected_object->origin), &env->camera.z_axis, (env->last_mouse_y - y) * 0.1);
+			move_coeff = distance_between_points(env->selected_object->origin, env->camera.origin) * 0.001;
+			vector_add((t_vector*)&(env->selected_object->origin), &env->camera.y_axis, (env->last_mouse_x - x) * move_coeff);
+			vector_add((t_vector*)&(env->selected_object->origin), &env->camera.z_axis, (env->last_mouse_y - y) * move_coeff);
 			throw_view_plane(env);
 		}
 	}
