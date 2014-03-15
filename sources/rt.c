@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/14 17:16:51 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/15 23:27:52 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,74 @@
 #define RENDER_WIDTH	1100
 #define RENDER_HEIGHT	670
 
-
-static void			pixel_to_image(t_env *env, t_point a, int color)
-{
-	unsigned int	i;
-
-	i = env->scene->view_width * (unsigned int)a.y + (unsigned int)a.x;
-	if (i < env->scene->view_width * env->scene->view_height && (int)a.y >= 0 && (int)a.x >= 0
-		&& (unsigned int)a.x < env->scene->view_width)
-		env->data[i] = color;
-}
-
-static float		min_float(float a, float b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
-
-static int			light_diaphragm(t_ray *ray, float diaphragm)
+static int			light_diaphragm(t_light_color *light, float diaphragm)
 {
 	t_color 		color;
 
-	color.red = (unsigned char)(min_float((ray->color.red / diaphragm), 1.0) * 255);
-	color.blue = (unsigned char)(min_float((ray->color.blue / diaphragm), 1.0) * 255);
-	color.green = (unsigned char)(min_float((ray->color.green / diaphragm), 1.0) * 255);
+	color.red = (unsigned char)(fmin((light->red / diaphragm), 1.0) * 255);
+	color.blue = (unsigned char)(fmin((light->blue / diaphragm), 1.0) * 255);
+	color.green = (unsigned char)(fmin((light->green / diaphragm), 1.0) * 255);
 	return (color.color);
+}
+
+static void			pixel_to_image(t_env *env, int x, int y, int color)
+{
+	unsigned int	i;
+
+	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
+	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0 && (int)x >= 0
+		&& (unsigned int)x < env->scene->view_width)
+		env->data[i] = color;
+}
+
+
+static void			light_to_render(t_env *env, int x, int y, t_light_color *light)
+{
+	unsigned int	i;
+
+	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
+	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0 && (int)x >= 0
+		&& (unsigned int)x < env->scene->view_width)
+	{
+		env->rendering[i].red = light->red;
+		env->rendering[i].green = light->green;
+		env->rendering[i].blue = light->blue;
+	}
+}
+
+static void			clean_light_on_render(t_env *env, int x, int y)
+{
+	unsigned int	i;
+
+	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
+	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0 && (int)x >= 0
+		&& (unsigned int)x < env->scene->view_width)
+	{
+		env->rendering[i].red = 0;
+		env->rendering[i].green = 0;
+		env->rendering[i].blue = 0;
+	}
+}
+
+static void			rendering_to_image(t_env *env)
+{
+	unsigned int	x;
+	unsigned int	y;
+
+	y = 0;
+	while (y < env->scene->view_height)
+	{
+		x = 0;
+		while (x < env->scene->view_width)
+		{
+			pixel_to_image(env, x, y,
+				light_diaphragm(&env->rendering[y * env->scene->view_width + x],
+					env->scene->diaphragm));
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
 int					throw_view_plane(t_env *env)
@@ -65,7 +107,6 @@ int					throw_view_plane(t_env *env)
 	unsigned int	i;
 	unsigned int	j;
 	t_ray			ray;
-	t_point			tmp;
 
 	float			time_ms;
 	
@@ -101,17 +142,19 @@ int					throw_view_plane(t_env *env)
 		while (i < env->scene->view_width)
 		{
 			// TREAT RAY HERE
-			tmp.x = (float)i;
-			tmp.y = (float)j;
 			
 			throw_ray(env, &ray, !env->pressed_keys.shift);
 
 			if (ray.inter_t != INFINITY && !env->pressed_keys.shift)
-				pixel_to_image(env, tmp, light_diaphragm(&ray, env->scene->diaphragm));
+				light_to_render(env, i, j, &ray.color);
 			else if (ray.inter_t != INFINITY)
-				pixel_to_image(env, tmp, ray.closest->color.color);
+				pixel_to_image(env, i, j, ray.closest->color.color);
+			else if (env->pressed_keys.shift)
+				pixel_to_image(env, i, j, 0x00000000);
 			else
-				pixel_to_image(env, tmp, env->scene->background_color);
+				clean_light_on_render(env, i, j);
+
+
 			// END TREAT RAY
 			ray.direction.x -= (env->scene->camera.y_axis.x / VIEWPLANE_PLOT);
 			ray.direction.y -= (env->scene->camera.y_axis.y / VIEWPLANE_PLOT);
@@ -128,7 +171,11 @@ int					throw_view_plane(t_env *env)
 		ray.direction.z += (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * env->scene->view_width;
 		j++;
 	}
-	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+
+	if (!env->pressed_keys.shift)
+		rendering_to_image(env);
+	else
+		mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 
 	env->block_events = 0;
 
@@ -140,10 +187,8 @@ int					throw_view_plane(t_env *env)
 
 static int			view_loop(t_env *env)
 {
-	// printf("view_loop_A\n");
 	if (!env->block_events && is_one_key_pressed(&env->pressed_keys))
 	{
-		printf("view_loop_B\n");
 		check_pressed_keys(env, &env->pressed_keys);
 		env->block_events = 1;
 		throw_view_plane(env);
@@ -293,6 +338,9 @@ int					main(int argc, char **argv)
 	env.scene->background_color = 0xFF000000;
 	env.scene->diaphragm = 1.0;
 	env.scene->matters = NULL;
+
+
+	env.rendering = (t_light_color*)malloc(env.scene->view_width * env.scene->view_height * sizeof(t_light_color));
 
 	env.mlx = mlx_init();
 	env.win = mlx_new_window(env.mlx, env.scene->view_width, env.scene->view_height, "RT");

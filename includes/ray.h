@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/13 19:59:52 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/15 22:53:09 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 typedef struct						s_ray
 {
+	/*
+	**	Remove some stuff here
+	*/
 	t_point							origin;
 	t_vector						direction;
 	unsigned int					recursivity;

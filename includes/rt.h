@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/14 17:11:13 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/15 23:09:32 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct				s_env
 	int						*data;
 
 	t_scene					*scene;
+	t_light_color			*rendering;
 
 	t_pressedkeys			pressed_keys;
 	t_object				*selected_object;

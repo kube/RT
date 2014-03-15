@@ -42,7 +42,7 @@
 
 # Scene Description
 scene:
-    name: "Trinity"
+    title: "Trinity"
     width: 1200
     height: 800
 

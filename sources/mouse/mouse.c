@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/14 16:45:04 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/15 22:36:01 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int				motionnotify_hook(int x, int y, t_env *env)
 	{
 		if (env->selected_object)
 		{
-			move_coeff = distance_between_points(env->selected_object->origin, env->scene->camera.origin) * 0.001;
+			move_coeff = distance_between_points(&env->selected_object->origin, &env->scene->camera.origin) * 0.001;
 			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.y_axis, (env->last_mouse_x - x) * move_coeff);
 			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.z_axis, (env->last_mouse_y - y) * move_coeff);
 			throw_view_plane(env);

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/14 17:23:17 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/15 23:21:11 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static float	is_point_exposed_to_light(t_env *env, t_point point, t_light *light
 	ray.direction.x = light->origin.x - ray.origin.x;
 	ray.direction.y = light->origin.y - ray.origin.y;
 	ray.direction.z = light->origin.z - ray.origin.z;
-	ray.origin.x = point.x + 0.005 * ray.direction.x;
-	ray.origin.y = point.y + 0.005 * ray.direction.y;
-	ray.origin.z = point.z + 0.005 * ray.direction.z;
+	ray.origin.x = point.x + 0.0005 * ray.direction.x;
+	ray.origin.y = point.y + 0.0005* ray.direction.y;
+	ray.origin.z = point.z + 0.0005 * ray.direction.z;
 	distance_to_light = vect_norm(&ray.direction);
 	normalize_vector(&ray.direction);
 	throw_ray(env, &ray, 0);
@@ -65,9 +65,6 @@ static float	phong_lighting(t_env *env, t_ray *ray)
 	t_light		*current_light;
 
 	intersection = get_point_from_ray_intersection(ray, ray->inter_t);
-	intersection.x = ray->origin.x + ray->direction.x * ray->inter_t;
-	intersection.y = ray->origin.y + ray->direction.y * ray->inter_t;
-	intersection.z = ray->origin.z + ray->direction.z * ray->inter_t;
 	normal.x = intersection.x - ray->closest->origin.x;
 	normal.y = intersection.y - ray->closest->origin.y;
 	normal.z = intersection.z - ray->closest->origin.z;
@@ -97,7 +94,7 @@ static float	phong_lighting(t_env *env, t_ray *ray)
 				*/
 				if (lambert > 0.97)
 				{
-					lambert = pow(lambert, 650);
+					lambert = pow(lambert, 300);
 					ray->color.red += lambert * (ray->closest->specular * current_light->color.red * current_light->intensity);
 					ray->color.green += lambert * (ray->closest->specular * current_light->color.green * current_light->intensity);
 					ray->color.blue += lambert * (ray->closest->specular * current_light->color.blue * current_light->intensity);
