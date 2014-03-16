@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 18:06:17 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 22:43:08 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct				s_env
 	int						running_threads;
 	int						refresh_image;
 	int						block_render;
+
+	pthread_t				interpreter_thread;
 
 	t_pressedkeys			pressed_keys;
 	t_object				*selected_object;

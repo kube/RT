@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 20:11:14 by availlan         ###   ########.fr       */
+/*   Updated: 2014/03/16 22:51:57 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 #include <mouse.h>
 
 #include <pthread.h>
+
+#include <ft_input.h>
+#include <ft_strings.h>
 
 #include <stdio.h>
 #include <time.h>
@@ -283,6 +286,48 @@ static int			create_render_thread(t_env *env, t_thread_input *input)
 	return (0);
 }
 
+static void			*ask_user(void *env_input)
+{
+	t_scene			*scene;
+	char			*line;
+
+	(void)env_input;
+	scene = ((t_env*)env_input)->scene;
+	while (1)
+	{
+		get_stdin_next_line(&line);
+		if (ft_strequ(line, "sphere"))
+		{
+			add_object(scene, new_object(OBJ_SPHERE));
+			scene->objects->origin.x = scene->camera.origin.x
+									+ scene->camera.x_axis.x * 4;
+			scene->objects->origin.y = scene->camera.origin.y
+									+ scene->camera.x_axis.y * 4;
+			scene->objects->origin.z = scene->camera.origin.z
+									+ scene->camera.x_axis.z * 4;
+			scene->objects->radius = 1;
+			scene->objects->color.color = 0xFFFAEFFF;
+			scene->objects->ambient = 0.8;
+			scene->objects->diffuse = 0.4;
+			scene->objects->specular = 0.2;
+		}
+
+		printf("%s\n", line);
+	}
+	return (NULL);
+}
+
+static int			create_interpreter_thread(t_env *env)
+{
+	if (pthread_create(&env->interpreter_thread, NULL,
+		ask_user, (void*)env))
+	{
+		ft_putendl_fd("ERROR! Unable to create interpreter thread.", 2);
+		return (1);
+	}
+	return (0);
+}
+
 int					update_image(t_env *env)
 {
 	unsigned int	i;
@@ -336,6 +381,8 @@ int					main(int argc, char **argv)
 	env.scene->diaphragm = 1.0;
 	env.scene->matters = NULL;
 
+	env.interpreter_thread = 0;
+
 	env.render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
 						* sizeof(pthread_t));
 	env.rendering = (t_light_color*)ft_memalloc(env.scene->view_width
@@ -353,6 +400,8 @@ int					main(int argc, char **argv)
 	init_cam_angle(&env.scene->camera, 0, 0);
 	create_test_objects(env.scene);
 	init_pressed_keys(&env.pressed_keys);
+
+	create_interpreter_thread(&env);
 
 	mlx_expose_hook(env.win, view_loop, &env);
 	mlx_hook(env.win, KeyPress, KeyPressMask, keypress_hook, &env);
