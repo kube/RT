@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/16 17:29:00 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 18:19:45 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static t_point	get_point_from_ray_intersection(t_ray *ray, float t)
 	return (point);
 }
 
-static float	is_point_exposed_to_light(t_env *env, t_point point, t_light *light)
+static float	is_point_exposed_to_light(t_env *env, t_object *object,
+											t_point point, t_light *light)
 {
 	t_ray		ray;
 	float		distance_to_light;
@@ -38,15 +39,9 @@ static float	is_point_exposed_to_light(t_env *env, t_point point, t_light *light
 	ray.direction.x = light->origin.x - ray.origin.x;
 	ray.direction.y = light->origin.y - ray.origin.y;
 	ray.direction.z = light->origin.z - ray.origin.z;
-	/*
-	**	Would be better to prevent light collision with same object
-	*/
-	ray.origin.x = point.x + 0.0005 * ray.direction.x;
-	ray.origin.y = point.y + 0.0005 * ray.direction.y;
-	ray.origin.z = point.z + 0.0005 * ray.direction.z;
 	distance_to_light = vect_norm(&ray.direction);
 	normalize_vector(&ray.direction);
-	throw_ray(env, &ray, 0);
+	throw_ray(env, &ray, 0, object);
 	if (ray.inter_t <= distance_to_light)
 		return (0);
 	return (1);
@@ -54,9 +49,12 @@ static float	is_point_exposed_to_light(t_env *env, t_point point, t_light *light
 
 static void		ambient_lighting(t_ray *ray)
 {
-	ray->color.red = ((float)ray->closest->color.red) * ray->closest->ambient / 255.0;
-	ray->color.green = ((float)ray->closest->color.green) * ray->closest->ambient / 255.0;
-	ray->color.blue = ((float)ray->closest->color.blue) * ray->closest->ambient / 255.0;
+	ray->color.red = ((float)ray->closest->color.red)
+						* ray->closest->ambient / 255.0;
+	ray->color.green = ((float)ray->closest->color.green)
+						* ray->closest->ambient / 255.0;
+	ray->color.blue = ((float)ray->closest->color.blue)
+						* ray->closest->ambient / 255.0;
 }
 
 static float	phong_lighting(t_env *env, t_ray *ray)
@@ -65,32 +63,38 @@ static float	phong_lighting(t_env *env, t_ray *ray)
 	t_vector	normal;
 	t_point		intersection;
 	float		lambert;
-	t_light		*current_light;
+	t_light		*light;
 
 	intersection = get_point_from_ray_intersection(ray, ray->inter_t);
 	normal.x = intersection.x - ray->closest->origin.x;
 	normal.y = intersection.y - ray->closest->origin.y;
 	normal.z = intersection.z - ray->closest->origin.z;
 	normalize_vector(&normal);
-	current_light = env->scene->lights;
-	while (current_light)
+	light = env->scene->lights;
+	while (light)
 	{
-		if (is_point_exposed_to_light(env, intersection, current_light))
+		if (is_point_exposed_to_light(env, ray->closest, intersection, light))
 		{
 			/*
 			**	Diffuse Lighting
 			*/
-			light_vector.x = current_light->origin.x - intersection.x;
-			light_vector.y = current_light->origin.y - intersection.y;
-			light_vector.z = current_light->origin.z - intersection.z;
+			light_vector.x = light->origin.x - intersection.x;
+			light_vector.y = light->origin.y - intersection.y;
+			light_vector.z = light->origin.z - intersection.z;
 			normalize_vector(&light_vector);
 			lambert = vect_dot(&normal, &light_vector);
 			lambert *= lambert * lambert;
 			if (lambert > 0)
 			{
-				ray->color.red += lambert * ((float)ray->closest->color.red * ray->closest->diffuse * current_light->color.red * current_light->intensity / 255.0);
-				ray->color.green += lambert * ((float)ray->closest->color.green * ray->closest->diffuse * current_light->color.green * current_light->intensity / 255.0);
-				ray->color.blue += lambert * ((float)ray->closest->color.blue * ray->closest->diffuse * current_light->color.blue * current_light->intensity / 255.0);
+				ray->color.red += lambert * ((float)ray->closest->color.red
+								* ray->closest->diffuse * light->color.red
+								* light->intensity / 255.0);
+				ray->color.green += lambert * ((float)ray->closest->color.green
+								* ray->closest->diffuse * light->color.green
+								* light->intensity / 255.0);
+				ray->color.blue += lambert * ((float)ray->closest->color.blue
+								* ray->closest->diffuse * light->color.blue
+								* light->intensity / 255.0);
 				/*
 				**	Specular (Faster to treat it here)
 				**	(Sorry for Lambert)
@@ -98,13 +102,16 @@ static float	phong_lighting(t_env *env, t_ray *ray)
 				if (lambert > 0.97)
 				{
 					lambert = pow(lambert, 300);
-					ray->color.red += lambert * (ray->closest->specular * current_light->color.red * current_light->intensity);
-					ray->color.green += lambert * (ray->closest->specular * current_light->color.green * current_light->intensity);
-					ray->color.blue += lambert * (ray->closest->specular * current_light->color.blue * current_light->intensity);
+					ray->color.red += lambert * (ray->closest->specular
+									* light->color.red * light->intensity);
+					ray->color.green += lambert * (ray->closest->specular
+									* light->color.green * light->intensity);
+					ray->color.blue += lambert * (ray->closest->specular
+									* light->color.blue * light->intensity);
 				}
 			}
 		}
-		current_light = current_light->next;
+		light = light->next;
 	}
 	return (lambert);
 }
@@ -113,7 +120,4 @@ void			phong_shading(t_env *env, t_ray *ray)
 {
 	ambient_lighting(ray);
 	phong_lighting(env, ray);
-	/*
-	**	Do reflection and refraction
-	*/
 }

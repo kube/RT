@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 19:30:09 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/15 18:37:41 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 17:59:00 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,28 @@ static float	positive_smallest(float a, float b)
 	return (b);
 }
 
-static float	sphere_equation_det(t_object *sphere, t_ray *ray, float *a, float *b)
+static float	sphere_equation_det(t_object *s, t_ray *ray, float *a, float *b)
 {
 	t_vector	ray_direction;
 	t_point		ray_origin;
-	t_point		sphere_origin;
+	t_point		s_origin;
 	float		radius;
 	float		c;
 
 	ray_direction = ray->direction;
 	ray_origin = ray->origin;
-	sphere_origin = sphere->origin;
-	radius = sphere->radius;
+	s_origin = s->origin;
+	radius = s->radius;
 	*a = ray_direction.x * ray_direction.x + ray_direction.y
 		* ray_direction.y + ray_direction.z * ray_direction.z;
-	*b = 2 * (ray_direction.x * (ray_origin.x - sphere_origin.x)
-		+ ray_direction.y * (ray_origin.y - sphere_origin.y)
-			+ ray_direction.z * (ray_origin.z - sphere_origin.z));
-	c = (ray_origin.x - sphere_origin.x) * (ray_origin.x - sphere_origin.x)
-		+ (ray_origin.y - sphere_origin.y)
-		* (ray_origin.y - sphere_origin.y)
-		+ (ray_origin.z - sphere_origin.z)
-		* (ray_origin.z - sphere_origin.z) - radius * radius;
+	*b = 2 * (ray_direction.x * (ray_origin.x - s_origin.x)
+		+ ray_direction.y * (ray_origin.y - s_origin.y)
+			+ ray_direction.z * (ray_origin.z - s_origin.z));
+	c = (ray_origin.x - s_origin.x) * (ray_origin.x - s_origin.x)
+		+ (ray_origin.y - s_origin.y)
+		* (ray_origin.y - s_origin.y)
+		+ (ray_origin.z - s_origin.z)
+		* (ray_origin.z - s_origin.z) - radius * radius;
 	return (c);
 }
 

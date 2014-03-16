@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 17:27:45 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 18:15:05 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,8 @@ void				*throw_view_plane(void *thread_input)
 		while (i <= input->x2)
 		{
 			ray = get_ray_from_point(env, i, j);
-			throw_ray(env, &ray, !env->pressed_keys.shift);
-			display_ray(env, &ray, i, j);
-			i++;
+			throw_ray(env, &ray, !env->pressed_keys.shift, NULL);
+			display_ray(env, &ray, i++, j);
 		}
 		j++;
 	}
@@ -272,7 +271,6 @@ static void			create_test_objects(t_scene *scene)
 
 static int			create_render_thread(t_env *env, t_thread_input *input)
 {
-	env->refresh_image = 1;
 	if (pthread_create(&env->render_threads[input->thread_number], NULL,
 		throw_view_plane, (void*)input))
 	{
@@ -298,8 +296,10 @@ int					update_image(t_env *env)
 			input->env = env;
 			input->x1 = i * (env->scene->view_width / RENDER_SPLIT);
 			input->y1 = j * (env->scene->view_height / RENDER_SPLIT);
-			input->x2 = env->scene->view_width - (RENDER_SPLIT - 1 - i) * (env->scene->view_width / RENDER_SPLIT);
-			input->y2 = env->scene->view_width - (RENDER_SPLIT - 1 - j) * (env->scene->view_height / RENDER_SPLIT);
+			input->x2 = env->scene->view_width - (RENDER_SPLIT - 1 - i)
+						* (env->scene->view_width / RENDER_SPLIT);
+			input->y2 = env->scene->view_width - (RENDER_SPLIT - 1 - j)
+						* (env->scene->view_height / RENDER_SPLIT);
 			input->thread_number = j * RENDER_SPLIT + i;
 			create_render_thread(env, input);
 			i++;
@@ -333,33 +333,31 @@ int					main(int argc, char **argv)
 	env.scene->diaphragm = 1.0;
 	env.scene->matters = NULL;
 
-
-
-	env.render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT * sizeof(pthread_t));
-
-	env.rendering = (t_light_color*)ft_memalloc(env.scene->view_width * env.scene->view_height * sizeof(t_light_color));
-
+	env.render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
+						* sizeof(pthread_t));
+	env.rendering = (t_light_color*)ft_memalloc(env.scene->view_width
+					* env.scene->view_height * sizeof(t_light_color));
 
 	env.mlx = mlx_init();
-	env.win = mlx_new_window(env.mlx, env.scene->view_width, env.scene->view_height, "RT");
-	env.img = mlx_new_image(env.mlx, env.scene->view_width, env.scene->view_height);
-	env.data = (int*)mlx_get_data_addr(env.img, &(env.bpp), &(env.size_line),
-				&(env.endian));
+	env.win = mlx_new_window(env.mlx, env.scene->view_width,
+				env.scene->view_height, "RT");
+	env.img = mlx_new_image(env.mlx, env.scene->view_width,
+				env.scene->view_height);
+	env.data = (int*)mlx_get_data_addr(env.img, &(env.bpp),
+				&(env.size_line), &(env.endian));
 
 	init_cam(&env.scene->camera, 0, 0, 0);
 	init_cam_angle(&env.scene->camera, 0, 0);
 	create_test_objects(env.scene);
 	init_pressed_keys(&env.pressed_keys);
 
-
 	mlx_expose_hook(env.win, view_loop, &env);
 	mlx_hook(env.win, KeyPress, KeyPressMask, keypress_hook, &env);
 	mlx_hook(env.win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env);
-	mlx_hook(env.win, ButtonPress, ButtonPressMask, buttonpress_hook, &env);
-	mlx_hook(env.win, ButtonRelease, ButtonReleaseMask, buttonrelease_hook, &env);
-	mlx_hook(env.win, MotionNotify, PointerMotionMask, motionnotify_hook, &env);
+	mlx_hook(env.win, ButtonPress, ButtonPressMask, mousepress_ev, &env);
+	mlx_hook(env.win, ButtonRelease, ButtonReleaseMask, mouserelease_ev, &env);
+	mlx_hook(env.win, MotionNotify, PointerMotionMask, motionnotify_ev, &env);
 	mlx_loop_hook(env.mlx, view_loop, &env);
 	mlx_loop(env.mlx);
-
 	return (0);
 }

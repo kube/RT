@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/14 16:51:01 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 18:07:14 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,24 @@ static float	intersection(t_object *obj, t_ray *ray)
 	return (INFINITY);
 }
 
-void			throw_ray(t_env *env, t_ray *ray, int calculate_light)
+void			throw_ray(t_env *env, t_ray *ray, int calculate_light,
+							t_object *to_ignore)
 {
 	float		tmp_t;
 	t_object	*obj;
 
 	obj = env->scene->objects;
-
 	ray->inter_t = INFINITY;
 	ray->closest = NULL;
 	while (obj)
 	{
-		tmp_t = intersection(obj, ray);
-		ray->closest = (tmp_t < ray->inter_t) ? obj : ray->closest;
-		ray->inter_t = (tmp_t < ray->inter_t) ? tmp_t : ray->inter_t;
-		tmp_t = INFINITY;
+		if (!to_ignore || obj != to_ignore)
+		{
+			tmp_t = intersection(obj, ray);
+			ray->closest = (tmp_t < ray->inter_t) ? obj : ray->closest;
+			ray->inter_t = (tmp_t < ray->inter_t) ? tmp_t : ray->inter_t;
+			tmp_t = INFINITY;
+		}
 		obj = obj->next;
 	}
 	if (calculate_light && ray->inter_t != INFINITY)

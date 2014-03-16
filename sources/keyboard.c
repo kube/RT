@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 17:27:13 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 18:19:43 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int			keypress_hook(int keycode, t_env *env)
 	/*
 	**	Use allocated table here with Callbacks, Better Performance, Less lines
 	*/
-
-	// printf("KPH : pk adress : %p\n", &env->pressed_keys);
 
 	printf("Press %d\n", keycode);
 
@@ -115,26 +113,34 @@ void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
 	if (keys->w)
 	{
 		if (env->selected_object)
-			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.x_axis, KEYBOARD_MOV_PLOT);
-		cam_translate_vector(&env->scene->camera, &env->scene->camera.x_axis, KEYBOARD_MOV_PLOT);
+			vector_add((t_vector*)&(env->selected_object->origin),
+				&env->scene->camera.x_axis, KEYBOARD_MOV_PLOT);
+		cam_translate_vector(&env->scene->camera, &env->scene->camera.x_axis,
+			KEYBOARD_MOV_PLOT);
 	}
 	if (keys->a)
 	{
 		if (env->selected_object)
-			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.y_axis, KEYBOARD_MOV_PLOT);
-		cam_translate_vector(&env->scene->camera, &env->scene->camera.y_axis, KEYBOARD_MOV_PLOT);
+			vector_add((t_vector*)&(env->selected_object->origin),
+				&env->scene->camera.y_axis, KEYBOARD_MOV_PLOT);
+		cam_translate_vector(&env->scene->camera, &env->scene->camera.y_axis,
+			KEYBOARD_MOV_PLOT);
 	}
 	if (keys->s)
 	{
 		if (env->selected_object)
-			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.x_axis, -KEYBOARD_MOV_PLOT);
-		cam_translate_vector(&env->scene->camera, &env->scene->camera.x_axis, -KEYBOARD_MOV_PLOT);
+			vector_add((t_vector*)&(env->selected_object->origin),
+				&env->scene->camera.x_axis, -KEYBOARD_MOV_PLOT);
+		cam_translate_vector(&env->scene->camera, &env->scene->camera.x_axis,
+			-KEYBOARD_MOV_PLOT);
 	}
 	if (keys->d)
 	{
 		if (env->selected_object)
-			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.y_axis, -KEYBOARD_MOV_PLOT);
-		cam_translate_vector(&env->scene->camera, &env->scene->camera.y_axis, -KEYBOARD_MOV_PLOT);
+			vector_add((t_vector*)&(env->selected_object->origin),
+			&env->scene->camera.y_axis, -KEYBOARD_MOV_PLOT);
+		cam_translate_vector(&env->scene->camera, &env->scene->camera.y_axis,
+			-KEYBOARD_MOV_PLOT);
 	}
 	env->refresh_image = 1;
 }

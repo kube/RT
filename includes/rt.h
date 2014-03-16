@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 15:31:13 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 18:06:17 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ typedef struct				s_env
 	t_pressedkeys			pressed_keys;
 	t_object				*selected_object;
 	int						pressed_mouse;
-	int						last_mouse_x;
-	int						last_mouse_y;
+	int						mouse_x;
+	int						mouse_y;
 	int						block_events;
-
-
 }							t_env;
 
 typedef struct				s_thread_input

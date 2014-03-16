@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 15:48:41 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 18:13:24 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 
-int				buttonpress_hook(int button, int x, int y, t_env *env)
+int				mousepress_ev(int button, int x, int y, t_env *env)
 {
 	t_ray		ray;
 
@@ -26,11 +26,11 @@ int				buttonpress_hook(int button, int x, int y, t_env *env)
 		env->pressed_mouse = 1;
 	printf("Pressed Button %d at %d, %d\n", button, x, y);
 	ray = get_ray_from_point(env, x, y);
-	throw_ray(env, &ray, 0);
+	throw_ray(env, &ray, 0, NULL);
 	if (ray.inter_t != INFINITY)
 	{
 		if (env->pressed_keys.del)
-		{	
+		{
 			remove_object(env->scene, ray.closest);
 			update_image(env);
 			printf("Removed %p\n", ray.closest);
@@ -41,7 +41,7 @@ int				buttonpress_hook(int button, int x, int y, t_env *env)
 	return (0);
 }
 
-int				buttonrelease_hook(int button, int x, int y, t_env *env)
+int				mouserelease_ev(int button, int x, int y, t_env *env)
 {
 	if (button == 1)
 	{
@@ -53,28 +53,28 @@ int				buttonrelease_hook(int button, int x, int y, t_env *env)
 	return (0);
 }
 
-int				motionnotify_hook(int x, int y, t_env *env)
+int				motionnotify_ev(int x, int y, t_env *env)
 {
-	float		move_coeff;
-	/*
-	**	Should check time to reduce lag
-	**	Should not do calculous here,
-	**	Deport calculous to event-aware thread (MlxLoop ?)
-	*/
+	float		coeff;
+
 	if (env->pressed_mouse)
 	{
 		if (env->selected_object)
 		{
-			move_coeff = distance_between_points(&env->selected_object->origin, &env->scene->camera.origin) * 0.001;
-			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.y_axis, (env->last_mouse_x - x) * move_coeff);
+			coeff = distance_between_points(&env->selected_object->origin,
+				&env->scene->camera.origin) * 0.001;
+			vector_add((t_vector*)&(env->selected_object->origin),
+				&env->scene->camera.y_axis, (env->mouse_x - x) * coeff);
 			if (env->pressed_keys.ctrl)
-				vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.x_axis, (env->last_mouse_y - y) * move_coeff);
+				vector_add((t_vector*)&(env->selected_object->origin),
+					&env->scene->camera.x_axis, (env->mouse_y - y) * coeff);
 			else
-				vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.z_axis, (env->last_mouse_y - y) * move_coeff);
+				vector_add((t_vector*)&(env->selected_object->origin),
+					&env->scene->camera.z_axis, (env->mouse_y - y) * coeff);
 			env->refresh_image = 1;
 		}
 	}
-	env->last_mouse_x = x;
-	env->last_mouse_y = y;
+	env->mouse_x = x;
+	env->mouse_y = y;
 	return (0);
 }
