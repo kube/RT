@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 16:47:01 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 17:09:35 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,10 @@ t_ray				get_ray_from_point(t_env *env, int i, int j)
 	ray.direction.y = env->scene->camera.x_axis.y;
 	ray.direction.z = env->scene->camera.x_axis.z;
 
+	// vector_add(&ray.direction, &env->scene->camera.y_axis, -(env->scene->view_width / VIEWPLANE_PLOT) / 2);
+	// vector_add(&ray.direction, &env->scene->camera.z_axis, -(env->scene->view_height / VIEWPLANE_PLOT) / 2);
+
+
 	ray.direction.x += (env->scene->camera.y_axis.x / VIEWPLANE_PLOT) * env->scene->view_width / 2;
 	ray.direction.y += (env->scene->camera.y_axis.y / VIEWPLANE_PLOT) * env->scene->view_width / 2;
 	ray.direction.z += (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * env->scene->view_width / 2;
@@ -195,9 +199,13 @@ t_ray				get_ray_from_point(t_env *env, int i, int j)
 	/*
 	**	Move to good point
 	*/
-	ray.direction.x -= (env->scene->camera.y_axis.x / VIEWPLANE_PLOT) * i;
-	ray.direction.y -= (env->scene->camera.y_axis.y / VIEWPLANE_PLOT) * i;
-	ray.direction.z -= (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * i;
+	vector_add(&ray.direction, &env->scene->camera.y_axis, -(1 / VIEWPLANE_PLOT) * i);
+	// vector_add(&ray.direction, env->scene->camera.z_axis, VIEWPLANE_PLOT * j);
+
+
+	// ray.direction.x -= (env->scene->camera.y_axis.x / VIEWPLANE_PLOT) * i;
+	// ray.direction.y -= (env->scene->camera.y_axis.y / VIEWPLANE_PLOT) * i;
+	// ray.direction.z -= (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * i;
 	
 	ray.direction.x -= (env->scene->camera.z_axis.x / VIEWPLANE_PLOT) * j;
 	ray.direction.y -= (env->scene->camera.z_axis.y / VIEWPLANE_PLOT) * j;
