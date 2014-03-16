@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/15 23:27:52 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 01:26:48 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <ft_math.h>
 #include <ft_colors.h>
 #include <ft_convert.h>
+#include <ft_memory.h>
 #include <math.h>
 #include <mlx.h>
 #include <X.h>
@@ -23,14 +24,19 @@
 #include <stdlib.h>
 #include <mouse.h>
 
+#include <pthread.h>
+
 #include <stdio.h>
 #include <time.h>
+
+
 
 /*
 ** This is just for development, render dimensions will be parsed in File
 */
-#define RENDER_WIDTH	1100
-#define RENDER_HEIGHT	670
+#define RENDER_WIDTH			1100
+#define RENDER_HEIGHT			670
+#define RENDER_SPLIT			4
 
 static int			light_diaphragm(t_light_color *light, float diaphragm)
 {
@@ -102,47 +108,25 @@ static void			rendering_to_image(t_env *env)
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
-int					throw_view_plane(t_env *env)
+void				*throw_view_plane(void *env_pointer)
 {
 	unsigned int	i;
 	unsigned int	j;
 	t_ray			ray;
-
+	t_env			*env;
 	float			time_ms;
-	
+
+	env = (t_env*)env_pointer;
 	time_ms = ((float)clock() / (float)CLOCKS_PER_SEC);
 
-	/*
-	** This function will be bettered with vector operations added in LibFt
-	*/
-	i = 0;
 	j = 0;
-
-	env->block_events = 1;
-
-	ray.origin.x = env->scene->camera.origin.x;
-	ray.origin.y = env->scene->camera.origin.y;
-	ray.origin.z = env->scene->camera.origin.z;
-
-	ray.direction.x = env->scene->camera.x_axis.x;
-	ray.direction.y = env->scene->camera.x_axis.y;
-	ray.direction.z = env->scene->camera.x_axis.z;
-
-	ray.direction.x += (env->scene->camera.y_axis.x / VIEWPLANE_PLOT) * env->scene->view_width / 2;
-	ray.direction.y += (env->scene->camera.y_axis.y / VIEWPLANE_PLOT) * env->scene->view_width / 2;
-	ray.direction.z += (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * env->scene->view_width / 2;
-
-	ray.direction.x += (env->scene->camera.z_axis.x / VIEWPLANE_PLOT) * env->scene->view_height / 2;
-	ray.direction.y += (env->scene->camera.z_axis.y / VIEWPLANE_PLOT) * env->scene->view_height / 2;
-	ray.direction.z += (env->scene->camera.z_axis.z / VIEWPLANE_PLOT) * env->scene->view_height / 2;
-
 	while (j < env->scene->view_height)
 	{
 		i = 0;
 		while (i < env->scene->view_width)
 		{
-			// TREAT RAY HERE
-			
+			ray = get_ray_from_point(env, i, j);
+
 			throw_ray(env, &ray, !env->pressed_keys.shift);
 
 			if (ray.inter_t != INFINITY && !env->pressed_keys.shift)
@@ -154,46 +138,30 @@ int					throw_view_plane(t_env *env)
 			else
 				clean_light_on_render(env, i, j);
 
-
-			// END TREAT RAY
-			ray.direction.x -= (env->scene->camera.y_axis.x / VIEWPLANE_PLOT);
-			ray.direction.y -= (env->scene->camera.y_axis.y / VIEWPLANE_PLOT);
-			ray.direction.z -= (env->scene->camera.y_axis.z / VIEWPLANE_PLOT);
 			i++;
 		}
-		ray.direction.x -= (env->scene->camera.z_axis.x / VIEWPLANE_PLOT);
-		ray.direction.y -= (env->scene->camera.z_axis.y / VIEWPLANE_PLOT);
-		ray.direction.z -= (env->scene->camera.z_axis.z / VIEWPLANE_PLOT);
-
-		// BACK TO ZERO ON Y-AXIS
-		ray.direction.x += (env->scene->camera.y_axis.x / VIEWPLANE_PLOT) * env->scene->view_width;
-		ray.direction.y += (env->scene->camera.y_axis.y / VIEWPLANE_PLOT) * env->scene->view_width;
-		ray.direction.z += (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * env->scene->view_width;
 		j++;
 	}
 
-	if (!env->pressed_keys.shift)
-		rendering_to_image(env);
-	else
-		mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
-
-	env->block_events = 0;
-
+	env->render_thread1 = NULL;
 	time_ms = ((float)clock() / (float)CLOCKS_PER_SEC) - time_ms;
 	printf("Render : %f ms\n", time_ms);
-
-	return (0);
+	return (NULL);
 }
 
 static int			view_loop(t_env *env)
 {
-	if (!env->block_events && is_one_key_pressed(&env->pressed_keys))
+	if (is_one_key_pressed(&env->pressed_keys))
 	{
+
 		check_pressed_keys(env, &env->pressed_keys);
-		env->block_events = 1;
-		throw_view_plane(env);
-		env->block_events = 0;
+		update_image(env);
 	}
+	if (!env->pressed_keys.shift)
+		rendering_to_image(env);
+	else
+		mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	env->refresh_image = 0;
 	return (0);
 }
 
@@ -316,6 +284,21 @@ static void			create_test_objects(t_scene *scene)
 	scene->lights->next->next->next = NULL;
 }
 
+int					update_image(t_env *env)
+{
+	if (env->render_thread1)
+	{
+		pthread_cancel (env->render_thread1);
+	}
+	env->refresh_image = 1;
+	if (pthread_create(&env->render_thread1, NULL, throw_view_plane, (void*)env))
+	{
+		ft_putendl_fd("ERROR! Unable to create render thread.", 2);
+		return (1);
+	}
+	return (0);
+}
+
 int					main(int argc, char **argv)
 {
 	t_env			env;
@@ -329,18 +312,22 @@ int					main(int argc, char **argv)
 
 	env.scene->view_width = RENDER_WIDTH;
 	env.scene->view_height = RENDER_HEIGHT;
-	env.block_events = 0;
 
 
 	env.selected_object = NULL;
 	env.pressed_mouse = 0;
+	env.refresh_image = 1;
 
 	env.scene->background_color = 0xFF000000;
 	env.scene->diaphragm = 1.0;
 	env.scene->matters = NULL;
 
 
-	env.rendering = (t_light_color*)malloc(env.scene->view_width * env.scene->view_height * sizeof(t_light_color));
+	env.render_thread1 = NULL;
+	// env.render_threads = (pthread_t*)ft_memalloc(RENDER_THREADS_DEFAULT * sizeof(pthread_t));
+
+
+	env.rendering = (t_light_color*)ft_memalloc(env.scene->view_width * env.scene->view_height * sizeof(t_light_color));
 
 	env.mlx = mlx_init();
 	env.win = mlx_new_window(env.mlx, env.scene->view_width, env.scene->view_height, "RT");
@@ -354,7 +341,7 @@ int					main(int argc, char **argv)
 	init_pressed_keys(&env.pressed_keys);
 
 
-	mlx_expose_hook(env.win, throw_view_plane, &env);
+	mlx_expose_hook(env.win, view_loop, &env);
 	mlx_hook(env.win, KeyPress, KeyPressMask, keypress_hook, &env);
 	mlx_hook(env.win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env);
 	mlx_hook(env.win, ButtonPress, ButtonPressMask, buttonpress_hook, &env);

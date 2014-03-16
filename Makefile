@@ -6,14 +6,14 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/14 03:18:00 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/15 23:39:28 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
 
 INCLUDEFOLDERS = -I./includes/ -I./libft/includes/ -I/opt/X11/include/X11/
 LIBFOLDERS = -L./libft/ -L/usr/X11/lib/ -L/usr/X11/include
-LIBS =  -lmlx -lXext -lX11 -lft -lm
+LIBS =  -lmlx -lXext -lX11 -lft -lm -lpthread
 
 CC = clang
 CFLAGS = -Wall  -Werror -Wextra -O3

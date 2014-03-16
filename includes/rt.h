@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/15 23:09:32 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 01:18:54 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <keyboard.h>
 # include <object.h>
 # include <matter.h>
+
+# include <pthread.h>
 
 # define VIEWPLANE_PLOT 1000
 
@@ -51,9 +53,28 @@ typedef struct				s_env
 	int						last_mouse_x;
 	int						last_mouse_y;
 	int						block_events;
+
+	int						refresh_image;
+
+	// pthread_t				*render_threads;
+	pthread_t				render_thread1;
+	// pthread_t				render_thread3;
+	// pthread_t				render_thread4;
+
 }							t_env;
 
-int			throw_view_plane(t_env *env);
+typedef struct				s_thread_input
+{
+	int						x;
+	int						y;
+	int						width;
+	int						height;
+	t_env					*env;
+}							t_thread_input;
+
+
+int			update_image(t_env *env);
+void		*throw_view_plane(void *env);
 
 void		init_pressed_keys(t_pressedkeys *keys);
 int			keypress_hook(int keycode, t_env *env);

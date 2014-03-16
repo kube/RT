@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/15 22:32:39 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 01:23:47 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,6 @@ int				is_one_key_pressed(t_pressedkeys *keys)
 {
 	int			i;
 	int			*key;
-
-
-	// printf("IOKP : pk adress : %p\n", keys);
-
 	/*
 	**	Maybe would be better with a mask ?
 	*/
@@ -90,10 +86,7 @@ int				is_one_key_pressed(t_pressedkeys *keys)
 	while ((size_t)key - (size_t)(keys) < sizeof(*keys))
 	{
 		if (*key)
-		{
-			printf("is_one_key_pressed\n");
 			return (1);
-		}
 		key++;
 	}
 	return (0);
@@ -106,14 +99,10 @@ void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
 	**	(Better Perfomance, Less Lines)
 	**	Maybe do this in is_one_key_pressed function
 	*/
-
 	if (env->block_events)
 		return ;
 	if (keys->up)
-	{
-		printf("UP\n");
 		cam_rot_y(&env->scene->camera, -KEYBOARD_PLOT);
-	}
 	if (keys->down)
 		cam_rot_y(&env->scene->camera, KEYBOARD_PLOT);
 	if (keys->left)
@@ -143,9 +132,6 @@ int			keyrelease_hook(int keycode, t_env *env)
 	/*
 	**	Use allocated table here with Callbacks, Better Performance, Less lines
 	*/
-
-	printf("Release %d\n", keycode);
-
 	if (keycode == 65363)
 		env->pressed_keys.right = 0;
 	else if (keycode == 65361)
