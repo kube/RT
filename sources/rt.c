@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 04:33:44 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 04:38:01 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ static void			create_test_objects(t_scene *scene)
 	scene->lights->next->next->origin.x = 15;
 	scene->lights->next->next->origin.y = -10;
 	scene->lights->next->next->origin.z = 10;
-	scene->lights->next->next->intensity = 4.0;
+	scene->lights->next->next->intensity = 9.0;
 	scene->lights->next->next->color.red = 0.0;
 	scene->lights->next->next->color.green = 0.0;
 	scene->lights->next->next->color.blue = 1.0;

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 04:24:04 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 04:36:51 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,9 @@ int			keypress_hook(int keycode, t_env *env)
 	else if (keycode == 65507)
 		env->pressed_keys.ctrl = 1;
 	else if (keycode == 61)
-	{
 		env->scene->diaphragm *= 1.05;
-		throw_view_plane(env);
-	}
 	else if (keycode == 45)
-	{	
 		env->scene->diaphragm /= 1.05;
-		throw_view_plane(env);
-	}
 	return (0);
 }
 
