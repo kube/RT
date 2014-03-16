@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 01:18:54 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 04:03:22 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <object.h>
 # include <matter.h>
 
+# include <time.h>
 # include <pthread.h>
 
 # define VIEWPLANE_PLOT 1000
@@ -45,7 +46,10 @@ typedef struct				s_env
 	int						*data;
 
 	t_scene					*scene;
-	t_light_color			*rendering;
+	int						current_rendering;
+	t_light_color			**rendering;
+	pthread_t				*render_threads;
+	int						refresh_image;
 
 	t_pressedkeys			pressed_keys;
 	t_object				*selected_object;
@@ -54,21 +58,17 @@ typedef struct				s_env
 	int						last_mouse_y;
 	int						block_events;
 
-	int						refresh_image;
-
-	// pthread_t				*render_threads;
-	pthread_t				render_thread1;
-	// pthread_t				render_thread3;
-	// pthread_t				render_thread4;
 
 }							t_env;
 
 typedef struct				s_thread_input
 {
-	int						x;
-	int						y;
-	int						width;
-	int						height;
+	unsigned int			x1;
+	unsigned int			y1;
+	unsigned int			x2;
+	unsigned int			y2;
+	int						thread_number;
+	int						current_rendering;
 	t_env					*env;
 }							t_thread_input;
 

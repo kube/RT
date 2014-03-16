@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 00:26:56 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 04:23:26 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int				buttonpress_hook(int button, int x, int y, t_env *env)
 		if (env->pressed_keys.del)
 		{	
 			remove_object(env->scene, ray.closest);
-			throw_view_plane(env);
+			update_image(env);
 			printf("Removed %p\n", ray.closest);
 		}
 		else
@@ -49,6 +49,7 @@ int				buttonrelease_hook(int button, int x, int y, t_env *env)
 		env->pressed_mouse = 0;
 	}
 	printf("Released Button %d at %d, %d\n", button, x, y);
+	update_image(env);
 	return (0);
 }
 
@@ -60,13 +61,16 @@ int				motionnotify_hook(int x, int y, t_env *env)
 	**	Should not do calculous here,
 	**	Deport calculous to event-aware thread (MlxLoop ?)
 	*/
-	if (env->pressed_mouse && !env->block_events)
+	if (env->pressed_mouse)
 	{
 		if (env->selected_object)
 		{
 			move_coeff = distance_between_points(&env->selected_object->origin, &env->scene->camera.origin) * 0.001;
 			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.y_axis, (env->last_mouse_x - x) * move_coeff);
-			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.z_axis, (env->last_mouse_y - y) * move_coeff);
+			if (env->pressed_keys.ctrl)
+				vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.x_axis, (env->last_mouse_y - y) * move_coeff);
+			else
+				vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.z_axis, (env->last_mouse_y - y) * move_coeff);
 			update_image(env);
 		}
 	}

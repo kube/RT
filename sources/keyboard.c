@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 01:23:47 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 04:24:04 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int			keypress_hook(int keycode, t_env *env)
 		env->pressed_keys.del = 1;
 	else if (keycode == 65505)
 		env->pressed_keys.shift = 1;
+	else if (keycode == 65507)
+		env->pressed_keys.ctrl = 1;
 	else if (keycode == 61)
 	{
 		env->scene->diaphragm *= 1.05;
@@ -99,8 +101,7 @@ void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
 	**	(Better Perfomance, Less Lines)
 	**	Maybe do this in is_one_key_pressed function
 	*/
-	if (env->block_events)
-		return ;
+
 	if (keys->up)
 		cam_rot_y(&env->scene->camera, -KEYBOARD_PLOT);
 	if (keys->down)
@@ -118,13 +119,30 @@ void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
 	if (keys->num_minus)
 		cam_translate(&env->scene->camera, 0, 0, -0.3);
 	if (keys->w)
+	{
+		if (env->selected_object)
+			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.x_axis, 0.3);
 		cam_translate_vector(&env->scene->camera, &env->scene->camera.x_axis, 0.3);
+	}
 	if (keys->a)
+	{
+		if (env->selected_object)
+			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.y_axis, 0.3);
 		cam_translate_vector(&env->scene->camera, &env->scene->camera.y_axis, 0.3);
+	}
 	if (keys->s)
+	{
+		if (env->selected_object)
+			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.x_axis, -0.3);
 		cam_translate_vector(&env->scene->camera, &env->scene->camera.x_axis, -0.3);
+	}
 	if (keys->d)
+	{
+		if (env->selected_object)
+			vector_add((t_vector*)&(env->selected_object->origin), &env->scene->camera.y_axis, -0.3);
 		cam_translate_vector(&env->scene->camera, &env->scene->camera.y_axis, -0.3);
+	}
+	update_image(env);
 }
 
 int			keyrelease_hook(int keycode, t_env *env)
@@ -157,9 +175,8 @@ int			keyrelease_hook(int keycode, t_env *env)
 	else if (keycode == 65535)
 		env->pressed_keys.del = 0;
 	else if (keycode == 65505)
-	{
 		env->pressed_keys.shift = 0;
-		throw_view_plane(env);
-	}
+	else if (keycode == 65507)
+		env->pressed_keys.ctrl = 0;
 	return (0);
 }

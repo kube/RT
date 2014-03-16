@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 01:26:48 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 04:33:44 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@
 */
 #define RENDER_WIDTH			1100
 #define RENDER_HEIGHT			670
-#define RENDER_SPLIT			4
+#define RENDER_SPLIT			2
+#define RENDER_JACHERE			2
 
 static int			light_diaphragm(t_light_color *light, float diaphragm)
 {
@@ -62,28 +63,32 @@ static void			pixel_to_image(t_env *env, int x, int y, int color)
 static void			light_to_render(t_env *env, int x, int y, t_light_color *light)
 {
 	unsigned int	i;
+	unsigned int	current_rendering;
 
+	current_rendering = (env->current_rendering + 1) % RENDER_JACHERE;
 	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
 	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0 && (int)x >= 0
 		&& (unsigned int)x < env->scene->view_width)
 	{
-		env->rendering[i].red = light->red;
-		env->rendering[i].green = light->green;
-		env->rendering[i].blue = light->blue;
+		env->rendering[current_rendering][i].red = light->red;
+		env->rendering[current_rendering][i].green = light->green;
+		env->rendering[current_rendering][i].blue = light->blue;
 	}
 }
 
 static void			clean_light_on_render(t_env *env, int x, int y)
 {
 	unsigned int	i;
+	unsigned int	current_rendering;
 
+	current_rendering = (env->current_rendering + 1) % RENDER_JACHERE;
 	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
 	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0 && (int)x >= 0
 		&& (unsigned int)x < env->scene->view_width)
 	{
-		env->rendering[i].red = 0;
-		env->rendering[i].green = 0;
-		env->rendering[i].blue = 0;
+		env->rendering[current_rendering][i].red = 0;
+		env->rendering[current_rendering][i].green = 0;
+		env->rendering[current_rendering][i].blue = 0;
 	}
 }
 
@@ -91,7 +96,9 @@ static void			rendering_to_image(t_env *env)
 {
 	unsigned int	x;
 	unsigned int	y;
+	int				current_rendering;
 
+	current_rendering = env->current_rendering;
 	y = 0;
 	while (y < env->scene->view_height)
 	{
@@ -99,7 +106,7 @@ static void			rendering_to_image(t_env *env)
 		while (x < env->scene->view_width)
 		{
 			pixel_to_image(env, x, y,
-				light_diaphragm(&env->rendering[y * env->scene->view_width + x],
+				light_diaphragm(&env->rendering[current_rendering][y * env->scene->view_width + x],
 					env->scene->diaphragm));
 			x++;
 		}
@@ -108,59 +115,66 @@ static void			rendering_to_image(t_env *env)
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
-void				*throw_view_plane(void *env_pointer)
+static void			display_ray(t_thread_input *input, t_ray *ray,
+								unsigned int i, unsigned int j)
 {
+	if (ray->inter_t != INFINITY && !input->env->pressed_keys.shift)
+		light_to_render(input->env, i, j, &ray->color);
+	else if (ray->inter_t != INFINITY)
+		pixel_to_image(input->env, i, j, ray->closest->color.color);
+	else if (input->env->pressed_keys.shift)
+		pixel_to_image(input->env, i, j, 0x00000000);
+	else
+		clean_light_on_render(input->env, i, j);
+}
+
+void				*throw_view_plane(void *thread_input)
+{
+	t_env			*env;
+	t_thread_input	*input;
 	unsigned int	i;
 	unsigned int	j;
 	t_ray			ray;
-	t_env			*env;
-	float			time_ms;
 
-	env = (t_env*)env_pointer;
-	time_ms = ((float)clock() / (float)CLOCKS_PER_SEC);
-
-	j = 0;
-	while (j < env->scene->view_height)
+	input = (t_thread_input*)thread_input;
+	env = input->env;
+	j = input->y1;
+	while (j <= input->y2)
 	{
-		i = 0;
-		while (i < env->scene->view_width)
+		i = input->x1;
+		while (i <= input->x2)
 		{
 			ray = get_ray_from_point(env, i, j);
-
 			throw_ray(env, &ray, !env->pressed_keys.shift);
-
-			if (ray.inter_t != INFINITY && !env->pressed_keys.shift)
-				light_to_render(env, i, j, &ray.color);
-			else if (ray.inter_t != INFINITY)
-				pixel_to_image(env, i, j, ray.closest->color.color);
-			else if (env->pressed_keys.shift)
-				pixel_to_image(env, i, j, 0x00000000);
-			else
-				clean_light_on_render(env, i, j);
-
+			display_ray(input, &ray, i, j);
 			i++;
 		}
 		j++;
 	}
-
-	env->render_thread1 = NULL;
-	time_ms = ((float)clock() / (float)CLOCKS_PER_SEC) - time_ms;
-	printf("Render : %f ms\n", time_ms);
+	env->refresh_image = 1;
+	env->render_threads[input->thread_number] = 0;
+	if (input->thread_number == (RENDER_SPLIT - 1) * (RENDER_SPLIT - 1))
+		env->current_rendering = (env->current_rendering + 1) % RENDER_JACHERE;
+	free(thread_input);
 	return (NULL);
 }
 
+
+
+
 static int			view_loop(t_env *env)
 {
-	if (is_one_key_pressed(&env->pressed_keys))
-	{
-
-		check_pressed_keys(env, &env->pressed_keys);
-		update_image(env);
-	}
 	if (!env->pressed_keys.shift)
 		rendering_to_image(env);
 	else
 		mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	if (is_one_key_pressed(&env->pressed_keys))
+		check_pressed_keys(env, &env->pressed_keys);
+	if (env->refresh_image)
+	{
+		update_image(env);
+		env->refresh_image = 0;
+	}
 	env->refresh_image = 0;
 	return (0);
 }
@@ -284,20 +298,63 @@ static void			create_test_objects(t_scene *scene)
 	scene->lights->next->next->next = NULL;
 }
 
-int					update_image(t_env *env)
+static int			create_render_thread(t_env *env, t_thread_input *input)
 {
-	if (env->render_thread1)
+	if (!env->render_threads[input->thread_number])
 	{
-		pthread_cancel (env->render_thread1);
-	}
-	env->refresh_image = 1;
-	if (pthread_create(&env->render_thread1, NULL, throw_view_plane, (void*)env))
-	{
-		ft_putendl_fd("ERROR! Unable to create render thread.", 2);
-		return (1);
+		env->refresh_image = 1;
+		if (pthread_create(&env->render_threads[input->thread_number], NULL,
+			throw_view_plane, (void*)input))
+		{
+			ft_putendl_fd("ERROR! Unable to create render thread.", 2);
+			return (1);
+		}
 	}
 	return (0);
 }
+
+int					update_image(t_env *env)
+{
+	unsigned int	i;
+	unsigned int	j;
+	t_thread_input	*input;
+	int				current_rendering;
+
+	j = 0;
+	current_rendering = env->current_rendering;
+	while (j < RENDER_SPLIT)
+	{
+		i = 0;
+		while (i < RENDER_SPLIT)
+		{
+			input = (t_thread_input*)malloc(sizeof(*input));
+			input->env = env;
+			input->x1 = i * (env->scene->view_width / RENDER_SPLIT);
+			input->y1 = j * (env->scene->view_height / RENDER_SPLIT);
+			input->x2 = env->scene->view_width - (RENDER_SPLIT - 1 - i) * (env->scene->view_width / RENDER_SPLIT);
+			input->y2 = env->scene->view_width - (RENDER_SPLIT - 1 - j) * (env->scene->view_height / RENDER_SPLIT);
+			input->thread_number = j * RENDER_SPLIT + i;
+			input->current_rendering = current_rendering;
+			create_render_thread(env, input);
+			i++;
+		}
+		j++;
+	}
+	return (0);
+}
+
+static void			initialize_renderings(t_env *env)
+{
+	int				i;
+
+	i = 0;
+	while (i < RENDER_JACHERE)
+	{
+		env->rendering[i] = (t_light_color*)ft_memalloc(env->scene->view_width * env->scene->view_height * sizeof(t_light_color));
+		i++;
+	}
+}
+
 
 int					main(int argc, char **argv)
 {
@@ -313,7 +370,6 @@ int					main(int argc, char **argv)
 	env.scene->view_width = RENDER_WIDTH;
 	env.scene->view_height = RENDER_HEIGHT;
 
-
 	env.selected_object = NULL;
 	env.pressed_mouse = 0;
 	env.refresh_image = 1;
@@ -322,12 +378,13 @@ int					main(int argc, char **argv)
 	env.scene->diaphragm = 1.0;
 	env.scene->matters = NULL;
 
+	env.current_rendering = 0;
 
-	env.render_thread1 = NULL;
-	// env.render_threads = (pthread_t*)ft_memalloc(RENDER_THREADS_DEFAULT * sizeof(pthread_t));
+	env.render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT * sizeof(pthread_t));
 
+	env.rendering = (t_light_color**)malloc(RENDER_JACHERE * sizeof(t_light_color*));
+	initialize_renderings(&env);
 
-	env.rendering = (t_light_color*)ft_memalloc(env.scene->view_width * env.scene->view_height * sizeof(t_light_color));
 
 	env.mlx = mlx_init();
 	env.win = mlx_new_window(env.mlx, env.scene->view_width, env.scene->view_height, "RT");

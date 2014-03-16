@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/16 00:59:42 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 03:31:51 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ static float	is_point_exposed_to_light(t_env *env, t_point point, t_light *light
 	ray.direction.x = light->origin.x - ray.origin.x;
 	ray.direction.y = light->origin.y - ray.origin.y;
 	ray.direction.z = light->origin.z - ray.origin.z;
+	/*
+	**	Would be better to prevent light collision with same object
+	*/
 	ray.origin.x = point.x + 0.0005 * ray.direction.x;
-	ray.origin.y = point.y + 0.0005* ray.direction.y;
+	ray.origin.y = point.y + 0.0005 * ray.direction.y;
 	ray.origin.z = point.z + 0.0005 * ray.direction.z;
 	distance_to_light = vect_norm(&ray.direction);
 	normalize_vector(&ray.direction);
