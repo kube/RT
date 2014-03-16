@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 18:13:24 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 20:20:38 by availlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,19 @@ int				motionnotify_ev(int x, int y, t_env *env)
 		{
 			coeff = distance_between_points(&env->selected_object->origin,
 				&env->scene->camera.origin) * 0.001;
-			vector_add((t_vector*)&(env->selected_object->origin),
-				&env->scene->camera.y_axis, (env->mouse_x - x) * coeff);
-			if (env->pressed_keys.ctrl)
-				vector_add((t_vector*)&(env->selected_object->origin),
-					&env->scene->camera.x_axis, (env->mouse_y - y) * coeff);
+			if (env->pressed_keys.alt)
+				env->selected_object->radius += (x - env->mouse_x) * coeff * 0.4;
 			else
+			{
 				vector_add((t_vector*)&(env->selected_object->origin),
-					&env->scene->camera.z_axis, (env->mouse_y - y) * coeff);
+					&env->scene->camera.y_axis, (env->mouse_x - x) * coeff);
+				if (env->pressed_keys.ctrl)
+					vector_add((t_vector*)&(env->selected_object->origin),
+						&env->scene->camera.x_axis, (env->mouse_y - y) * coeff);
+				else
+					vector_add((t_vector*)&(env->selected_object->origin),
+						&env->scene->camera.z_axis, (env->mouse_y - y) * coeff);
+			}
 			env->refresh_image = 1;
 		}
 	}

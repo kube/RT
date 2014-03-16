@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 18:15:05 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 20:11:14 by availlan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,8 @@ void				*throw_view_plane(void *thread_input)
 
 	input = (t_thread_input*)thread_input;
 	env = input->env;
-	env->running_threads++;
+
+
 	j = input->y1;
 	while (j <= input->y2)
 	{
@@ -152,13 +153,14 @@ void				*throw_view_plane(void *thread_input)
 
 static int			view_loop(t_env *env)
 {
+
 	if (is_one_key_pressed(&env->pressed_keys))
 		check_pressed_keys(env, &env->pressed_keys);
 	if (!env->running_threads && !env->block_render && env->refresh_image)
 		update_image(env);
 	if (!env->running_threads)
 	{
-		if (!env->pressed_keys.shift)
+		if (!env->pressed_keys.shift && env->refresh_image)
 			rendering_to_image(env);
 		else
 			mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
@@ -271,6 +273,7 @@ static void			create_test_objects(t_scene *scene)
 
 static int			create_render_thread(t_env *env, t_thread_input *input)
 {
+	env->running_threads++;
 	if (pthread_create(&env->render_threads[input->thread_number], NULL,
 		throw_view_plane, (void*)input))
 	{
