@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 16:47:52 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 17:27:13 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
 	*/
 
 	if (keys->up)
-	{
-
 		cam_rot_y(&env->scene->camera, -KEYBOARD_ROT_PLOT);
-	}
 	if (keys->down)
 		cam_rot_y(&env->scene->camera, KEYBOARD_ROT_PLOT);
 	if (keys->left)

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/16 03:31:51 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 17:29:00 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,7 @@ void			phong_shading(t_env *env, t_ray *ray)
 {
 	ambient_lighting(ray);
 	phong_lighting(env, ray);
+	/*
+	**	Do reflection and refraction
+	*/
 }

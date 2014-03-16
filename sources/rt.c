@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 17:09:35 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 17:27:45 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,17 +108,17 @@ static void			rendering_to_image(t_env *env)
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
-static void			display_ray(t_thread_input *input, t_ray *ray,
+static void			display_ray(t_env *env, t_ray *ray,
 								unsigned int i, unsigned int j)
 {
-	if (ray->inter_t != INFINITY && !input->env->pressed_keys.shift)
-		light_to_render(input->env, i, j, &ray->color);
+	if (ray->inter_t != INFINITY && !env->pressed_keys.shift)
+		light_to_render(env, i, j, &ray->color);
 	else if (ray->inter_t != INFINITY)
-		pixel_to_image(input->env, i, j, ray->closest->color.color);
-	else if (input->env->pressed_keys.shift)
-		pixel_to_image(input->env, i, j, 0x00000000);
+		pixel_to_image(env, i, j, ray->closest->color.color);
+	else if (env->pressed_keys.shift)
+		pixel_to_image(env, i, j, 0x00000000);
 	else
-		clean_light_on_render(input->env, i, j);
+		clean_light_on_render(env, i, j);
 }
 
 void				*throw_view_plane(void *thread_input)
@@ -140,12 +140,11 @@ void				*throw_view_plane(void *thread_input)
 		{
 			ray = get_ray_from_point(env, i, j);
 			throw_ray(env, &ray, !env->pressed_keys.shift);
-			display_ray(input, &ray, i, j);
+			display_ray(env, &ray, i, j);
 			i++;
 		}
 		j++;
 	}
-	env->render_threads[input->thread_number] = 0;
 	env->block_render = 1;
 	env->running_threads--;
 	free(thread_input);
@@ -173,45 +172,20 @@ t_ray				get_ray_from_point(t_env *env, int i, int j)
 {
 	t_ray			ray;
 
-	/*
-	**	Gotta Simplify all this stuff !
-	*/
 	ray.origin.x = env->scene->camera.origin.x;
 	ray.origin.y = env->scene->camera.origin.y;
 	ray.origin.z = env->scene->camera.origin.z;
-
 	ray.direction.x = env->scene->camera.x_axis.x;
 	ray.direction.y = env->scene->camera.x_axis.y;
 	ray.direction.z = env->scene->camera.x_axis.z;
-
-	// vector_add(&ray.direction, &env->scene->camera.y_axis, -(env->scene->view_width / VIEWPLANE_PLOT) / 2);
-	// vector_add(&ray.direction, &env->scene->camera.z_axis, -(env->scene->view_height / VIEWPLANE_PLOT) / 2);
-
-
-	ray.direction.x += (env->scene->camera.y_axis.x / VIEWPLANE_PLOT) * env->scene->view_width / 2;
-	ray.direction.y += (env->scene->camera.y_axis.y / VIEWPLANE_PLOT) * env->scene->view_width / 2;
-	ray.direction.z += (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * env->scene->view_width / 2;
-
-	ray.direction.x += (env->scene->camera.z_axis.x / VIEWPLANE_PLOT) * env->scene->view_height / 2;
-	ray.direction.y += (env->scene->camera.z_axis.y / VIEWPLANE_PLOT) * env->scene->view_height / 2;
-	ray.direction.z += (env->scene->camera.z_axis.z / VIEWPLANE_PLOT) * env->scene->view_height / 2;
-
-	/*
-	**	Move to good point
-	*/
-	vector_add(&ray.direction, &env->scene->camera.y_axis, -(1 / VIEWPLANE_PLOT) * i);
-	// vector_add(&ray.direction, env->scene->camera.z_axis, VIEWPLANE_PLOT * j);
-
-
-	// ray.direction.x -= (env->scene->camera.y_axis.x / VIEWPLANE_PLOT) * i;
-	// ray.direction.y -= (env->scene->camera.y_axis.y / VIEWPLANE_PLOT) * i;
-	// ray.direction.z -= (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * i;
-	
+	i -= env->scene->view_width / 2;
+	j -= env->scene->view_height / 2;
+	ray.direction.x -= (env->scene->camera.y_axis.x / VIEWPLANE_PLOT) * i;
+	ray.direction.y -= (env->scene->camera.y_axis.y / VIEWPLANE_PLOT) * i;
+	ray.direction.z -= (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * i;
 	ray.direction.x -= (env->scene->camera.z_axis.x / VIEWPLANE_PLOT) * j;
 	ray.direction.y -= (env->scene->camera.z_axis.y / VIEWPLANE_PLOT) * j;
 	ray.direction.z -= (env->scene->camera.z_axis.z / VIEWPLANE_PLOT) * j;
-
-
 	return (ray);
 }
 
