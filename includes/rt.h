@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 04:03:22 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/16 15:31:13 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ typedef struct				s_env
 	int						*data;
 
 	t_scene					*scene;
-	int						current_rendering;
-	t_light_color			**rendering;
+	t_light_color			*rendering;
 	pthread_t				*render_threads;
+	int						running_threads;
 	int						refresh_image;
+	int						block_render;
 
 	t_pressedkeys			pressed_keys;
 	t_object				*selected_object;
@@ -68,7 +69,6 @@ typedef struct				s_thread_input
 	unsigned int			x2;
 	unsigned int			y2;
 	int						thread_number;
-	int						current_rendering;
 	t_env					*env;
 }							t_thread_input;
 
