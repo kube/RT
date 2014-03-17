@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 04:56:44 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 20:04:56 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,64 +31,11 @@
 #include <stdio.h>
 #include <time.h>
 
-
 /*
 ** This is just for development, render dimensions will be parsed in File
 */
 #define RENDER_WIDTH			1100
 #define RENDER_HEIGHT			670
-#define RENDER_SPLIT			2
-
-
-static int			light_diaphragm(t_light_color *light, float diaphragm)
-{
-	t_color 		color;
-
-	color.red = (unsigned char)(fmin((light->red / diaphragm), 1.0) * 255);
-	color.blue = (unsigned char)(fmin((light->blue / diaphragm), 1.0) * 255);
-	color.green = (unsigned char)(fmin((light->green / diaphragm), 1.0) * 255);
-	return (color.color);
-}
-
-static void			pixel_to_image(t_env *env, int x, int y, int color)
-{
-	unsigned int	i;
-
-	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
-	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0
-		&& (int)x >= 0 && (unsigned int)x < env->scene->view_width)
-		env->data[i] = color;
-}
-
-
-static void			light_to_render(t_env *env, int x, int y,
-									t_light_color *light)
-{
-	unsigned int	i;
-
-	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
-	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0
-		&& (int)x >= 0 && (unsigned int)x < env->scene->view_width)
-	{
-		env->rendering[i].red = light->red;
-		env->rendering[i].green = light->green;
-		env->rendering[i].blue = light->blue;
-	}
-}
-
-static void			clean_light_on_render(t_env *env, int x, int y)
-{
-	unsigned int	i;
-
-	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
-	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0
-		&& (int)x >= 0 && (unsigned int)x < env->scene->view_width)
-	{
-		env->rendering[i].red = 0;
-		env->rendering[i].green = 0;
-		env->rendering[i].blue = 0;
-	}
-}
 
 static void			rendering_to_image(t_env *env)
 {
@@ -109,52 +56,6 @@ static void			rendering_to_image(t_env *env)
 		y++;
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
-}
-
-static void			display_ray(t_env *env, t_ray *ray,
-								unsigned int i, unsigned int j)
-{
-	if (ray->inter_t != INFINITY && !env->pressed_keys.shift)
-		light_to_render(env, i, j, &ray->color);
-	else if (ray->inter_t != INFINITY)
-		pixel_to_image(env, i, j, ray->closest->color.color);
-	else if (env->pressed_keys.shift)
-		pixel_to_image(env, i, j, 0x00000000);
-	else
-		clean_light_on_render(env, i, j);
-}
-
-void				*throw_view_plane(void *thread_input)
-{
-	t_env			*env;
-	t_thread_input	*input;
-	unsigned int	i;
-	unsigned int	j;
-	t_ray			ray;
-
-	input = (t_thread_input*)thread_input;
-	env = input->env;
-
-	printf("START\n");
-
-	j = input->y1;
-	while (j <= input->y2)
-	{
-		i = input->x1;
-		while (i <= input->x2)
-		{
-			ray = get_ray_from_point(env, i, j);
-			throw_ray(env, &ray, !env->pressed_keys.shift, NULL);
-			display_ray(env, &ray, i++, j);
-		}
-		j++;
-	}
-	env->block_render = 1;
-	env->running_threads--;
-
-	printf("END\n");
-	free(thread_input);
-	return (NULL);
 }
 
 static int			view_loop(t_env *env)
@@ -277,17 +178,6 @@ static void			create_test_objects(t_scene *scene)
 	scene->lights->next->next->next = NULL;
 }
 
-static int			create_render_thread(t_env *env, t_thread_input *input)
-{
-	env->running_threads++;
-	if (pthread_create(&env->render_threads[input->thread_number], NULL,
-		throw_view_plane, (void*)input))
-	{
-		ft_putendl_fd("ERROR! Unable to create render thread.", 2);
-		return (1);
-	}
-	return (0);
-}
 
 int					update_image(t_env *env)
 {

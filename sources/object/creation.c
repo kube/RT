@@ -6,13 +6,15 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:12:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/17 04:52:02 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 05:05:20 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <ft_memory.h>
 #include <stdlib.h>
+
+#include <pthread.h>
 
 void			load_matter_object(t_object *object, t_matter *matter)
 {
@@ -26,14 +28,26 @@ void			load_matter_object(t_object *object, t_matter *matter)
 	object->refract_index = matter->refract_index;
 }
 
-void			duplicate_object(t_scene *scene, t_object *object)
+static void		kill_all_rendering_threads(t_env *env)
 {
-	(void)object;
+	int			i;
+
+	i = 0;
+	while (i < RENDER_SPLIT * RENDER_SPLIT)
+		pthread_cancel(env->render_threads[i]);
+}
+
+void			duplicate_object(t_env *env, t_object *object)
+{
 	t_object	*object_created;
 
 	object_created = new_object(OBJ_SPHERE);
+	kill_all_rendering_threads(env);
 	ft_memcpy(object_created, object, sizeof(t_object));
-	add_object(scene, object_created);
+	add_object(env->scene, object_created);
+	env->block_render = 0;
+	env->refresh_image = 1;
+	update_image(env);
 }
 
 void			remove_light(t_scene *scene, t_light *light)

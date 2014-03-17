@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 04:44:12 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 05:02:11 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
 	if (keys->space)
 	{
 		if (env->selected_object)
-			duplicate_object(env->scene, env->selected_object);
+			duplicate_object(env, env->selected_object);
 	}
 	env->refresh_image = 1;
 }

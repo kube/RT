@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 04:43:08 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 20:04:45 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <pthread.h>
 
 # define VIEWPLANE_PLOT 1000
+# define RENDER_SPLIT	2
 
 typedef struct				s_scene
 {
@@ -89,12 +90,9 @@ typedef struct				s_command
 }							t_command;
 
 int			update_image(t_env *env);
-void		*throw_view_plane(void *env);
-
-void		init_pressed_keys(t_pressedkeys *keys);
-int			keypress_hook(int keycode, t_env *env);
-void		check_pressed_keys(t_env *env, t_pressedkeys *keys);
-int			keyrelease_hook(int keycode, t_env *env);
+int			create_render_thread(t_env *env, t_thread_input *input);
+void		pixel_to_image(t_env *env, int x, int y, int color);
+int			light_diaphragm(t_light_color *light, float diaphragm);
 
 t_matter	*get_matter(t_env *env, char *name);
 void		add_matter(t_env *env, t_matter *matter);
@@ -103,9 +101,14 @@ t_matter	*new_matter(char *name);
 void		load_matter_object(t_object *object, t_matter *matter);
 t_object	*new_object(int type);
 void		add_object(t_scene *scene, t_object *object);
-void		duplicate_object(t_scene *scene, t_object *object);
+void		duplicate_object(t_env *env, t_object *object);
 void		remove_object(t_scene *scene, t_object *object);
 void		remove_light(t_scene *scene, t_light *light);
+
+void		init_pressed_keys(t_pressedkeys *keys);
+int			keypress_hook(int keycode, t_env *env);
+void		check_pressed_keys(t_env *env, t_pressedkeys *keys);
+int			keyrelease_hook(int keycode, t_env *env);
 
 int			create_interpreter_thread(t_env *env);
 
