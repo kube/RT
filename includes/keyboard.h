@@ -23,6 +23,7 @@ typedef struct			s_pressedkeys
 	int					shift;
 	int					ctrl;
 	int					alt;
+	int					space;
 }						t_pressedkeys;
 
 int			is_one_key_pressed(t_pressedkeys *keys);

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:12:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/17 04:14:55 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 04:52:02 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ void			load_matter_object(t_object *object, t_matter *matter)
 	object->reflection = matter->reflection;
 	object->refraction = matter->refraction;
 	object->refract_index = matter->refract_index;
+}
+
+void			duplicate_object(t_scene *scene, t_object *object)
+{
+	(void)object;
+	t_object	*object_created;
+
+	object_created = new_object(OBJ_SPHERE);
+	ft_memcpy(object_created, object, sizeof(t_object));
+	add_object(scene, object_created);
 }
 
 void			remove_light(t_scene *scene, t_light *light)

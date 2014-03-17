@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 20:18:44 by availlan         ###   ########.fr       */
+/*   Updated: 2014/03/17 04:44:12 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int			keypress_hook(int keycode, t_env *env)
 		env->pressed_keys.shift = 1;
 	else if (keycode == 65507)
 		env->pressed_keys.ctrl = 1;
+	else if (keycode == 32)
+		env->pressed_keys.space = 1;
 	else if (keycode == 61)
 		env->scene->diaphragm *= 1.05;
 	else if (keycode == 45)
@@ -144,6 +146,11 @@ void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
 		cam_translate_vector(&env->scene->camera, &env->scene->camera.y_axis,
 			-KEYBOARD_MOV_PLOT);
 	}
+	if (keys->space)
+	{
+		if (env->selected_object)
+			duplicate_object(env->scene, env->selected_object);
+	}
 	env->refresh_image = 1;
 }
 
@@ -176,6 +183,8 @@ int			keyrelease_hook(int keycode, t_env *env)
 		env->pressed_keys.d = 0;
 	else if (keycode == 65535)
 		env->pressed_keys.del = 0;
+	else if (keycode == 32)
+		env->pressed_keys.space = 0;
 	else if (keycode == 65505)
 		env->pressed_keys.shift = 0;
 	else if (keycode == 65507)

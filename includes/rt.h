@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 04:15:10 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 04:43:08 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,9 @@ void		add_matter(t_env *env, t_matter *matter);
 t_matter	*new_matter(char *name);
 
 void		load_matter_object(t_object *object, t_matter *matter);
-void		add_object(t_scene *scene, t_object *object);
 t_object	*new_object(int type);
+void		add_object(t_scene *scene, t_object *object);
+void		duplicate_object(t_scene *scene, t_object *object);
 void		remove_object(t_scene *scene, t_object *object);
 void		remove_light(t_scene *scene, t_light *light);
 
