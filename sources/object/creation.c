@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:12:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/14 16:32:02 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 04:14:55 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,28 @@ void			load_matter_object(t_object *object, t_matter *matter)
 	object->reflection = matter->reflection;
 	object->refraction = matter->refraction;
 	object->refract_index = matter->refract_index;
+}
+
+void			remove_light(t_scene *scene, t_light *light)
+{
+	t_light		*current;
+	t_light		*previous;
+
+	previous = NULL;
+	current = scene->lights;
+	while (current)
+	{
+		if (current == light)
+		{
+			if (previous)
+				previous->next = current->next;
+			else
+				scene->lights = current->next;
+			free(light);
+		}
+		previous = current;
+		current = current->next;
+	}
 }
 
 void			remove_object(t_scene *scene, t_object *object)

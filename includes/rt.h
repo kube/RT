@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 22:43:08 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 04:15:10 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ typedef struct				s_scene
 	t_light					*lights;
 }							t_scene;
 
+typedef struct				s_interpreter
+{
+	char					**last_command;
+	struct s_command		*commands;
+}							t_interpreter;
+
 typedef struct				s_env
 {
 	void					*mlx;
@@ -52,7 +58,9 @@ typedef struct				s_env
 	int						refresh_image;
 	int						block_render;
 
+	t_interpreter			interpreter;
 	pthread_t				interpreter_thread;
+
 
 	t_pressedkeys			pressed_keys;
 	t_object				*selected_object;
@@ -72,6 +80,13 @@ typedef struct				s_thread_input
 	t_env					*env;
 }							t_thread_input;
 
+typedef struct				s_command
+{
+	char					*token;
+	struct s_command		*child;
+	void					(*f)(t_env*, char**);
+	struct s_command		*next;
+}							t_command;
 
 int			update_image(t_env *env);
 void		*throw_view_plane(void *env);
@@ -89,5 +104,8 @@ void		load_matter_object(t_object *object, t_matter *matter);
 void		add_object(t_scene *scene, t_object *object);
 t_object	*new_object(int type);
 void		remove_object(t_scene *scene, t_object *object);
+void		remove_light(t_scene *scene, t_light *light);
+
+int			create_interpreter_thread(t_env *env);
 
 #endif

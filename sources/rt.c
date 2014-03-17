@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/16 22:51:57 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 03:36:48 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@
 #include <parser.h>
 #include <stdlib.h>
 #include <mouse.h>
+#include <interpreter.h>
 
 #include <pthread.h>
 
-#include <ft_input.h>
-#include <ft_strings.h>
 
 #include <stdio.h>
 #include <time.h>
-
 
 
 /*
@@ -40,6 +38,8 @@
 #define RENDER_WIDTH			1100
 #define RENDER_HEIGHT			670
 #define RENDER_SPLIT			2
+
+
 static int			light_diaphragm(t_light_color *light, float diaphragm)
 {
 	t_color 		color;
@@ -281,48 +281,6 @@ static int			create_render_thread(t_env *env, t_thread_input *input)
 		throw_view_plane, (void*)input))
 	{
 		ft_putendl_fd("ERROR! Unable to create render thread.", 2);
-		return (1);
-	}
-	return (0);
-}
-
-static void			*ask_user(void *env_input)
-{
-	t_scene			*scene;
-	char			*line;
-
-	(void)env_input;
-	scene = ((t_env*)env_input)->scene;
-	while (1)
-	{
-		get_stdin_next_line(&line);
-		if (ft_strequ(line, "sphere"))
-		{
-			add_object(scene, new_object(OBJ_SPHERE));
-			scene->objects->origin.x = scene->camera.origin.x
-									+ scene->camera.x_axis.x * 4;
-			scene->objects->origin.y = scene->camera.origin.y
-									+ scene->camera.x_axis.y * 4;
-			scene->objects->origin.z = scene->camera.origin.z
-									+ scene->camera.x_axis.z * 4;
-			scene->objects->radius = 1;
-			scene->objects->color.color = 0xFFFAEFFF;
-			scene->objects->ambient = 0.8;
-			scene->objects->diffuse = 0.4;
-			scene->objects->specular = 0.2;
-		}
-
-		printf("%s\n", line);
-	}
-	return (NULL);
-}
-
-static int			create_interpreter_thread(t_env *env)
-{
-	if (pthread_create(&env->interpreter_thread, NULL,
-		ask_user, (void*)env))
-	{
-		ft_putendl_fd("ERROR! Unable to create interpreter thread.", 2);
 		return (1);
 	}
 	return (0);
