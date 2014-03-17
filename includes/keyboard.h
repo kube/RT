@@ -23,6 +23,7 @@ typedef struct			s_pressedkeys
 	int					shift;
 	int					ctrl;
 	int					alt;
+	int					tab;
 	int					space;
 }						t_pressedkeys;
 

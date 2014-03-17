@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 22:20:10 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 00:03:13 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,17 @@ int				motionnotify_ev(int x, int y, t_env *env)
 				&env->scene->camera.origin) * 0.001;
 			if (env->pressed_keys.alt)
 			{
-				env->selected_object->radius +=
+				env->selected_object->radius += 
 					fmin((float)(x - env->mouse_x), (float)(y - env->mouse_y)) * coeff;
 				if (env->selected_object->radius < 0)
 					env->selected_object->radius = -env->selected_object->radius;
+			}
+			else if (env->pressed_keys.tab)
+			{
+				// env->selected_object->normal.x -= (x - env->mouse_x) / coeff;
+				// normalize_vector(&env->selected_object->normal);
+				// env->selected_object->normal.y -= (y - env->mouse_y) / coeff;
+				vect_rot_y(&env->selected_object->normal, sin(y - env->mouse_y) / (5000 * coeff));
 			}
 			else
 			{

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 21:22:04 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 23:32:50 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int			keypress_hook(int keycode, t_env *env)
 		env->pressed_keys.shift = 1;
 	else if (keycode == 65507)
 		env->pressed_keys.ctrl = 1;
+	else if (keycode == 65289)
+		env->pressed_keys.tab = 1;
 	else if (keycode == 32)
 	{
 		if (env->selected_object)
@@ -188,6 +190,8 @@ int			keyrelease_hook(int keycode, t_env *env)
 		env->pressed_keys.shift = 0;
 	else if (keycode == 65507)
 		env->pressed_keys.ctrl = 0;
+	else if (keycode == 65289)
+		env->pressed_keys.tab = 0;
 	else if (keycode == 65406)
 		env->pressed_keys.alt = 0;
 	return (0);
