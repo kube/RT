@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 20:04:45 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 20:51:27 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int			update_image(t_env *env);
 int			create_render_thread(t_env *env, t_thread_input *input);
 void		pixel_to_image(t_env *env, int x, int y, int color);
 int			light_diaphragm(t_light_color *light, float diaphragm);
+void		render_to_image(t_env *env);
 
 t_matter	*get_matter(t_env *env, char *name);
 void		add_matter(t_env *env, t_matter *matter);
@@ -111,5 +112,10 @@ void		check_pressed_keys(t_env *env, t_pressedkeys *keys);
 int			keyrelease_hook(int keycode, t_env *env);
 
 int			create_interpreter_thread(t_env *env);
+
+void		light_to_render(t_env *env, int x, int y,
+							t_light_color *light);
+void		clean_light_on_render(t_env *env, int x, int y);
+void		kill_all_rendering_threads(t_env *env);
 
 #endif

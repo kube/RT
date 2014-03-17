@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 20:01:25 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/17 22:08:50 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,6 @@
 #include <ft_print.h>
 #include <stdlib.h>
 #include <math.h>
-
-static void			light_to_render(t_env *env, int x, int y,
-									t_light_color *light)
-{
-	unsigned int	i;
-
-	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
-	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0
-		&& (int)x >= 0 && (unsigned int)x < env->scene->view_width)
-	{
-		env->rendering[i].red = light->red;
-		env->rendering[i].green = light->green;
-		env->rendering[i].blue = light->blue;
-	}
-}
-
-static void			clean_light_on_render(t_env *env, int x, int y)
-{
-	unsigned int	i;
-
-	i = env->scene->view_width * (unsigned int)y + (unsigned int)x;
-	if (i < env->scene->view_width * env->scene->view_height && (int)y >= 0
-		&& (int)x >= 0 && (unsigned int)x < env->scene->view_width)
-	{
-		env->rendering[i].red = 0;
-		env->rendering[i].green = 0;
-		env->rendering[i].blue = 0;
-	}
-}
 
 static void			display_ray(t_env *env, t_ray *ray,
 								unsigned int i, unsigned int j)
