@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/17 20:05:09 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/17 20:44:47 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -36,9 +36,12 @@ SOURCES =	rt.c								\
 			phong_shading.c						\
 			matter.c							\
 			render_thread.c						\
+			render_to_image.c					\
 			light_diaphragm.c					\
 			keyboard.c							\
 			pixel.c								\
+			\
+			tests.c								\
 
 OBJECTS =	$(SOURCES:.c=.o)
 
