@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 17:16:41 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 22:45:23 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int			keypress_hook(int keycode, t_env *env)
 		env->pressed_keys.up = 1;
 	else if (keycode == 65364)
 		env->pressed_keys.down = 1;
+	else if (keycode == 65365)
+		env->pressed_keys.p_up = 1;
 	else if (keycode == 65366)
 		env->pressed_keys.p_down = 1;
 	else if (keycode == 65451)
@@ -154,8 +156,7 @@ void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
 		cam_translate_vector(&env->scene->camera, &env->scene->camera.y_axis,
 			-KEYBOARD_MOV_PLOT);
 	}
-
-	env->refresh_image = 1;
+	ask_image_refresh(env);
 }
 
 int			keyrelease_hook(int keycode, t_env *env)
@@ -171,6 +172,8 @@ int			keyrelease_hook(int keycode, t_env *env)
 		env->pressed_keys.up = 0;
 	else if (keycode == 65364)
 		env->pressed_keys.down = 0;
+	else if (keycode == 65365)
+		env->pressed_keys.p_up = 0;
 	else if (keycode == 65366)
 		env->pressed_keys.p_down = 0;
 	else if (keycode == 65451)

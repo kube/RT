@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 18:34:00 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 22:39:52 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 /*
 **	Development Libraries
 */
+#include <time.h>
 #include <stdio.h>
 #include <tests.h>
 
@@ -41,24 +42,24 @@
 
 static int			view_loop(t_env *env)
 {
-
 	if (is_one_key_pressed(&env->pressed_keys))
-	{
-		env->refresh_image = 1;
 		check_pressed_keys(env, &env->pressed_keys);
-	}
-	if (!env->running_threads && !env->block_render && env->refresh_image)
-		update_image(env);
 	if (!env->running_threads)
 	{
 		update_render_cam(&env->scene->render_cam, &env->scene->camera);
-		if (!env->pressed_keys.shift && env->refresh_image)
+		if (!env->pressed_keys.shift)
 			render_to_image(env);
 		else
 			mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
-		env->block_render = 0;
 	}
+	if (!env->running_threads && env->last_image_refresh < env->last_scene_change)
+		update_image(env);
 	return (0);
+}
+
+void				ask_image_refresh(t_env *env)
+{
+	env->last_scene_change = clock();
 }
 
 t_ray				get_ray_from_point(t_env *env, int i, int j)
@@ -104,7 +105,6 @@ int					update_image(t_env *env)
 						* (env->scene->view_height / RENDER_SPLIT);
 			input->thread_number = j * RENDER_SPLIT + i;
 			create_render_thread(env, input);
-			env->refresh_image = 0;
 			i++;
 		}
 		j++;
@@ -129,8 +129,9 @@ int					main(int argc, char **argv)
 	env.selected_object = NULL;
 	env.pressed_mouse = 0;
 	env.running_threads = 0;
-	env.block_render = 0;
-	env.refresh_image = 1;
+
+	env.last_scene_change = clock();
+	env.last_image_refresh = 0;
 
 	env.scene->background_color = 0xFF000000;
 	env.scene->diaphragm = 1.0;
@@ -138,6 +139,7 @@ int					main(int argc, char **argv)
 
 	env.interpreter_thread = 0;
 	env.block_events = 0;
+
 
 	env.render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
 						* sizeof(pthread_t));

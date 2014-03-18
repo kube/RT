@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 00:03:13 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 22:13:13 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int				mouserelease_ev(int button, int x, int y, t_env *env)
 		env->pressed_mouse = 0;
 	}
 	printf("Released Button %d at %d, %d\n", button, x, y);
-	env->refresh_image = 1;
+	ask_image_refresh(env);
 	return (0);
 }
 
@@ -98,8 +98,8 @@ int				motionnotify_ev(int x, int y, t_env *env)
 					vector_add((t_vector*)&(env->selected_object->origin),
 						&env->scene->camera.z_axis, (env->mouse_y - y) * coeff);
 			}
-			env->refresh_image = 1;
 		}
+		ask_image_refresh(env);
 	}
 	env->mouse_x = x;
 	env->mouse_y = y;

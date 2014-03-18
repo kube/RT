@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 17:16:21 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 21:31:11 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct				s_env
 	pthread_t				*render_threads;
 	int						running_threads;
 
-	int						refresh_image;
-	int						block_render;
+	clock_t					last_image_refresh;
+	clock_t					last_scene_change;
 	int						block_events;
 
 	t_interpreter			interpreter;
@@ -118,6 +118,6 @@ int			create_interpreter_thread(t_env *env);
 void		light_to_render(t_env *env, int x, int y,
 							t_light_color *light);
 void		clean_light_on_render(t_env *env, int x, int y);
-void		kill_all_rendering_threads(t_env *env);
+void		ask_image_refresh(t_env *env);
 
 #endif

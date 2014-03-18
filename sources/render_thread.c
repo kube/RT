@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 18:46:00 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 22:49:09 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void			*throw_view_plane(void *thread_input)
 
 	input = (t_thread_input*)thread_input;
 	env = input->env;
+	env->last_image_refresh = clock();
 	j = input->y1;
 	while (j <= input->y2)
 	{
@@ -51,7 +52,6 @@ static void			*throw_view_plane(void *thread_input)
 		}
 		j++;
 	}
-	env->block_render = 1;
 	env->running_threads--;
 	free(thread_input);
 	return (NULL);
