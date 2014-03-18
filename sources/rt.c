@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 21:21:39 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 18:34:00 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,15 @@ static int			view_loop(t_env *env)
 {
 
 	if (is_one_key_pressed(&env->pressed_keys))
+	{
+		env->refresh_image = 1;
 		check_pressed_keys(env, &env->pressed_keys);
+	}
 	if (!env->running_threads && !env->block_render && env->refresh_image)
 		update_image(env);
 	if (!env->running_threads)
 	{
+		update_render_cam(&env->scene->render_cam, &env->scene->camera);
 		if (!env->pressed_keys.shift && env->refresh_image)
 			render_to_image(env);
 		else
@@ -61,20 +65,20 @@ t_ray				get_ray_from_point(t_env *env, int i, int j)
 {
 	t_ray			ray;
 
-	ray.origin.x = env->scene->camera.origin.x;
-	ray.origin.y = env->scene->camera.origin.y;
-	ray.origin.z = env->scene->camera.origin.z;
-	ray.direction.x = env->scene->camera.x_axis.x;
-	ray.direction.y = env->scene->camera.x_axis.y;
-	ray.direction.z = env->scene->camera.x_axis.z;
+	ray.origin.x = env->scene->render_cam.origin.x;
+	ray.origin.y = env->scene->render_cam.origin.y;
+	ray.origin.z = env->scene->render_cam.origin.z;
+	ray.direction.x = env->scene->render_cam.x_axis.x;
+	ray.direction.y = env->scene->render_cam.x_axis.y;
+	ray.direction.z = env->scene->render_cam.x_axis.z;
 	i -= env->scene->view_width / 2;
 	j -= env->scene->view_height / 2;
-	ray.direction.x -= (env->scene->camera.y_axis.x / VIEWPLANE_PLOT) * i;
-	ray.direction.y -= (env->scene->camera.y_axis.y / VIEWPLANE_PLOT) * i;
-	ray.direction.z -= (env->scene->camera.y_axis.z / VIEWPLANE_PLOT) * i;
-	ray.direction.x -= (env->scene->camera.z_axis.x / VIEWPLANE_PLOT) * j;
-	ray.direction.y -= (env->scene->camera.z_axis.y / VIEWPLANE_PLOT) * j;
-	ray.direction.z -= (env->scene->camera.z_axis.z / VIEWPLANE_PLOT) * j;
+	ray.direction.x -= (env->scene->render_cam.y_axis.x / VIEWPLANE_PLOT) * i;
+	ray.direction.y -= (env->scene->render_cam.y_axis.y / VIEWPLANE_PLOT) * i;
+	ray.direction.z -= (env->scene->render_cam.y_axis.z / VIEWPLANE_PLOT) * i;
+	ray.direction.x -= (env->scene->render_cam.z_axis.x / VIEWPLANE_PLOT) * j;
+	ray.direction.y -= (env->scene->render_cam.z_axis.y / VIEWPLANE_PLOT) * j;
+	ray.direction.z -= (env->scene->render_cam.z_axis.z / VIEWPLANE_PLOT) * j;
 	return (ray);
 }
 
@@ -100,6 +104,7 @@ int					update_image(t_env *env)
 						* (env->scene->view_height / RENDER_SPLIT);
 			input->thread_number = j * RENDER_SPLIT + i;
 			create_render_thread(env, input);
+			env->refresh_image = 0;
 			i++;
 		}
 		j++;
@@ -132,6 +137,7 @@ int					main(int argc, char **argv)
 	env.scene->matters = NULL;
 
 	env.interpreter_thread = 0;
+	env.block_events = 0;
 
 	env.render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
 						* sizeof(pthread_t));

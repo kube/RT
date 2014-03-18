@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 23:32:50 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 17:16:41 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ int			keypress_hook(int keycode, t_env *env)
 	*/
 
 	printf("Press %d\n", keycode);
+
+	if (env->block_events)
+		return (0);
 
 	if (keycode == 65307)
 		exit(0);

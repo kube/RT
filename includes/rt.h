@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 20:51:27 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 17:16:21 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 typedef struct				s_scene
 {
 	t_camera				camera;
+	t_camera				render_cam;
 	unsigned int			view_width;
 	unsigned int			view_height;
 	float					diaphragm;
@@ -56,8 +57,10 @@ typedef struct				s_env
 	t_light_color			*rendering;
 	pthread_t				*render_threads;
 	int						running_threads;
+
 	int						refresh_image;
 	int						block_render;
+	int						block_events;
 
 	t_interpreter			interpreter;
 	pthread_t				interpreter_thread;
@@ -68,7 +71,6 @@ typedef struct				s_env
 	int						pressed_mouse;
 	int						mouse_x;
 	int						mouse_y;
-	int						block_events;
 }							t_env;
 
 typedef struct				s_thread_input
