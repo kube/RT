@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 21:31:11 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/18 23:57:37 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <camera.h>
 # include <keyboard.h>
 # include <object.h>
+# include <light.h>
 # include <matter.h>
 
 # include <time.h>

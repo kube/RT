@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:01:22 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/11 23:58:48 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/18 23:53:45 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,33 +50,5 @@ typedef struct				s_object
 	};
 	struct s_object			*next;
 }							t_object;
-
-typedef union				u_light_color
-{
-	struct
-	{
-		float				red;
-		float				green;
-		float				blue;
-	};
-	struct
-	{
-		float				r;
-		float				g;
-		float				b;
-	};
-}							t_light_color;
-
-typedef struct				s_light
-{
-	int						type;
-	t_point					origin;
-	float					intensity;
-
-	t_vector				direction;
-	float					aperture;
-	t_light_color			color;
-	struct s_light			*next;
-}							t_light;
 
 #endif

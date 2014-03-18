@@ -2,8 +2,8 @@
 # define KEYBOARD_H
 # include <rt.h>
 
-# define KEYBOARD_ROT_PLOT M_PI / 3000000
-# define KEYBOARD_MOV_PLOT 0.000009
+# define KEYBOARD_ROT_PLOT M_PI / 2000000
+# define KEYBOARD_MOV_PLOT 0.00002
 
 typedef struct			s_pressedkeys
 {
