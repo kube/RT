@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 19:32:30 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 21:47:09 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,16 @@ static int			view_loop()
 	if (!env->running_threads)
 	{
 		update_render_cam(&env->scene->render_cam, &env->scene->camera);
-		if (!env->pressed_keys.shift)
-			render_to_image();
-		else
-			mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+		if (env->last_image_refresh < env->last_light_refresh)
+		{	
+			if (!env->pressed_keys.shift)
+				render_to_image();
+			else
+				mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+		}
+		if (env->last_light_refresh < env->last_scene_change)
+			update_image();
 	}
-	if (!env->running_threads && env->last_image_refresh < env->last_scene_change)
-		update_image();
 	return (0);
 }
 
@@ -131,6 +134,7 @@ int					main(int argc, char **argv)
 	env->running_threads = 0;
 
 	env->last_scene_change = clock();
+	env->last_light_refresh = 0;
 	env->last_image_refresh = 0;
 
 	env->scene->background_color = 0xFF000000;

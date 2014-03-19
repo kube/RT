@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 18:06:21 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 21:47:24 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void			*throw_view_plane(void *thread_input)
 	t_ray			ray;
 
 	input = (t_thread_input*)thread_input;
-	env->last_image_refresh = clock();
+	env->last_light_refresh = clock();
 	j = input->y1;
 	while (j <= input->y2)
 	{

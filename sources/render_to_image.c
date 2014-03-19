@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 20:37:33 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 16:09:04 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 21:45:10 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void				render_to_image()
 		}
 		y++;
 	}
+	env->last_image_refresh = clock();
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
