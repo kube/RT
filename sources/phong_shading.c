@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/16 18:19:45 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:06:06 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_point	get_point_from_ray_intersection(t_ray *ray, float t)
 	return (point);
 }
 
-static float	is_point_exposed_to_light(t_env *env, t_object *object,
+static float	is_point_exposed_to_light(t_object *object,
 											t_point point, t_light *light)
 {
 	t_ray		ray;
@@ -41,7 +41,7 @@ static float	is_point_exposed_to_light(t_env *env, t_object *object,
 	ray.direction.z = light->origin.z - ray.origin.z;
 	distance_to_light = vect_norm(&ray.direction);
 	normalize_vector(&ray.direction);
-	throw_ray(env, &ray, 0, object);
+	throw_ray(&ray, 0, object);
 	if (ray.inter_t <= distance_to_light)
 		return (0);
 	return (1);
@@ -57,7 +57,7 @@ static void		ambient_lighting(t_ray *ray)
 						* ray->closest->ambient / 255.0;
 }
 
-static float	phong_lighting(t_env *env, t_ray *ray)
+static float	phong_lighting(t_ray *ray)
 {
 	t_vector	light_vector;
 	t_vector	normal;
@@ -73,7 +73,7 @@ static float	phong_lighting(t_env *env, t_ray *ray)
 	light = env->scene->lights;
 	while (light)
 	{
-		if (is_point_exposed_to_light(env, ray->closest, intersection, light))
+		if (is_point_exposed_to_light(ray->closest, intersection, light))
 		{
 			/*
 			**	Diffuse Lighting
@@ -116,8 +116,8 @@ static float	phong_lighting(t_env *env, t_ray *ray)
 	return (lambert);
 }
 
-void			phong_shading(t_env *env, t_ray *ray)
+void			phong_shading(t_ray *ray)
 {
 	ambient_lighting(ray);
-	phong_lighting(env, ray);
+	phong_lighting(ray);
 }

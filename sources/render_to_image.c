@@ -6,14 +6,15 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 20:37:33 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 20:49:41 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:09:04 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <rt.h>
 #include <mlx.h>
 
-void				light_to_render(t_env *env, int x, int y,
+void				light_to_render(int x, int y,
 									t_light_color *light)
 {
 	unsigned int	i;
@@ -28,7 +29,7 @@ void				light_to_render(t_env *env, int x, int y,
 	}
 }
 
-void				clean_light_on_render(t_env *env, int x, int y)
+void				clean_light_on_render(int x, int y)
 {
 	unsigned int	i;
 
@@ -42,7 +43,7 @@ void				clean_light_on_render(t_env *env, int x, int y)
 	}
 }
 
-void				render_to_image(t_env *env)
+void				render_to_image()
 {
 	unsigned int	x;
 	unsigned int	y;
@@ -53,7 +54,7 @@ void				render_to_image(t_env *env)
 		x = 0;
 		while (x < env->scene->view_width)
 		{
-			pixel_to_image(env, x, y,
+			pixel_to_image(x, y,
 				light_diaphragm(&env->rendering[y * env->scene->view_width + x],
 					env->scene->diaphragm));
 			x++;

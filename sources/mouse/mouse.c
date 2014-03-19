@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 22:13:13 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:05:08 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int				mousepress_ev(int button, int x, int y, t_env *env)
 	t_ray		ray;
 
 	printf("Pressed Button %d at %d, %d\n", button, x, y);
-	ray = get_ray_from_point(env, x, y);
-	throw_ray(env, &ray, 0, NULL);
+	ray = get_ray_from_point(x, y);
+	throw_ray(&ray, 0, NULL);
 	if (button == 1)
 		env->pressed_mouse = 1;
 	if (ray.inter_t != INFINITY)
@@ -59,7 +59,7 @@ int				mouserelease_ev(int button, int x, int y, t_env *env)
 		env->pressed_mouse = 0;
 	}
 	printf("Released Button %d at %d, %d\n", button, x, y);
-	ask_image_refresh(env);
+	ask_image_refresh();
 	return (0);
 }
 

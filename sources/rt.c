@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 23:57:25 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:08:21 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,29 @@
 #define RENDER_HEIGHT			670
 
 
-static int			view_loop(t_env *env)
+static int			view_loop()
 {
 	if (is_one_key_pressed(&env->pressed_keys))
-		check_pressed_keys(env, &env->pressed_keys);
+		check_pressed_keys(&env->pressed_keys);
 	if (!env->running_threads)
 	{
 		update_render_cam(&env->scene->render_cam, &env->scene->camera);
 		if (!env->pressed_keys.shift)
-			render_to_image(env);
+			render_to_image();
 		else
 			mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 	}
 	if (!env->running_threads && env->last_image_refresh < env->last_scene_change)
-		update_image(env);
+		update_image();
 	return (0);
 }
 
-void				ask_image_refresh(t_env *env)
+void				ask_image_refresh()
 {
 	env->last_scene_change = clock();
 }
 
-t_ray				get_ray_from_point(t_env *env, int i, int j)
+t_ray				get_ray_from_point(int i, int j)
 {
 	t_ray			ray;
 
@@ -83,7 +83,7 @@ t_ray				get_ray_from_point(t_env *env, int i, int j)
 	return (ray);
 }
 
-int					update_image(t_env *env)
+int					update_image()
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -96,7 +96,6 @@ int					update_image(t_env *env)
 		while (i < RENDER_SPLIT)
 		{
 			input = (t_thread_input*)malloc(sizeof(*input));
-			input->env = env;
 			input->x1 = i * (env->scene->view_width / RENDER_SPLIT);
 			input->y1 = j * (env->scene->view_height / RENDER_SPLIT);
 			input->x2 = env->scene->view_width - (RENDER_SPLIT - 1 - i)
@@ -104,7 +103,7 @@ int					update_image(t_env *env)
 			input->y2 = env->scene->view_width - (RENDER_SPLIT - 1 - j)
 						* (env->scene->view_height / RENDER_SPLIT);
 			input->thread_number = j * RENDER_SPLIT + i;
-			create_render_thread(env, input);
+			create_render_thread(input);
 			i++;
 		}
 		j++;
@@ -114,60 +113,61 @@ int					update_image(t_env *env)
 
 int					main(int argc, char **argv)
 {
-	t_env			env;
-
 	if (argc == 2)
 	{
 		parse_file(argv[1]);
 		return (0);
 	}
-	env.scene = (t_scene*)malloc(sizeof(t_scene));
 
-	env.scene->view_width = RENDER_WIDTH;
-	env.scene->view_height = RENDER_HEIGHT;
+	env = (t_env*)ft_memalloc(sizeof(t_env));
 
-	env.selected_object = NULL;
-	env.pressed_mouse = 0;
-	env.running_threads = 0;
+	env->scene = (t_scene*)malloc(sizeof(t_scene));
 
-	env.last_scene_change = clock();
-	env.last_image_refresh = 0;
+	env->scene->view_width = RENDER_WIDTH;
+	env->scene->view_height = RENDER_HEIGHT;
 
-	env.scene->background_color = 0xFF000000;
-	env.scene->diaphragm = 1.0;
-	env.scene->matters = NULL;
+	env->selected_object = NULL;
+	env->pressed_mouse = 0;
+	env->running_threads = 0;
 
-	env.interpreter_thread = 0;
-	env.block_events = 0;
+	env->last_scene_change = clock();
+	env->last_image_refresh = 0;
+
+	env->scene->background_color = 0xFF000000;
+	env->scene->diaphragm = 1.0;
+	env->scene->matters = NULL;
+
+	env->interpreter_thread = 0;
+	env->block_events = 0;
 
 
-	env.render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
+	env->render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
 						* sizeof(pthread_t));
-	env.rendering = (t_light_color*)ft_memalloc(env.scene->view_width
-					* env.scene->view_height * sizeof(t_light_color));
+	env->rendering = (t_light_color*)ft_memalloc(env->scene->view_width
+					* env->scene->view_height * sizeof(t_light_color));
 
-	env.mlx = mlx_init();
-	env.win = mlx_new_window(env.mlx, env.scene->view_width,
-				env.scene->view_height, "RT");
-	env.img = mlx_new_image(env.mlx, env.scene->view_width,
-				env.scene->view_height);
-	env.data = (int*)mlx_get_data_addr(env.img, &(env.bpp),
-				&(env.size_line), &(env.endian));
+	env->mlx = mlx_init();
+	env->win = mlx_new_window(env->mlx, env->scene->view_width,
+				env->scene->view_height, "RT");
+	env->img = mlx_new_image(env->mlx, env->scene->view_width,
+				env->scene->view_height);
+	env->data = (int*)mlx_get_data_addr(env->img, &(env->bpp),
+				&(env->size_line), &(env->endian));
 
-	init_cam(&env.scene->camera, 0, 0, 0);
-	init_cam_angle(&env.scene->camera, 0, 0);
-	create_test_objects(env.scene);
-	init_pressed_keys(&env.pressed_keys);
+	init_cam(&env->scene->camera, 0, 0, 0);
+	init_cam_angle(&env->scene->camera, 0, 0);
+	create_test_objects(env->scene);
+	init_pressed_keys(&env->pressed_keys);
 
 	create_interpreter_thread(&env);
 
-	mlx_expose_hook(env.win, view_loop, &env);
-	mlx_hook(env.win, KeyPress, KeyPressMask, keypress_hook, &env);
-	mlx_hook(env.win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env);
-	mlx_hook(env.win, ButtonPress, ButtonPressMask, mousepress_ev, &env);
-	mlx_hook(env.win, ButtonRelease, ButtonReleaseMask, mouserelease_ev, &env);
-	mlx_hook(env.win, MotionNotify, PointerMotionMask, motionnotify_ev, &env);
-	mlx_loop_hook(env.mlx, view_loop, &env);
-	mlx_loop(env.mlx);
+	mlx_expose_hook(env->win, view_loop, env);
+	mlx_hook(env->win, KeyPress, KeyPressMask, keypress_hook, &env->pressed_keys);
+	mlx_hook(env->win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env->pressed_keys);
+	mlx_hook(env->win, ButtonPress, ButtonPressMask, mousepress_ev, env);
+	mlx_hook(env->win, ButtonRelease, ButtonReleaseMask, mouserelease_ev, env);
+	mlx_hook(env->win, MotionNotify, PointerMotionMask, motionnotify_ev, env);
+	mlx_loop_hook(env->mlx, view_loop, env);
+	mlx_loop(env->mlx);
 	return (0);
 }

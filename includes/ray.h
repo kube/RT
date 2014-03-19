@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/16 17:49:09 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:02:28 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ typedef struct						s_ray
 	float							inter_t;
 }									t_ray;
 
-t_ray		get_ray_from_point(t_env *env, int i, int j);
-void		throw_ray(t_env *env, t_ray *ray, int calculate_light,
+t_ray		get_ray_from_point(int i, int j);
+void		throw_ray(t_ray *ray, int calculate_light,
 						t_object *to_ignore);
-void		phong_shading(t_env *env, t_ray *ray);
+void		phong_shading(t_ray *ray);
 
 float		sphere_equation(t_object *sphere, t_ray *ray);
 float		plane_equation(t_object *plane, t_ray *ray);

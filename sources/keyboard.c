@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 22:45:23 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:09:20 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		init_pressed_keys(t_pressedkeys *keys)
 	ft_bzero(keys, sizeof(*keys));
 }
 
-int			keypress_hook(int keycode, t_env *env)
+int			keypress_hook(int keycode, t_pressedkeys *keys)
 {
 	/*
 	**	Use allocated table here with Callbacks, Better Performance, Less lines
@@ -37,48 +37,48 @@ int			keypress_hook(int keycode, t_env *env)
 	if (keycode == 65307)
 		exit(0);
 	else if (keycode == 65363)
-		env->pressed_keys.right = 1;
+		keys->right = 1;
 	else if (keycode == 65361)
-		env->pressed_keys.left = 1;
+		keys->left = 1;
 	else if (keycode == 65362)
-		env->pressed_keys.up = 1;
+		keys->up = 1;
 	else if (keycode == 65364)
-		env->pressed_keys.down = 1;
+		keys->down = 1;
 	else if (keycode == 65365)
-		env->pressed_keys.p_up = 1;
+		keys->p_up = 1;
 	else if (keycode == 65366)
-		env->pressed_keys.p_down = 1;
+		keys->p_down = 1;
 	else if (keycode == 65451)
-		env->pressed_keys.num_plus = 1;
+		keys->num_plus = 1;
 	else if (keycode == 65453)
-		env->pressed_keys.num_minus = 1;
+		keys->num_minus = 1;
 	else if (keycode == 119)
-		env->pressed_keys.w = 1;
+		keys->w = 1;
 	else if (keycode == 97)
-		env->pressed_keys.a = 1;
+		keys->a = 1;
 	else if (keycode == 115)
-		env->pressed_keys.s = 1;
+		keys->s = 1;
 	else if (keycode == 100)
-		env->pressed_keys.d = 1;
+		keys->d = 1;
 	else if (keycode == 65535)
-		env->pressed_keys.del = 1;
+		keys->del = 1;
 	else if (keycode == 65505)
-		env->pressed_keys.shift = 1;
+		keys->shift = 1;
 	else if (keycode == 65507)
-		env->pressed_keys.ctrl = 1;
+		keys->ctrl = 1;
 	else if (keycode == 65289)
-		env->pressed_keys.tab = 1;
+		keys->tab = 1;
 	else if (keycode == 32)
 	{
 		if (env->selected_object)
-			duplicate_object(env, env->selected_object);
+			duplicate_object(env->selected_object);
 	}
 	else if (keycode == 61)
 		env->scene->diaphragm *= 1.05;
 	else if (keycode == 45)
 		env->scene->diaphragm /= 1.05;
 	else if (keycode == 65406)
-		env->pressed_keys.alt = 1;
+		keys->alt = 1;
 	return (0);
 }
 
@@ -100,7 +100,7 @@ int				is_one_key_pressed(t_pressedkeys *keys)
 	return (0);
 }
 
-void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
+void				check_pressed_keys(t_pressedkeys *keys)
 {
 	/*
 	**	Use dedicated Key Structure with Callback ?
@@ -159,46 +159,46 @@ void				check_pressed_keys(t_env *env, t_pressedkeys *keys)
 	ask_image_refresh(env);
 }
 
-int			keyrelease_hook(int keycode, t_env *env)
+int			keyrelease_hook(int keycode, t_pressedkeys *keys)
 {
 	/*
 	**	Use allocated table here with Callbacks, Better Performance, Less lines
 	*/
 	if (keycode == 65363)
-		env->pressed_keys.right = 0;
+		keys->right = 0;
 	else if (keycode == 65361)
-		env->pressed_keys.left = 0;
+		keys->left = 0;
 	else if (keycode == 65362)
-		env->pressed_keys.up = 0;
+		keys->up = 0;
 	else if (keycode == 65364)
-		env->pressed_keys.down = 0;
+		keys->down = 0;
 	else if (keycode == 65365)
-		env->pressed_keys.p_up = 0;
+		keys->p_up = 0;
 	else if (keycode == 65366)
-		env->pressed_keys.p_down = 0;
+		keys->p_down = 0;
 	else if (keycode == 65451)
-		env->pressed_keys.num_plus = 0;
+		keys->num_plus = 0;
 	else if (keycode == 65453)
-		env->pressed_keys.num_minus = 0;
+		keys->num_minus = 0;
 	else if (keycode == 119)
-		env->pressed_keys.w = 0;
+		keys->w = 0;
 	else if (keycode == 97)
-		env->pressed_keys.a = 0;
+		keys->a = 0;
 	else if (keycode == 115)
-		env->pressed_keys.s = 0;
+		keys->s = 0;
 	else if (keycode == 100)
-		env->pressed_keys.d = 0;
+		keys->d = 0;
 	else if (keycode == 65535)
-		env->pressed_keys.del = 0;
+		keys->del = 0;
 	else if (keycode == 32)
-		env->pressed_keys.space = 0;
+		keys->space = 0;
 	else if (keycode == 65505)
-		env->pressed_keys.shift = 0;
+		keys->shift = 0;
 	else if (keycode == 65507)
-		env->pressed_keys.ctrl = 0;
+		keys->ctrl = 0;
 	else if (keycode == 65289)
-		env->pressed_keys.tab = 0;
+		keys->tab = 0;
 	else if (keycode == 65406)
-		env->pressed_keys.alt = 0;
+		keys->alt = 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/18 23:57:37 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:07:54 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct				s_thread_input
 	unsigned int			x2;
 	unsigned int			y2;
 	int						thread_number;
-	t_env					*env;
 }							t_thread_input;
 
 typedef struct				s_command
@@ -92,33 +91,35 @@ typedef struct				s_command
 	struct s_command		*next;
 }							t_command;
 
-int			update_image(t_env *env);
-int			create_render_thread(t_env *env, t_thread_input *input);
-void		pixel_to_image(t_env *env, int x, int y, int color);
-int			light_diaphragm(t_light_color *light, float diaphragm);
-void		render_to_image(t_env *env);
+t_env		*env;
 
-t_matter	*get_matter(t_env *env, char *name);
-void		add_matter(t_env *env, t_matter *matter);
+int			update_image();
+int			create_render_thread(t_thread_input *input);
+void		pixel_to_image(int x, int y, int color);
+int			light_diaphragm(t_light_color *light, float diaphragm);
+void		render_to_image();
+
+t_matter	*get_matter(char *name);
+void		add_matter(t_matter *matter);
 t_matter	*new_matter(char *name);
 
 void		load_matter_object(t_object *object, t_matter *matter);
 t_object	*new_object(int type);
 void		add_object(t_scene *scene, t_object *object);
-void		duplicate_object(t_env *env, t_object *object);
+void		duplicate_object(t_object *object);
 void		remove_object(t_scene *scene, t_object *object);
 void		remove_light(t_scene *scene, t_light *light);
 
 void		init_pressed_keys(t_pressedkeys *keys);
-int			keypress_hook(int keycode, t_env *env);
-void		check_pressed_keys(t_env *env, t_pressedkeys *keys);
-int			keyrelease_hook(int keycode, t_env *env);
+int			keypress_hook(int keycode, t_pressedkeys *keys);
+void		check_pressed_keys(t_pressedkeys *keys);
+int			keyrelease_hook(int keycode, t_pressedkeys *keys);
 
-int			create_interpreter_thread(t_env *env);
+int			create_interpreter_thread();
 
-void		light_to_render(t_env *env, int x, int y,
+void		light_to_render(int x, int y,
 							t_light_color *light);
-void		clean_light_on_render(t_env *env, int x, int y);
-void		ask_image_refresh(t_env *env);
+void		clean_light_on_render(int x, int y);
+void		ask_image_refresh();
 
 #endif

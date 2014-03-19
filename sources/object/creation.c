@@ -6,9 +6,10 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:12:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/18 21:25:48 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:03:30 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <rt.h>
 #include <ft_memory.h>
@@ -28,7 +29,7 @@ void			load_matter_object(t_object *object, t_matter *matter)
 	object->refract_index = matter->refract_index;
 }
 
-void			duplicate_object(t_env *env, t_object *object)
+void			duplicate_object(t_object *object)
 {
 	t_object	*object_created;
 

@@ -6,13 +6,13 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 20:01:18 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 20:01:44 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:09:39 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 
-void				pixel_to_image(t_env *env, int x, int y, int color)
+void				pixel_to_image(int x, int y, int color)
 {
 	unsigned int	i;
 

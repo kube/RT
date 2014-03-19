@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:22:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/14 16:51:22 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 16:06:29 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <ft_memory.h>
 #include <ft_strings.h>
 
-t_matter		*get_matter(t_env *env, char *name)
+t_matter		*get_matter(char *name)
 {
 	t_matter	*current;
 
@@ -28,9 +28,9 @@ t_matter		*get_matter(t_env *env, char *name)
 	return (0);
 }
 
-void			add_matter(t_env *env, t_matter *matter)
+void			add_matter(t_matter *matter)
 {
-	if (!get_matter(env, matter->name))
+	if (!get_matter(matter->name))
 	{
 		matter->next = env->scene->matters;
 		env->scene->matters = matter;
