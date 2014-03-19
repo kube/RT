@@ -6,13 +6,13 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:01:22 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/19 19:35:38 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 23:04:39 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJECT_H
 # define OBJECT_H
-
+# include <scene.h>
 # include <ft_math.h>
 # include <ft_colors.h>
 
@@ -51,5 +51,10 @@ typedef struct				s_object
 	};
 	struct s_object			*next;
 }							t_object;
+
+t_object	*new_object(int type);
+void		add_object(t_scene *scene, t_object *object);
+void		duplicate_object(t_object *object);
+void		remove_object(t_scene *scene, t_object *object);
 
 #endif

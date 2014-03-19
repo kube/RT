@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:12:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/19 22:50:18 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 22:57:11 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,6 @@
 #include <stdlib.h>
 
 #include <pthread.h>
-
-void			load_matter_object(t_object *object, t_matter *matter)
-{
-	object->color = matter->color;
-	object->opacity = matter->opacity;
-	object->ambient = matter->ambient;
-	object->diffuse = matter->diffuse;
-	object->specular = matter->specular;
-	object->reflection = matter->reflection;
-	object->refraction = matter->refraction;
-	object->refract_index = matter->refract_index;
-}
 
 void			duplicate_object(t_object *object)
 {

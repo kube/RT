@@ -6,12 +6,13 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/18 23:53:24 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 19:35:50 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 23:03:41 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIGHT_H
 # define LIGHT_H
+# include <scene.h>
 
 # define LIGHT_DOT			0
 # define LIGHT_SPHERE		1
@@ -44,5 +45,7 @@ typedef struct				s_light
 	t_light_color			color;
 	struct s_light			*next;
 }							t_light;
+
+void		remove_light(t_scene *scene, t_light *light);
 
 #endif

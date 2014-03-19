@@ -6,27 +6,22 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/19 17:06:34 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 23:07:51 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAY_H
 # define RAY_H
-
 # include <rt.h>
 # include <ft_colors.h>
 
 typedef struct						s_ray
 {
-	/*
-	**	Remove some stuff here
-	*/
 	t_point							origin;
 	t_vector						direction;
 	unsigned int					recursivity;
 	float							intensity;
 	t_light_color					color;
-	t_color							f_color;
 	t_object						*closest;
 	float							inter_t;
 }									t_ray;

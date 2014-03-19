@@ -6,13 +6,25 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:22:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/19 16:06:29 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 22:57:17 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <ft_memory.h>
 #include <ft_strings.h>
+
+void			load_matter_to_object(t_object *object, t_matter *matter)
+{
+	object->color = matter->color;
+	object->opacity = matter->opacity;
+	object->ambient = matter->ambient;
+	object->diffuse = matter->diffuse;
+	object->specular = matter->specular;
+	object->reflection = matter->reflection;
+	object->refraction = matter->refraction;
+	object->refract_index = matter->refract_index;
+}
 
 t_matter		*get_matter(char *name)
 {
