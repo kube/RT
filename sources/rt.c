@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 21:47:09 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 22:10:41 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 #include <ft_colors.h>
 #include <ft_convert.h>
 #include <ft_memory.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <math.h>
 #include <mlx.h>
 #include <X.h>
 #include <rt.h>
 #include <ray.h>
 #include <parser.h>
-#include <stdlib.h>
 #include <mouse.h>
 #include <interpreter.h>
 #include <pthread.h>
@@ -57,6 +58,7 @@ static int			view_loop()
 		if (env->last_light_refresh < env->last_scene_change)
 			update_image();
 	}
+	usleep(10000);
 	return (0);
 }
 
