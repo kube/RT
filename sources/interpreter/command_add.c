@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 03:27:02 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 19:21:04 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 22:50:31 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void			add_sphere()
 	env->scene->objects->ambient = 0.8;
 	env->scene->objects->diffuse = 0.4;
 	env->scene->objects->specular = 0.2;
-	ask_image_refresh();
+	env->last_scene_change = clock();
 }
 
 static void			add_plane()
@@ -50,7 +50,7 @@ static void			add_plane()
 	env->scene->objects->ambient = 0.1;
 	env->scene->objects->diffuse = 0.8;
 	env->scene->objects->specular = 0.4;
-	ask_image_refresh();
+	env->last_scene_change = clock();
 }
 
 static void			add_light()
@@ -71,7 +71,7 @@ static void			add_light()
 	new_light->color.blue = 1.0;
 	new_light->next = env->scene->lights;
 	env->scene->lights = new_light;
-	ask_image_refresh();
+	env->last_scene_change = clock();
 }
 
 void				command_add(char **line)

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 22:10:41 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 22:49:04 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,10 @@ static int			view_loop()
 		if (env->last_light_refresh < env->last_scene_change)
 			update_image();
 	}
-	usleep(10000);
+	usleep(4000);
 	return (0);
 }
 
-void				ask_image_refresh()
-{
-	env->last_scene_change = clock();
-}
 
 t_ray				get_ray_from_point(int i, int j)
 {
@@ -113,6 +109,12 @@ int					update_image()
 		}
 		j++;
 	}
+	return (0);
+}
+
+static int			expose_hook()
+{
+	env->last_scene_change = clock();
 	return (0);
 }
 
@@ -167,13 +169,13 @@ int					main(int argc, char **argv)
 
 	create_interpreter_thread(&env);
 
-	mlx_expose_hook(env->win, view_loop, env);
+	mlx_expose_hook(env->win, expose_hook, NULL);
 	mlx_hook(env->win, KeyPress, KeyPressMask, keypress_hook, &env->pressed_keys);
 	mlx_hook(env->win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env->pressed_keys);
-	mlx_hook(env->win, ButtonPress, ButtonPressMask, mousepress_ev, env);
-	mlx_hook(env->win, ButtonRelease, ButtonReleaseMask, mouserelease_ev, env);
-	mlx_hook(env->win, MotionNotify, PointerMotionMask, motionnotify_ev, env);
-	mlx_loop_hook(env->mlx, view_loop, env);
+	mlx_hook(env->win, ButtonPress, ButtonPressMask, mousepress_ev, NULL);
+	mlx_hook(env->win, ButtonRelease, ButtonReleaseMask, mouserelease_ev, NULL);
+	mlx_hook(env->win, MotionNotify, PointerMotionMask, motionnotify_ev, NULL);
+	mlx_loop_hook(env->mlx, view_loop, NULL);
 	mlx_loop(env->mlx);
 	return (0);
 }

@@ -2,8 +2,8 @@
 # define KEYBOARD_H
 # include <rt.h>
 
-# define KEYBOARD_ROT_PLOT M_PI / 400
-# define KEYBOARD_MOV_PLOT 0.14
+# define KEYBOARD_ROT_PLOT M_PI / 1100
+# define KEYBOARD_MOV_PLOT 0.045
 
 typedef struct			s_pressedkeys
 {
@@ -28,5 +28,9 @@ typedef struct			s_pressedkeys
 }						t_pressedkeys;
 
 int			is_one_key_pressed(t_pressedkeys *keys);
+void		init_pressed_keys(t_pressedkeys *keys);
+int			keypress_hook(int keycode, t_pressedkeys *keys);
+void		check_pressed_keys(t_pressedkeys *keys);
+int			keyrelease_hook(int keycode, t_pressedkeys *keys);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 16:09:20 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 22:51:17 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void				check_pressed_keys(t_pressedkeys *keys)
 		cam_translate_vector(&env->scene->camera, &env->scene->camera.y_axis,
 			-KEYBOARD_MOV_PLOT);
 	}
-	ask_image_refresh(env);
+	env->last_scene_change = clock();
 }
 
 int			keyrelease_hook(int keycode, t_pressedkeys *keys)

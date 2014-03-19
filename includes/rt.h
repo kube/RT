@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 21:50:23 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 22:49:12 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,16 +100,10 @@ void		duplicate_object(t_object *object);
 void		remove_object(t_scene *scene, t_object *object);
 void		remove_light(t_scene *scene, t_light *light);
 
-void		init_pressed_keys(t_pressedkeys *keys);
-int			keypress_hook(int keycode, t_pressedkeys *keys);
-void		check_pressed_keys(t_pressedkeys *keys);
-int			keyrelease_hook(int keycode, t_pressedkeys *keys);
-
 int			create_interpreter_thread();
 
 void		light_to_render(int x, int y,
 							t_light_color *light);
 void		clean_light_on_render(int x, int y);
-void		ask_image_refresh();
 
 #endif

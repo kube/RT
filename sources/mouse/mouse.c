@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 16:05:08 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 22:51:01 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include <stdio.h>
 
-int				mousepress_ev(int button, int x, int y, t_env *env)
+int				mousepress_ev(int button, int x, int y)
 {
 	t_ray		ray;
 
@@ -51,7 +51,7 @@ int				mousepress_ev(int button, int x, int y, t_env *env)
 	return (0);
 }
 
-int				mouserelease_ev(int button, int x, int y, t_env *env)
+int				mouserelease_ev(int button, int x, int y)
 {
 	if (button == 1)
 	{
@@ -59,11 +59,10 @@ int				mouserelease_ev(int button, int x, int y, t_env *env)
 		env->pressed_mouse = 0;
 	}
 	printf("Released Button %d at %d, %d\n", button, x, y);
-	ask_image_refresh();
 	return (0);
 }
 
-int				motionnotify_ev(int x, int y, t_env *env)
+int				motionnotify_ev(int x, int y)
 {
 	float		coeff;
 
@@ -99,7 +98,7 @@ int				motionnotify_ev(int x, int y, t_env *env)
 						&env->scene->camera.z_axis, (env->mouse_y - y) * coeff);
 			}
 		}
-		ask_image_refresh(env);
+		env->last_scene_change = clock();
 	}
 	env->mouse_x = x;
 	env->mouse_y = y;

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/09 02:12:30 by kube              #+#    #+#             */
-/*   Updated: 2014/03/19 16:03:30 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 22:50:18 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			duplicate_object(t_object *object)
 	object_created = new_object(OBJ_SPHERE);
 	ft_memcpy(object_created, object, sizeof(t_object));
 	add_object(env->scene, object_created);
-	ask_image_refresh(env);
+	env->last_scene_change = clock();
 }
 
 void			remove_light(t_scene *scene, t_light *light)
@@ -81,6 +81,7 @@ void			remove_object(t_scene *scene, t_object *object)
 		previous = current;
 		current = current->next;
 	}
+	env->last_scene_change = clock();
 }
 
 void			add_object(t_scene *scene, t_object *object)
