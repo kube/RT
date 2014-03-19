@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 00:47:38 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 18:49:44 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 19:37:39 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
 
 static void			check_command(t_command *commands, char **command_line)
 {
@@ -50,7 +49,6 @@ static void			parse_line(char *line)
 	}
 }
 
-
 static void			interpreter_add_command(t_command **commands, char *token,
 											void (*callback)(char**))
 {
@@ -69,7 +67,8 @@ static void			interpreter_init_commands(t_interpreter *interpreter)
 	interpreter_add_command(&interpreter->commands, "list", command_list);
 	interpreter_add_command(&interpreter->commands, "remove", command_remove);
 	interpreter_add_command(&interpreter->commands, "add", command_add);
-	// add_command("repeat", command_repeat);
+	interpreter_add_command(&interpreter->commands, "export", command_export);
+
 	// add_command("modify", command_list);
 	// add_command("	", command_tab);
 }

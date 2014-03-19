@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/18 23:53:24 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 00:29:26 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 19:35:50 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef union				u_light_color
 
 typedef struct				s_light
 {
+	char					*light;
 	int						type;
 	t_point					origin;
 	float					intensity;

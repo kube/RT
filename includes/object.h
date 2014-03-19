@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:01:22 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/18 23:53:45 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 19:35:38 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 typedef struct				s_object
 {
+	char					*name;
 	int						type;
 	t_point					origin;
 	union

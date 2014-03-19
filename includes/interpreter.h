@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 00:50:04 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 18:50:19 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 19:42:25 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ typedef struct				s_command
 void		command_list(char **line);
 void		command_remove(char **line);
 void		command_add(char **line);
+void		command_export(char **line);
 
 #endif

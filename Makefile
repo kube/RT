@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/17 20:44:47 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/19 19:42:49 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -30,6 +30,7 @@ SOURCES =	rt.c								\
 			interpreter/command_list.c			\
 			interpreter/command_remove.c		\
 			interpreter/command_add.c			\
+			interpreter/command_export.c		\
 			mouse/mouse.c						\
 			ray_throw.c							\
 			equations.c							\
