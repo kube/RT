@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 03:01:57 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 04:01:33 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 18:50:05 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdio.h>
 
-void				command_list(t_env *env, char **line)
+void				command_list(char **line)
 {
 	t_object		*object;
 	t_light			*light;

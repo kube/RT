@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 00:47:38 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 03:37:35 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 18:49:44 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@
 #include <stdlib.h>
 
 
-static void			check_command(t_env *env, t_command *commands,
-									char **command_line)
+static void			check_command(t_command *commands, char **command_line)
 {
 	while (commands)
 	{
 		if (ft_strequ(commands->token, *command_line))
 		{
-			commands->f(env, command_line + 1);
+			commands->callback(command_line + 1);
 			return ;
 		}
 		commands = commands->next;
@@ -38,14 +37,14 @@ static void			check_command(t_env *env, t_command *commands,
 	ft_putendl_fd("ERROR! Unrecognized command.", 2);
 }
 
-static void			parse_line(t_env *env, char *line)
+static void			parse_line(char *line)
 {
 	char			**splited;
 
 	splited = ft_strsplit(line, ' ');
 	if (*splited)
 	{
-		check_command(env, env->interpreter.commands, splited);
+		check_command(env->interpreter.commands, splited);
 		free(splited);
 		free(line);
 	}
@@ -53,13 +52,13 @@ static void			parse_line(t_env *env, char *line)
 
 
 static void			interpreter_add_command(t_command **commands, char *token,
-											void (*f)(t_env*, char**))
+											void (*callback)(char**))
 {
 	t_command		*new_command;
 
 	new_command = (t_command*)malloc(sizeof(t_command));
 	new_command->token = ft_strdup(token);
-	new_command->f = f;
+	new_command->callback = callback;
 	new_command->next = *commands;
 	*commands = new_command;
 }
@@ -75,27 +74,25 @@ static void			interpreter_init_commands(t_interpreter *interpreter)
 	// add_command("	", command_tab);
 }
 
-static void			*ask_user(void *env_input)
+static void			*ask_user()
 {
-	t_env			*env;
 	t_scene			*scene;
 	char			*line;
 
-	env = (t_env*)env_input;
 	scene = env->scene;
 	while (1)
 	{
 		get_stdin_next_line(&line);
-		parse_line(env, line);
+		parse_line(line);
 	}
 	return (NULL);
 }
 
-int					create_interpreter_thread(t_env *env)
+int					create_interpreter_thread()
 {
 	interpreter_init_commands(&env->interpreter);
 	if (pthread_create(&env->interpreter_thread, NULL,
-		ask_user, (void*)env))
+		ask_user, NULL))
 	{
 		ft_putendl_fd("ERROR! Unable to create interpreter thread.", 2);
 		return (1);

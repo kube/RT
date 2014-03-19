@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 16:07:41 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 18:06:21 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include <ft_print.h>
 #include <stdlib.h>
 #include <math.h>
+
+
+#include <stdio.h>
+
+#define PREDEFINED_RENDER_PLOT	9
 
 static void			display_ray(t_ray *ray,
 								unsigned int i, unsigned int j)

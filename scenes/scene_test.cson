@@ -51,9 +51,9 @@ scene:
         x: 0
         y: 50
         z: 10
-        rotX: 0
-        rotY: -20
         rotZ: 0
+        rotY: -20
+        rotX: 0
 
     # Lights
     light:

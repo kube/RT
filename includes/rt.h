@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 16:07:54 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 18:48:14 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <object.h>
 # include <light.h>
 # include <matter.h>
+# include <interpreter.h>
 
 # include <time.h>
 # include <pthread.h>
@@ -37,12 +38,6 @@ typedef struct				s_scene
 	t_object				*objects;
 	t_light					*lights;
 }							t_scene;
-
-typedef struct				s_interpreter
-{
-	char					**last_command;
-	struct s_command		*commands;
-}							t_interpreter;
 
 typedef struct				s_env
 {
@@ -83,13 +78,7 @@ typedef struct				s_thread_input
 	int						thread_number;
 }							t_thread_input;
 
-typedef struct				s_command
-{
-	char					*token;
-	struct s_command		*child;
-	void					(*f)(t_env*, char**);
-	struct s_command		*next;
-}							t_command;
+
 
 t_env		*env;
 

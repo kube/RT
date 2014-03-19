@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 03:27:02 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 04:05:56 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 18:59:27 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <interpreter.h>
 
-static void			add_sphere(t_env *env)
+static void			add_sphere()
 {
 	add_object(env->scene, new_object(OBJ_SPHERE));
 	env->scene->objects->origin.x = env->scene->camera.origin.x
@@ -33,9 +33,10 @@ static void			add_sphere(t_env *env)
 	env->scene->objects->ambient = 0.8;
 	env->scene->objects->diffuse = 0.4;
 	env->scene->objects->specular = 0.2;
+	ask_image_refresh();
 }
 
-static void			add_plane(t_env *env)
+static void			add_plane()
 {
 	add_object(env->scene, new_object(OBJ_PLANE));
 	env->scene->objects->origin.x = env->scene->camera.origin.x
@@ -49,9 +50,10 @@ static void			add_plane(t_env *env)
 	env->scene->objects->ambient = 0.1;
 	env->scene->objects->diffuse = 0.8;
 	env->scene->objects->specular = 0.4;
+	ask_image_refresh();
 }
 
-static void			add_light(t_env *env)
+static void			add_light()
 {
 	t_light			*new_light;
 
@@ -69,18 +71,19 @@ static void			add_light(t_env *env)
 	new_light->color.blue = 1.0;
 	new_light->next = env->scene->lights;
 	env->scene->lights = new_light;
+	ask_image_refresh();
 }
 
-void				command_add(t_env *env, char **line)
+void				command_add(char **line)
 {
 	if (*line && !line[1])
 	{
 		if (ft_strequ("sphere", *line))
-			add_sphere(env);
+			add_sphere();
 		else if (ft_strequ("plane", *line))
-			add_plane(env);
+			add_plane();
 		else if (ft_strequ("light", *line))
-			add_light(env);
+			add_light();
 		else
 			ft_putendl("Unrecognized object type.");
 	}
