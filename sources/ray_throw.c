@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_throw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/19 18:36:26 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/21 22:54:18 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,34 @@ static float	intersection(t_object *obj, t_ray *ray)
 	return (INFINITY);
 }
 
+static void		calculate_reflected_ray(t_ray *ray, t_ray *reflected_ray)
+{
+	t_vector	normal;
+
+	if (ray->closest->type == OBJ_SPHERE)
+	{
+		normal.x = intersection.x - ray->closest->origin.x;
+		normal.y = intersection.y - ray->closest->origin.y;
+		normal.z = intersection.z - ray->closest->origin.z;
+	}
+	else
+		normal = ray->closest->normal;
+	normalize_vector(&normal);
+	reflected_ray->origin.x = ray->origin.x + ray->direction.x * ray->inter_t;
+	reflected_ray->origin.y = ray->origin.y + ray->direction.y * ray->inter_t;
+	reflected_ray->origin.z = ray->origin.z + ray->direction.z * ray->inter_t;
+	reflected_ray->direction.x = 2 * (vect_dot(normal, ray->direction)) * normal.x * - ray->direction.x;
+	reflected_ray->direction.y = 2 * (vect_dot(normal, ray->direction)) * normal.y * - ray->direction.y;
+	reflected_ray->direction.z = 2 * (vect_dot(normal, ray->direction)) * normal.z * - ray->direction.z;
+	normalize_vector(&reflected_ray->direction);
+}
+
 void			throw_ray(t_ray *ray, int calculate_light,
-							t_object *to_ignore)
+							t_object *to_ignore, int recursivity)
 {
 	float		tmp_t;
 	t_object	*obj;
+	t_ray		reflected_ray;
 
 	obj = env->scene->objects;
 	ray->inter_t = INFINITY;
@@ -55,4 +78,10 @@ void			throw_ray(t_ray *ray, int calculate_light,
 	}
 	if (calculate_light && ray->inter_t != INFINITY)
 		phong_shading(ray);
+	/*
+	** REFLECTION
+	*/
+	calculate_reflected_ray(ray, &reflected_ray);
+	if (recursivity > 0 && calculate_light)
+		throw_ray(reflected_ray, 1, ray->closest, recursivity - 1);
 }

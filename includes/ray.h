@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/19 23:07:51 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/21 22:39:03 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ typedef struct						s_ray
 {
 	t_point							origin;
 	t_vector						direction;
-	unsigned int					recursivity;
 	float							intensity;
 	t_light_color					color;
 	t_object						*closest;
