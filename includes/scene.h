@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/19 23:03:03 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 23:07:21 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/21 23:03:32 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct				s_scene
 	unsigned int			view_width;
 	unsigned int			view_height;
 	float					diaphragm;
+	int						recursivity;
 	int						background_color;
 	struct s_matter			*matters;
 	struct s_object			*objects;

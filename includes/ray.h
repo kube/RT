@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/21 22:39:03 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/21 22:59:27 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ typedef struct						s_ray
 
 t_ray		get_ray_from_point(int i, int j);
 void		throw_ray(t_ray *ray, int calculate_light,
-						t_object *to_ignore);
+						t_object *to_ignore, int recursivity);
 void		throw_ray_predefined(t_ray *ray, int calculate_light,
-							t_object *obj);
+								t_object *obj);
 void		phong_shading(t_ray *ray);
 
 float		sphere_equation(t_object *sphere, t_ray *ray);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong_shading.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/19 18:04:49 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/21 23:09:19 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static float	is_point_exposed_to_light(t_object *object,
 	ray.direction.z = light->origin.z - ray.origin.z;
 	distance_to_light = vect_norm(&ray.direction);
 	normalize_vector(&ray.direction);
-	throw_ray(&ray, 0, object);
+	throw_ray(&ray, 0, object, 0);
 	if (ray.inter_t <= distance_to_light)
 		return (0);
 	return (1);

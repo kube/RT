@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_throw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/21 22:54:18 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/21 23:25:43 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ static float	intersection(t_object *obj, t_ray *ray)
 static void		calculate_reflected_ray(t_ray *ray, t_ray *reflected_ray)
 {
 	t_vector	normal;
+	t_point		intersection;
+
+	intersection.x = ray->origin.x + ray->direction.x * ray->inter_t;
+	intersection.y = ray->origin.y + ray->direction.y * ray->inter_t;
+	intersection.z = ray->origin.z + ray->direction.z * ray->inter_t;
 
 	if (ray->closest->type == OBJ_SPHERE)
 	{
@@ -46,12 +51,12 @@ static void		calculate_reflected_ray(t_ray *ray, t_ray *reflected_ray)
 	else
 		normal = ray->closest->normal;
 	normalize_vector(&normal);
-	reflected_ray->origin.x = ray->origin.x + ray->direction.x * ray->inter_t;
-	reflected_ray->origin.y = ray->origin.y + ray->direction.y * ray->inter_t;
-	reflected_ray->origin.z = ray->origin.z + ray->direction.z * ray->inter_t;
-	reflected_ray->direction.x = 2 * (vect_dot(normal, ray->direction)) * normal.x * - ray->direction.x;
-	reflected_ray->direction.y = 2 * (vect_dot(normal, ray->direction)) * normal.y * - ray->direction.y;
-	reflected_ray->direction.z = 2 * (vect_dot(normal, ray->direction)) * normal.z * - ray->direction.z;
+	reflected_ray->origin.x = intersection.x;
+	reflected_ray->origin.y = intersection.y;
+	reflected_ray->origin.z = intersection.z;
+	reflected_ray->direction.x = 2 * (vect_dot(&normal, &ray->direction)) * normal.x * - ray->direction.x;
+	reflected_ray->direction.y = 2 * (vect_dot(&normal, &ray->direction)) * normal.y * - ray->direction.y;
+	reflected_ray->direction.z = 2 * (vect_dot(&normal, &ray->direction)) * normal.z * - ray->direction.z;
 	normalize_vector(&reflected_ray->direction);
 }
 
@@ -79,9 +84,19 @@ void			throw_ray(t_ray *ray, int calculate_light,
 	if (calculate_light && ray->inter_t != INFINITY)
 		phong_shading(ray);
 	/*
-	** REFLECTION
+	** REFLECTION (Check also if object is reflective)
 	*/
-	calculate_reflected_ray(ray, &reflected_ray);
-	if (recursivity > 0 && calculate_light)
-		throw_ray(reflected_ray, 1, ray->closest, recursivity - 1);
+	if (ray->closest && ray->inter_t < INFINITY && recursivity > 0 && calculate_light)
+	{
+		calculate_reflected_ray(ray, &reflected_ray);
+		throw_ray(&reflected_ray, 1, ray->closest, recursivity - 1);
+
+		ray->color.red *= (1 - ray->closest->reflection);
+		ray->color.green *= (1 - ray->closest->reflection);
+		ray->color.blue *= (1 - ray->closest->reflection);
+
+		ray->color.red += ray->closest->reflection * reflected_ray.color.red;
+		ray->color.green += ray->closest->reflection * reflected_ray.color.green;
+		ray->color.blue += ray->closest->reflection * reflected_ray.color.blue;
+	}
 }

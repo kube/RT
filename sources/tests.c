@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 20:34:33 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 17:12:55 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/21 23:27:42 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void			create_test_objects(t_scene *scene)
 	scene->objects->ambient = 0.1;
 	scene->objects->diffuse = 0.8;
 	scene->objects->specular = 0.1;
+	scene->objects->reflection = 1.0;
 
 	add_object(scene, new_object(OBJ_SPHERE));
 	scene->objects->origin.x = 9;
@@ -35,6 +36,7 @@ void			create_test_objects(t_scene *scene)
 	scene->objects->ambient = 0.1;
 	scene->objects->diffuse = 0.8;
 	scene->objects->specular = 0.4;
+	scene->objects->reflection = 0.3;
 
 	add_object(scene, new_object(OBJ_PLANE));
 	scene->objects->origin.z = -1;
@@ -43,6 +45,7 @@ void			create_test_objects(t_scene *scene)
 	scene->objects->ambient = 0.1;
 	scene->objects->diffuse = 0.8;
 	scene->objects->specular = 0.4;
+	scene->objects->reflection = 0.4;
 
 	add_object(scene, new_object(OBJ_PLANE));
 	scene->objects->origin.x = 20;
@@ -51,6 +54,7 @@ void			create_test_objects(t_scene *scene)
 	scene->objects->ambient = 0.1;
 	scene->objects->diffuse = 0.8;
 	scene->objects->specular = 0.7;
+	scene->objects->reflection = 0.2;
 
 	add_object(scene, new_object(OBJ_SPHERE));
 	scene->objects->origin.x = -10;
@@ -59,6 +63,7 @@ void			create_test_objects(t_scene *scene)
 	scene->objects->ambient = 0.1;
 	scene->objects->diffuse = 0.8;
 	scene->objects->specular = 0.4;
+	scene->objects->reflection = 0.2;
 
 	add_object(scene, new_object(OBJ_SPHERE));
 	scene->objects->radius = 150;
@@ -66,6 +71,7 @@ void			create_test_objects(t_scene *scene)
 	scene->objects->ambient = 0.8;
 	scene->objects->diffuse = 0.4;
 	scene->objects->specular = 0.2;
+	scene->objects->reflection = 0.2;
 
 
 	scene->lights = (t_light *)malloc(sizeof(t_light));

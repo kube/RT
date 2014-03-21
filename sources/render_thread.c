@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 21:47:24 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/21 23:12:24 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void			*throw_view_plane(void *thread_input)
 		while (i <= input->x2)
 		{
 			ray = get_ray_from_point(i, j);
-			throw_ray(&ray, !env->pressed_keys.shift, NULL);
+			throw_ray(&ray, !env->pressed_keys.shift, NULL, env->scene->recursivity);
 			display_ray(&ray, i++, j);
 		}
 		j++;
