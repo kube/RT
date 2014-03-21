@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 20:34:33 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/17 20:35:58 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/19 17:12:55 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ void			create_test_objects(t_scene *scene)
 	scene->objects->ambient = 0.1;
 	scene->objects->diffuse = 0.8;
 	scene->objects->specular = 0.4;
+
+	add_object(scene, new_object(OBJ_PLANE));
+	scene->objects->origin.x = 20;
+	scene->objects->normal.x = -1;
+	scene->objects->color.color = 0xF0A0A0;
+	scene->objects->ambient = 0.1;
+	scene->objects->diffuse = 0.8;
+	scene->objects->specular = 0.7;
 
 	add_object(scene, new_object(OBJ_SPHERE));
 	scene->objects->origin.x = -10;

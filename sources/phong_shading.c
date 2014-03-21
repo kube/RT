@@ -6,7 +6,7 @@
 /*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/19 16:54:35 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/19 18:04:49 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,14 @@ static float	phong_lighting(t_ray *ray)
 	t_vector	camera;
 
 	intersection = get_point_from_ray_intersection(ray, ray->inter_t);
-	normal.x = intersection.x - ray->closest->origin.x;
-	normal.y = intersection.y - ray->closest->origin.y;
-	normal.z = intersection.z - ray->closest->origin.z;
+	if (ray->closest->type == OBJ_SPHERE)
+	{
+		normal.x = intersection.x - ray->closest->origin.x;
+		normal.y = intersection.y - ray->closest->origin.y;
+		normal.z = intersection.z - ray->closest->origin.z;
+	}
+	else
+		normal = ray->closest->normal;
 	normalize_vector(&normal);
 	light = env->scene->lights;
 	while (light)
@@ -99,21 +104,21 @@ static float	phong_lighting(t_ray *ray)
 								* ray->closest->diffuse * light->color.blue
 								* light->intensity / 255.0);
 			}
-			reflect_light.x = 2 * vect_dot(&normal, &light_vector) * normal.x - light_vector.x;
-			reflect_light.y = 2 * vect_dot(&normal, &light_vector) * normal.y - light_vector.y;
-			reflect_light.z = 2 * vect_dot(&normal, &light_vector) * normal.z - light_vector.z;
-			normalize_vector(&reflect_light);
-			camera.x = env->scene->camera.origin.x - intersection.x;
-			camera.y = env->scene->camera.origin.y - intersection.y;
-			camera.z = env->scene->camera.origin.z - intersection.z;
-			normalize_vector(&camera);
-			specular = ray->closest->specular * pow(fmax(0, vect_dot(&reflect_light, &camera)), 100);
-			if (specular > 0)
-			{
-				ray->color.red += specular * (ray->closest->specular * light->intensity);
-				ray->color.green += specular * (ray->closest->specular * light->intensity);
-				ray->color.blue += specular * (ray->closest->specular * light->intensity);
-			}
+				reflect_light.x = 2 * vect_dot(&normal, &light_vector) * normal.x - light_vector.x;
+				reflect_light.y = 2 * vect_dot(&normal, &light_vector) * normal.y - light_vector.y;
+				reflect_light.z = 2 * vect_dot(&normal, &light_vector) * normal.z - light_vector.z;
+				normalize_vector(&reflect_light);
+				camera.x = env->scene->camera.origin.x - intersection.x;
+				camera.y = env->scene->camera.origin.y - intersection.y;
+				camera.z = env->scene->camera.origin.z - intersection.z;
+				normalize_vector(&camera);
+				specular = ray->closest->specular * pow(fmax(0, vect_dot(&reflect_light, &camera)), 500);
+				if (specular > 0)
+				{
+					ray->color.red += specular * (ray->closest->specular * light->intensity);
+					ray->color.green += specular * (ray->closest->specular * light->intensity);
+					ray->color.blue += specular * (ray->closest->specular * light->intensity);
+				}
 		}
 		light = light->next;
 	}
