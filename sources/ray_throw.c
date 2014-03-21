@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_throw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/21 23:25:43 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/21 23:40:00 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ static void		calculate_reflected_ray(t_ray *ray, t_ray *reflected_ray)
 	reflected_ray->origin.x = intersection.x;
 	reflected_ray->origin.y = intersection.y;
 	reflected_ray->origin.z = intersection.z;
+	ray->direction.x = -ray->direction.x;
+	ray->direction.y = -ray->direction.y;
+	ray->direction.z = -ray->direction.z;
 	reflected_ray->direction.x = 2 * (vect_dot(&normal, &ray->direction)) * normal.x * - ray->direction.x;
 	reflected_ray->direction.y = 2 * (vect_dot(&normal, &ray->direction)) * normal.y * - ray->direction.y;
 	reflected_ray->direction.z = 2 * (vect_dot(&normal, &ray->direction)) * normal.z * - ray->direction.z;
