@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 22:51:17 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/21 22:26:14 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,15 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 			duplicate_object(env->selected_object);
 	}
 	else if (keycode == 61)
+	{
 		env->scene->diaphragm *= 1.05;
+		env->last_light_refresh = clock();
+	}
 	else if (keycode == 45)
+	{
 		env->scene->diaphragm /= 1.05;
+		env->last_light_refresh = clock();
+	}
 	else if (keycode == 65406)
 		keys->alt = 1;
 	return (0);
