@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/22 01:34:05 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/22 19:32:46 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int					main(int argc, char **argv)
 
 	env->scene->view_width = RENDER_WIDTH;
 	env->scene->view_height = RENDER_HEIGHT;
-	env->scene->recursivity = 4;
+	env->scene->recursivity = 10;
 
 	env->selected_object = NULL;
 	env->pressed_mouse = 0;

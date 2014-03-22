@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong_shading.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/21 23:09:19 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/22 19:33:15 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ static t_point	get_point_from_ray_intersection(t_ray *ray, float t)
 	return (point);
 }
 
-static float	is_point_exposed_to_light(t_object *object,
-											t_point point, t_light *light)
+static float	is_point_exposed_to_light(t_point point, t_light *light)
 {
 	t_ray		ray;
 	float		distance_to_light;
@@ -41,7 +40,7 @@ static float	is_point_exposed_to_light(t_object *object,
 	ray.direction.z = light->origin.z - ray.origin.z;
 	distance_to_light = vect_norm(&ray.direction);
 	normalize_vector(&ray.direction);
-	throw_ray(&ray, 0, object, 0);
+	throw_ray(&ray, 0, 0);
 	if (ray.inter_t <= distance_to_light)
 		return (0);
 	return (1);
@@ -74,6 +73,12 @@ static float	phong_lighting(t_ray *ray)
 		normal.x = intersection.x - ray->closest->origin.x;
 		normal.y = intersection.y - ray->closest->origin.y;
 		normal.z = intersection.z - ray->closest->origin.z;
+		if (ray->inside)
+		{
+			normal.x = -normal.x;
+			normal.y = -normal.y;
+			normal.z = -normal.z;
+		}
 	}
 	else
 		normal = ray->closest->normal;
@@ -81,7 +86,7 @@ static float	phong_lighting(t_ray *ray)
 	light = env->scene->lights;
 	while (light)
 	{
-		if (is_point_exposed_to_light(ray->closest, intersection, light))
+		if (is_point_exposed_to_light(intersection, light))
 		{
 			/*
 			**	Diffuse Lighting

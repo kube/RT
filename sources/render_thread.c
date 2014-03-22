@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_thread.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/22 18:07:25 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/22 19:33:38 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void			*throw_view_plane(void *thread_input)
 		while (i <= input->x2)
 		{
 			ray = get_ray_from_point(i, j);
-			throw_ray(&ray, !env->pressed_keys.shift, NULL, env->scene->recursivity);
+			throw_ray(&ray, !env->pressed_keys.shift, env->scene->recursivity);
 			display_ray(&ray, i++, j);
 		}
 		j++;

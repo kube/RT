@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   equations.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 19:30:09 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/16 17:59:00 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/22 19:37:10 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,29 @@
 #include <object.h>
 #include <math.h>
 
-static float	positive_smallest(float a, float b)
+static float	positive_smallest(float a, float b, t_ray *ray)
 {
 	if (a < 0)
 	{
 		if (b > 0)
+		{
+			ray->inside = 1;
 			return (b);
+		}
+		ray->inside = 0;
 		return (INFINITY);
 	}
 	if (b < 0)
 	{
 		if (a > 0)
+		{
+			ray->inside = 1;
 			return (a);
+		}
+		ray->inside = 0;
 		return (INFINITY);
 	}
+	ray->inside = 0;
 	if (a < b)
 		return (a);
 	return (b);
@@ -73,8 +82,9 @@ float			sphere_equation(t_object *sphere, t_ray *ray)
 	{
 		det = sqrt(det);
 		res = positive_smallest((-b + det) / (2 * a),
-				(-b - det) / (2 * a));
-		return (res);
+				(-b - det) / (2 * a), ray);
+		if (res > 0.001)
+			return (res);
 	}
 	return (INFINITY);
 }

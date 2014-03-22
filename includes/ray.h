@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/21 22:59:27 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/22 19:31:50 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ typedef struct						s_ray
 	t_light_color					color;
 	t_object						*closest;
 	float							inter_t;
+	int								inside;
 }									t_ray;
 
 t_ray		get_ray_from_point(int i, int j);
-void		throw_ray(t_ray *ray, int calculate_light,
-						t_object *to_ignore, int recursivity);
+void		throw_ray(t_ray *ray, int calculate_light, int recursivity);
 void		throw_ray_predefined(t_ray *ray, int calculate_light,
 								t_object *obj);
 void		phong_shading(t_ray *ray);

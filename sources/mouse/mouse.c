@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/22 18:24:21 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/22 19:32:25 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				mousepress_ev(int button, int x, int y)
 
 	printf("Pressed Button %d at %d, %d\n", button, x, y);
 	ray = get_ray_from_point(x, y);
-	throw_ray(&ray, 0, NULL, 0);
+	throw_ray(&ray, 0, 0);
 	if (button == 1)
 		env->pressed_mouse = 1;
 	if (ray.inter_t != INFINITY)

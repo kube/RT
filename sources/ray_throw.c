@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_throw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/22 18:12:53 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/22 19:31:39 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ static void		calculate_reflected_ray(t_ray *ray, t_ray *reflected_ray)
 		normal.x = intersection.x - ray->closest->origin.x;
 		normal.y = intersection.y - ray->closest->origin.y;
 		normal.z = intersection.z - ray->closest->origin.z;
+		if (ray->inside)
+		{
+			normal.x = -normal.x;
+			normal.y = -normal.y;
+			normal.z = -normal.z;
+		}
 	}
 	else
 		normal = ray->closest->normal;
@@ -65,8 +71,7 @@ static void		calculate_reflected_ray(t_ray *ray, t_ray *reflected_ray)
 	normalize_vector(&reflected_ray->direction);
 }
 
-void			throw_ray(t_ray *ray, int calculate_light,
-							t_object *to_ignore, int recursivity)
+void			throw_ray(t_ray *ray, int calculate_light, int recursivity)
 {
 	float		tmp_t;
 	t_object	*obj;
@@ -81,13 +86,10 @@ void			throw_ray(t_ray *ray, int calculate_light,
 	ray->color.blue = 0.0;
 	while (obj)
 	{
-		if (!to_ignore || obj != to_ignore)
-		{
-			tmp_t = intersection(obj, ray);
-			ray->closest = (tmp_t < ray->inter_t) ? obj : ray->closest;
-			ray->inter_t = (tmp_t < ray->inter_t) ? tmp_t : ray->inter_t;
-			tmp_t = INFINITY;
-		}
+		tmp_t = intersection(obj, ray);
+		ray->closest = (tmp_t < ray->inter_t) ? obj : ray->closest;
+		ray->inter_t = (tmp_t < ray->inter_t) ? tmp_t : ray->inter_t;
+		tmp_t = INFINITY;
 		obj = obj->next;
 	}
 	if (calculate_light && ray->inter_t != INFINITY)
@@ -96,7 +98,7 @@ void			throw_ray(t_ray *ray, int calculate_light,
 		if (ray->closest->reflection > 0.0 && recursivity > 0)
 		{
 			calculate_reflected_ray(ray, &reflected_ray);
-			throw_ray(&reflected_ray, 1, ray->closest, recursivity - 1);
+			throw_ray(&reflected_ray, 1, recursivity - 1);
 
 			ray->color.red *= (1 - ray->closest->reflection);
 			ray->color.green *= (1 - ray->closest->reflection);
