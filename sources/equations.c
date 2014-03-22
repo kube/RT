@@ -6,7 +6,7 @@
 /*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 19:30:09 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/22 19:37:10 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/22 19:38:32 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ float			sphere_equation(t_object *sphere, t_ray *ray)
 		det = sqrt(det);
 		res = positive_smallest((-b + det) / (2 * a),
 				(-b - det) / (2 * a), ray);
-		if (res > 0.001)
-			return (res);
+		return (res);
 	}
 	return (INFINITY);
 }

@@ -6,7 +6,7 @@
 /*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/22 19:33:15 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/22 19:47:13 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ static float	is_point_exposed_to_light(t_point point, t_light *light)
 	ray.direction.z = light->origin.z - ray.origin.z;
 	distance_to_light = vect_norm(&ray.direction);
 	normalize_vector(&ray.direction);
+	ray.origin.x += ray.direction.x * 0.1;
+	ray.origin.y += ray.direction.y * 0.1;
+	ray.origin.z += ray.direction.z * 0.1;
 	throw_ray(&ray, 0, 0);
 	if (ray.inter_t <= distance_to_light)
 		return (0);

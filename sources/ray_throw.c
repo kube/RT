@@ -6,7 +6,7 @@
 /*   By: lbinet <lbinet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/22 19:31:39 by lbinet           ###   ########.fr       */
+/*   Updated: 2014/03/22 19:46:10 by lbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ static void		calculate_reflected_ray(t_ray *ray, t_ray *reflected_ray)
 	reflected_ray->direction.y = 2 * (vect_dot(&normal, &ray->direction)) * normal.y - ray->direction.y;
 	reflected_ray->direction.z = 2 * (vect_dot(&normal, &ray->direction)) * normal.z - ray->direction.z;
 	normalize_vector(&reflected_ray->direction);
+	reflected_ray->origin.x += reflected_ray->direction.x * 0.1;
+	reflected_ray->origin.y += reflected_ray->direction.y * 0.1;
+	reflected_ray->origin.z += reflected_ray->direction.z * 0.1;
 }
 
 void			throw_ray(t_ray *ray, int calculate_light, int recursivity)
