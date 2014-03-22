@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/21 23:12:24 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/22 18:07:25 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@
 static void			display_ray(t_ray *ray,
 								unsigned int i, unsigned int j)
 {
-	if (ray->inter_t != INFINITY && !env->pressed_keys.shift)
+	if (!env->pressed_keys.shift)
 		light_to_render(i, j, &ray->color);
 	else if (ray->inter_t != INFINITY)
 		pixel_to_image(i, j, ray->closest->color.color);
 	else if (env->pressed_keys.shift)
 		pixel_to_image(i, j, 0x00000000);
-	else
-		clean_light_on_render(i, j);
 }
 
 static void			*throw_view_plane(void *thread_input)
