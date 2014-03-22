@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/21 23:05:07 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/22 18:24:21 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int				mousepress_ev(int button, int x, int y)
 
 int				mouserelease_ev(int button, int x, int y)
 {
-	if (button == 1)
+	if (button == 1 || button == 0)
 	{
 		env->selected_object = NULL;
 		env->pressed_mouse = 0;
