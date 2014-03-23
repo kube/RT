@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 00:50:04 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 22:55:50 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/23 15:50:56 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ void		command_list(char **line);
 void		command_remove(char **line);
 void		command_add(char **line);
 void		command_export(char **line);
+
+void		export_image(int file);
+void		export_scene(int file);
 
 #endif

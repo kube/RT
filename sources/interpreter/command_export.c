@@ -6,12 +6,13 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 03:01:57 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/23 00:48:49 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/23 15:59:43 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <ft_print.h>
+#include <ft_strings.h>
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -104,40 +105,47 @@ static void			display_scene_header(int file)
 	ft_putendl_fd("", file);
 }
 
-void				command_export(char **line)
+void				export_scene(int file)
 {
 	t_object		*object;
 	t_light			*light;
+
+	display_scene_header(file);
+	display_camera_properties(&env->scene->camera, file);
+	light = env->scene->lights;
+	while (light)
+	{
+		display_light_properties(light, file);
+		light = light->next;
+	}
+	object = env->scene->objects;
+	while (object)
+	{
+		if (object->type == OBJ_SPHERE)
+			display_sphere_properties(object, file);
+		else if (object->type == OBJ_PLANE)
+			display_plane_properties(object, file);
+		object = object->next;
+	}
+}
+
+void				command_export(char **line)
+{
 	int				file;
 
-	if (*line)
-	{
-		printf("%s\n", *line);
-		file = open(*line, O_CREAT | O_TRUNC | O_WRONLY, 0666);
-	}
+	file = 1;
+	if ((ft_strequ(*line, "image")
+		|| ft_strequ(*line, "scene"))
+		&& line[1])
+		file = open(line[1], O_CREAT | O_TRUNC | O_WRONLY, 0666);
 	else
-		file = 1;
+		ft_putendl_fd("usage: export [image|scene] <file>", 2);
 	if (file > 0)
 	{
-		display_scene_header(file);
-		display_camera_properties(&env->scene->camera, file);
-		light = env->scene->lights;
-		while (light)
-		{
-			display_light_properties(light, file);
-			light = light->next;
-		}
-		object = env->scene->objects;
-		while (object)
-		{
-			if (object->type == OBJ_SPHERE)
-				display_sphere_properties(object, file);
-			else if (object->type == OBJ_PLANE)
-				display_plane_properties(object, file);
-			object = object->next;
-		}
-		printf("Exported scene to %s\n", *line);
+		if (ft_strequ(*line, "image"))
+			export_image(file);
+		else if (ft_strequ(*line, "scene"))
+			export_scene(file);
+		close(file);
 	}
-	else
-		ft_putendl_fd("ERROR! Cannot export scene.", 2);
 }
