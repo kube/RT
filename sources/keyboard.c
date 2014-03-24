@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/21 22:26:14 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/24 23:27:41 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 		env->scene->diaphragm /= 1.05;
 		env->last_light_refresh = clock();
 	}
-	else if (keycode == 65406)
+	else if (keycode == 65406 || keycode == 65513)
 		keys->alt = 1;
 	return (0);
 }
@@ -204,7 +204,7 @@ int			keyrelease_hook(int keycode, t_pressedkeys *keys)
 		keys->ctrl = 0;
 	else if (keycode == 65289)
 		keys->tab = 0;
-	else if (keycode == 65406)
+	else if (keycode == 65406 || keycode == 65513)
 		keys->alt = 0;
 	return (0);
 }
