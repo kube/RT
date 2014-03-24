@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_throw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/23 23:02:34 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/24 23:25:36 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-
-#include <stdio.h>
-
 static float	intersection(t_object *obj, t_ray *ray)
 {
-	/*
-	**	Should use functions tabled here (Better performance)
-	*/
-
 	if (obj->type == OBJ_SPHERE)
 		return (sphere_equation(obj, ray));
 	else if (obj->type == OBJ_PLANE)
@@ -36,33 +29,32 @@ static float	intersection(t_object *obj, t_ray *ray)
 	return (INFINITY);
 }
 
-static void		calculate_reflected_ray(t_ray *ray, t_ray *reflected_ray)
+static void		calculate_reflected_ray(t_ray *a, t_ray *b)
 {
-	t_vector	normal;
+	t_vector	n;
 	t_point		intersection;
 
-	intersection.x = ray->origin.x + ray->direction.x * ray->inter_t;
-	intersection.y = ray->origin.y + ray->direction.y * ray->inter_t;
-	intersection.z = ray->origin.z + ray->direction.z * ray->inter_t;
-
-	if (ray->closest->type == OBJ_SPHERE)
+	intersection.x = a->origin.x + a->direction.x * a->inter_t;
+	intersection.y = a->origin.y + a->direction.y * a->inter_t;
+	intersection.z = a->origin.z + a->direction.z * a->inter_t;
+	if (a->closest->type == OBJ_SPHERE)
 	{
-		normal.x = intersection.x - ray->closest->origin.x;
-		normal.y = intersection.y - ray->closest->origin.y;
-		normal.z = intersection.z - ray->closest->origin.z;
+		n.x = intersection.x - a->closest->origin.x;
+		n.y = intersection.y - a->closest->origin.y;
+		n.z = intersection.z - a->closest->origin.z;
 	}
 	else
-		normal = ray->closest->normal;
-	reflected_ray->origin.x = intersection.x;
-	reflected_ray->origin.y = intersection.y;
-	reflected_ray->origin.z = intersection.z;
-	ray->direction.x = -ray->direction.x;
-	ray->direction.y = -ray->direction.y;
-	ray->direction.z = -ray->direction.z;
-	reflected_ray->direction.x = 2 * (vect_dot(&normal, &ray->direction)) * normal.x - ray->direction.x;
-	reflected_ray->direction.y = 2 * (vect_dot(&normal, &ray->direction)) * normal.y - ray->direction.y;
-	reflected_ray->direction.z = 2 * (vect_dot(&normal, &ray->direction)) * normal.z - ray->direction.z;
-	normalize_vector(&reflected_ray->direction);
+		n = a->closest->normal;
+	b->origin.x = intersection.x;
+	b->origin.y = intersection.y;
+	b->origin.z = intersection.z;
+	a->direction.x = -a->direction.x;
+	a->direction.y = -a->direction.y;
+	a->direction.z = -a->direction.z;
+	b->direction.x = 2 * (vect_dot(&n, &a->direction)) * n.x - a->direction.x;
+	b->direction.y = 2 * (vect_dot(&n, &a->direction)) * n.y - a->direction.y;
+	b->direction.z = 2 * (vect_dot(&n, &a->direction)) * n.z - a->direction.z;
+	normalize_vector(&b->direction);
 }
 
 void			throw_ray(t_ray *ray, int calculate_light,
@@ -70,12 +62,11 @@ void			throw_ray(t_ray *ray, int calculate_light,
 {
 	float		tmp_t;
 	t_object	*obj;
-	t_ray		reflected_ray;
+	t_ray		reflected;
 
 	obj = env->scene->objects;
 	ray->inter_t = INFINITY;
 	ray->closest = NULL;
-
 	ray->color.red = 0.0;
 	ray->color.green = 0.0;
 	ray->color.blue = 0.0;
@@ -95,16 +86,15 @@ void			throw_ray(t_ray *ray, int calculate_light,
 		phong_shading(ray);
 		if (ray->closest->reflection > 0.0 && recursivity > 0)
 		{
-			calculate_reflected_ray(ray, &reflected_ray);
-			throw_ray(&reflected_ray, 1, ray->closest, recursivity - 1);
-
+			calculate_reflected(ray, &reflected);
+			throw_ray(&reflected, 1, ray->closest, recursivity - 1);
 			ray->color.red *= (1 - ray->closest->reflection);
 			ray->color.green *= (1 - ray->closest->reflection);
 			ray->color.blue *= (1 - ray->closest->reflection);
-			if (reflected_ray.closest)
-				ray->color.red += ray->closest->reflection * reflected_ray.color.red;
-				ray->color.green += ray->closest->reflection * reflected_ray.color.green;
-				ray->color.blue += ray->closest->reflection * reflected_ray.color.blue;
+			if (reflected.closest)
+				ray->color.r += ray->closest->reflection * reflected.color.r;
+				ray->color.g += ray->closest->reflection * reflected.color.g;
+				ray->color.b += ray->closest->reflection * reflected.color.b;
 		}
 	}
 }
