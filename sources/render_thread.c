@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_thread.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/22 18:07:25 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/24 23:56:03 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,44 @@
 
 #define PREDEFINED_RENDER_PLOT	9
 
-static void			display_ray(t_ray *ray,
+static void			display_ray(t_light_color color,
 								unsigned int i, unsigned int j)
 {
-	if (!env->pressed_keys.shift)
-		light_to_render(i, j, &ray->color);
-	else if (ray->inter_t != INFINITY)
-		pixel_to_image(i, j, ray->closest->color.color);
-	else if (env->pressed_keys.shift)
-		pixel_to_image(i, j, 0x00000000);
+	// if (!env->pressed_keys.shift)
+	light_to_render(i, j, &color);
+	// else if (ray->inter_t != INFINITY)
+	// 	pixel_to_image(i, j, ray->closest->color.color);
+	// else if (env->pressed_keys.shift)
+	// 	pixel_to_image(i, j, 0x00000000);
+}
+
+static void			send_pixel_rays(unsigned int x, unsigned int y)
+{
+	float			i;
+	float			j;
+	t_ray			ray;
+	t_light_color	dot;
+
+	dot.r = 0.0;
+	dot.g = 0.0;
+	dot.b = 0.0;
+	j = 0;
+	while (j < env->scene->antialiasing)
+	{
+		i = 0;
+		while (i < env->scene->antialiasing)
+		{
+			ray = get_ray_from_point(((float)x + (i / env->scene->antialiasing)),
+									((float)y + (j / env->scene->antialiasing)));
+			throw_ray(&ray, !env->pressed_keys.shift, 0, env->scene->recursivity);
+			dot.r += ray.color.r;
+			dot.g += ray.color.g;
+			dot.b += ray.color.b;
+			i++;
+		}
+		j++;
+	}
+	display_ray(dot, x, y);
 }
 
 static void			*throw_view_plane(void *thread_input)
@@ -37,7 +66,6 @@ static void			*throw_view_plane(void *thread_input)
 	t_thread_input	*input;
 	unsigned int	i;
 	unsigned int	j;
-	t_ray			ray;
 
 	input = (t_thread_input*)thread_input;
 	env->last_light_refresh = clock();
@@ -47,9 +75,8 @@ static void			*throw_view_plane(void *thread_input)
 		i = input->x1;
 		while (i <= input->x2)
 		{
-			ray = get_ray_from_point(i, j);
-			throw_ray(&ray, !env->pressed_keys.shift, NULL, env->scene->recursivity);
-			display_ray(&ray, i++, j);
+			send_pixel_rays(i, j);
+			i++;
 		}
 		j++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 20:34:33 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/23 23:26:08 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/24 21:33:14 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void			create_test_objects(t_scene *scene)
 	scene->objects->origin.x = 7;
 	scene->objects->radius = 2;
 
-	scene->objects->normal.x = 0;
-	scene->objects->normal.y = 1;
-	scene->objects->normal.z = 0;
+	scene->objects->rotX = 0;
+	scene->objects->rotY = 1;
+	scene->objects->rotZ = 0;
 	
 	scene->objects->color.color = 0x000000FF;
 	scene->objects->ambient = 0.1;

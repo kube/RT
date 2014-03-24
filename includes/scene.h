@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/19 23:03:03 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/21 23:03:32 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/24 23:09:18 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct				s_scene
 	struct s_matter			*matters;
 	struct s_object			*objects;
 	struct s_light			*lights;
+	unsigned int			antialiasing;
 }							t_scene;
 
 #endif

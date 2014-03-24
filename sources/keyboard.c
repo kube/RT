@@ -6,7 +6,7 @@
 /*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/24 23:27:41 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/24 23:31:22 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ int				is_one_key_pressed(t_pressedkeys *keys)
 {
 	int			i;
 	int			*key;
-	/*
-	**	Maybe would be better with a mask ?
-	*/
+
 	i = 0;
 	key = (int*)keys;
 	while ((size_t)key - (size_t)(keys) < sizeof(*keys))

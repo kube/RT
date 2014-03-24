@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/21 23:02:08 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/24 23:09:09 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct				s_env
 
 	t_interpreter			interpreter;
 	pthread_t				interpreter_thread;
+
 
 	t_pressedkeys			pressed_keys;
 	t_object				*selected_object;

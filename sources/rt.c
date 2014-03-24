@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/22 01:34:05 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/25 00:00:20 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int			view_loop()
 }
 
 
-t_ray				get_ray_from_point(int i, int j)
+t_ray				get_ray_from_point(float i, float j)
 {
 	t_ray			ray;
 
@@ -133,6 +133,7 @@ int					main(int argc, char **argv)
 	env->scene->view_width = RENDER_WIDTH;
 	env->scene->view_height = RENDER_HEIGHT;
 	env->scene->recursivity = 4;
+	env->scene->antialiasing = 2;
 
 	env->selected_object = NULL;
 	env->pressed_mouse = 0;

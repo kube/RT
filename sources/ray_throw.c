@@ -6,7 +6,7 @@
 /*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/24 23:28:09 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/24 23:55:24 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static float	intersection(t_object *obj, t_ray *ray)
 	return (INFINITY);
 }
 
-static void		calculate_reflected_ray(t_ray *a, t_ray *b)
+static void		calculate_reflected(t_ray *a, t_ray *b)
 {
 	t_vector	n;
 	t_point		intersection;
