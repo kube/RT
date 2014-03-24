@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/23 15:37:42 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/23 22:56:20 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -35,6 +35,7 @@ SOURCES =	rt.c								\
 			mouse/mouse.c						\
 			ray_throw.c							\
 			equations.c							\
+			equations/cylinder.c				\
 			phong_shading.c						\
 			matter.c							\
 			render_thread.c						\

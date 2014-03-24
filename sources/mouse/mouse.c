@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/22 18:24:21 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/24 01:33:20 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int				mousepress_ev(int button, int x, int y)
 		env->pressed_mouse = 1;
 	if (ray.inter_t != INFINITY)
 	{
-
 		if (button == 1 && env->pressed_keys.del)
 		{
 			remove_object(env->scene, ray.closest);
@@ -81,10 +80,16 @@ int				motionnotify_ev(int x, int y)
 			}
 			else if (env->pressed_keys.tab)
 			{
-				// env->selected_object->normal.x -= (x - env->mouse_x) / coeff;
-				// normalize_vector(&env->selected_object->normal);
+				// vector_add(&env->selected_object->normal,
+				// 			&env->scene->camera.y_axis, (x - env->mouse_x));
+				// vector_add(&env->selected_object->normal,
+				// 			&env->scene->camera.z_axis, (y - env->mouse_y));
+				normalize_vector(&env->selected_object->normal);
 				// env->selected_object->normal.y -= (y - env->mouse_y) / coeff;
-				vect_rot_y(&env->selected_object->normal, sin(y - env->mouse_y) / (5000 * coeff));
+				// vect_rot_y(&env->selected_object->normal, sin(y - env->mouse_y) / (5000 * coeff));
+
+				vect_rot_x(&env->selected_object->normal, -cos(x - env->mouse_x) / (5000 * coeff));
+
 			}
 			else
 			{

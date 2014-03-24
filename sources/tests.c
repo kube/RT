@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 20:34:33 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/23 13:03:26 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/23 23:26:08 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,23 @@ void			create_test_objects(t_scene *scene)
 	scene->objects->diffuse = 0.8;
 	scene->objects->specular = 0.7;
 	scene->objects->reflection = 0.2;
+
+
+	add_object(scene, new_object(OBJ_CYLINDER));
+	scene->objects->origin.x = 7;
+	scene->objects->radius = 2;
+
+	scene->objects->normal.x = 0;
+	scene->objects->normal.y = 1;
+	scene->objects->normal.z = 0;
+	
+	scene->objects->color.color = 0x000000FF;
+	scene->objects->ambient = 0.1;
+	scene->objects->diffuse = 0.8;
+	scene->objects->specular = 0.7;
+	scene->objects->reflection = 0.2;
+
+
 
 	add_object(scene, new_object(OBJ_SPHERE));
 	scene->objects->origin.x = -10;

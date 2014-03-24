@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/21 22:59:27 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/23 22:59:51 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ float		sphere_equation(t_object *sphere, t_ray *ray);
 float		plane_equation(t_object *plane, t_ray *ray);
 float		cylinder_equation(t_object *cylinder, t_ray * ray);
 float		cone_equation(t_object *cone, t_ray *ray);
+float		positive_smallest(float a, float b);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 19:30:09 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/16 17:59:00 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/23 22:59:42 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <object.h>
 #include <math.h>
 
-static float	positive_smallest(float a, float b)
+float			positive_smallest(float a, float b)
 {
 	if (a < 0)
 	{
@@ -61,11 +61,11 @@ static float	sphere_equation_det(t_object *s, t_ray *ray, float *a, float *b)
 
 float			sphere_equation(t_object *sphere, t_ray *ray)
 {
-	float	res;
-	float	a;
-	float	b;
-	float	c;
-	float	det;
+	float		res;
+	float		a;
+	float		b;
+	float		c;
+	float		det;
 
 	c = sphere_equation_det(sphere, ray, &a, &b);
 	det = b * b - 4 * a * c;
@@ -79,11 +79,11 @@ float			sphere_equation(t_object *sphere, t_ray *ray)
 	return (INFINITY);
 }
 
-float		plane_equation(t_object *plane, t_ray *ray)
+float			plane_equation(t_object *plane, t_ray *ray)
 {
-	float	n;
-	float	d;
-	float	res;
+	float		n;
+	float		d;
+	float		res;
 
 	n = plane->normal.x * (plane->origin.x - ray->origin.x)
 		+ plane->normal.y * (plane->origin.y - ray->origin.y)
