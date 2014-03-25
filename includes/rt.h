@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/24 23:09:09 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/25 16:05:28 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct				s_env
 	clock_t					last_light_refresh;
 	clock_t					last_scene_change;
 	int						block_events;
+	int						fast_mode;
 
 	t_interpreter			interpreter;
 	pthread_t				interpreter_thread;

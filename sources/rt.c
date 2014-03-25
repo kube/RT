@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/25 00:00:20 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/25 17:04:15 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static int			view_loop()
 		update_render_cam(&env->scene->render_cam, &env->scene->camera);
 		if (env->last_image_refresh < env->last_light_refresh)
 		{	
-			if (!env->pressed_keys.shift)
-				render_to_image();
-			else
+			if (env->fast_mode)
 				mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+			else
+				render_to_image();
 		}
 		if (env->last_light_refresh < env->last_scene_change)
 			update_image();
@@ -132,24 +132,24 @@ int					main(int argc, char **argv)
 
 	env->scene->view_width = RENDER_WIDTH;
 	env->scene->view_height = RENDER_HEIGHT;
-	env->scene->recursivity = 4;
-	env->scene->antialiasing = 2;
+	env->scene->recursivity = 2;
+	env->scene->antialiasing = 10;
 
 	env->selected_object = NULL;
 	env->pressed_mouse = 0;
 	env->running_threads = 0;
 
+	env->fast_mode = 1;
+
 	env->last_scene_change = clock();
 	env->last_light_refresh = 0;
 	env->last_image_refresh = 0;
 
-	env->scene->background_color = 0xFF000000;
 	env->scene->diaphragm = 1.0;
 	env->scene->matters = NULL;
 
 	env->interpreter_thread = 0;
 	env->block_events = 0;
-
 
 	env->render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
 						* sizeof(pthread_t));

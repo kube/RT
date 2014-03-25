@@ -63,48 +63,6 @@ scene:
         type: spot
         color: #45F4C2
 
-    # Matters
-    matter:
-        name: "iron"
-        texture: "./textures/iron.xpm"
-        reflection: 0.3
-        refraction: 0.0
-        refract_index: 1.2
-        ambient: 1.0
-        diffuse: 0.8
-        specular: 0.8
-
-    matter:
-        name: "glass"
-        texture: "./textures/glass.xpm"
-        reflection: 0.2
-        refraction: 0.8
-
-    matter:
-        name: "grass"
-        texture: "./textures/grass.xpm"
-        reflection: 0.0
-        refraction: 0.0
-
-    matter:
-        name: "wood"
-        texture: "./textures/wood.xpm"
-        opacity: 1.0
-        reflection: 0.0
-        refraction: 0.0
-        ambient: 0.07
-        diffuse: 1.0
-        specular: 0.01
-
-    matter:
-        name: "sky"
-        texture: "./textures/sky.xpm"
-        reflection: 0.0
-        refraction: 0.0
-        ambient: 1.0
-        diffuse: 0.0
-        specular: 0.0
-
     # Defining a skybox
     sphere:
         x: 0
@@ -121,9 +79,9 @@ scene:
         x: 0
         y: 0
         z: 0
-        rotX: 0
-        rotY: 0
-        rotZ: 0
+        normX: 0
+        normY: 0
+        normZ: 1
         # texture: "./textures/grass.xpm"
         matter: "sky"
         diffuse 0.5

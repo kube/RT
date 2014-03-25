@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_thread.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/24 23:56:03 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/25 16:48:07 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@
 static void			display_ray(t_light_color color,
 								unsigned int i, unsigned int j)
 {
-	// if (!env->pressed_keys.shift)
+	color.r /= env->scene->antialiasing * env->scene->antialiasing;
+	color.g /= env->scene->antialiasing * env->scene->antialiasing;
+	color.b /= env->scene->antialiasing * env->scene->antialiasing;
 	light_to_render(i, j, &color);
-	// else if (ray->inter_t != INFINITY)
-	// 	pixel_to_image(i, j, ray->closest->color.color);
-	// else if (env->pressed_keys.shift)
-	// 	pixel_to_image(i, j, 0x00000000);
 }
 
 static void			send_pixel_rays(unsigned int x, unsigned int y)
@@ -61,6 +59,20 @@ static void			send_pixel_rays(unsigned int x, unsigned int y)
 	display_ray(dot, x, y);
 }
 
+static void			send_fast_rays(unsigned int x, unsigned int y)
+{
+	t_ray			ray;
+
+	ray = get_ray_from_point((float)x, (float)y);
+	throw_ray(&ray, 0, 0, 0);
+
+	if (ray.inter_t != INFINITY)
+		pixel_to_image(x, y, blend_colors(ray.closest->color.color,
+			0x000000, 1 / ray.inter_t, COLOR_BLEND_OVER));
+	else
+		pixel_to_image(x, y, 0x00000000);
+}
+
 static void			*throw_view_plane(void *thread_input)
 {
 	t_thread_input	*input;
@@ -75,7 +87,10 @@ static void			*throw_view_plane(void *thread_input)
 		i = input->x1;
 		while (i <= input->x2)
 		{
-			send_pixel_rays(i, j);
+			if (env->fast_mode)
+				send_fast_rays(i, j);
+			else
+				send_pixel_rays(i, j);
 			i++;
 		}
 		j++;

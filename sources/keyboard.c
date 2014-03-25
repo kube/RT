@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/24 23:31:22 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/25 16:47:30 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 		keys->d = 1;
 	else if (keycode == 65535)
 		keys->del = 1;
-	else if (keycode == 65505)
-		keys->shift = 1;
+	else if (keycode == 65505 || keycode == 65506)
+		env->fast_mode = 1;
 	else if (keycode == 65507)
 		keys->ctrl = 1;
 	else if (keycode == 65289)
@@ -196,8 +196,8 @@ int			keyrelease_hook(int keycode, t_pressedkeys *keys)
 		keys->del = 0;
 	else if (keycode == 32)
 		keys->space = 0;
-	else if (keycode == 65505)
-		keys->shift = 0;
+	else if (keycode == 65505 || keycode == 65506)
+		env->fast_mode = 0;
 	else if (keycode == 65507)
 		keys->ctrl = 0;
 	else if (keycode == 65289)

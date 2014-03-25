@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 20:34:33 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/24 21:33:14 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/25 14:42:31 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void			create_test_objects(t_scene *scene)
 
 
 	add_object(scene, new_object(OBJ_CYLINDER));
+
+	
 	scene->objects->origin.x = 7;
 	scene->objects->radius = 2;
 

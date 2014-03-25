@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/19 23:03:03 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/24 23:09:18 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/25 16:04:37 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ typedef struct				s_scene
 	struct s_camera			render_cam;
 	unsigned int			view_width;
 	unsigned int			view_height;
-	float					diaphragm;
-	int						recursivity;
-	int						background_color;
 	struct s_matter			*matters;
 	struct s_object			*objects;
 	struct s_light			*lights;
+	float					diaphragm;
+	int						recursivity;
 	unsigned int			antialiasing;
 }							t_scene;
 
