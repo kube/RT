@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 00:50:04 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/23 15:50:56 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 00:25:16 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,15 @@ typedef struct				s_command
 }							t_command;
 
 int			create_interpreter_thread();
-void		command_list(char **line);
-void		command_remove(char **line);
-void		command_add(char **line);
-void		command_export(char **line);
+void		cmd_list(char **line);
+void		cmd_remove(char **line);
+void		cmd_add(char **line);
+void		cmd_export(char **line);
+void		cmd_antialias(char **line);
+void		cmd_render(char **line);
+void		cmd_editmode(char **line);
+void		cmd_recursivity(char **line);
+void		cmd_unblock(char **line);
 
 void		export_image(int file);
 void		export_scene(int file);

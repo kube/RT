@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/25 16:47:30 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 00:36:27 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <string.h>
 #include <ft_memory.h>
 
-#include <stdio.h>
-
 void		init_pressed_keys(t_pressedkeys *keys)
 {
 	ft_bzero(keys, sizeof(*keys));
@@ -25,17 +23,10 @@ void		init_pressed_keys(t_pressedkeys *keys)
 
 int			keypress_hook(int keycode, t_pressedkeys *keys)
 {
-	/*
-	**	Use allocated table here with Callbacks, Better Performance, Less lines
-	*/
-
-	printf("Press %d\n", keycode);
-
-	if (env->block_events)
-		return (0);
-
 	if (keycode == 65307)
 		exit(0);
+	else if (env->block_events)
+		return (0);
 	else if (keycode == 65363)
 		keys->right = 1;
 	else if (keycode == 65361)
@@ -62,8 +53,6 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 		keys->d = 1;
 	else if (keycode == 65535)
 		keys->del = 1;
-	else if (keycode == 65505 || keycode == 65506)
-		env->fast_mode = 1;
 	else if (keycode == 65507)
 		keys->ctrl = 1;
 	else if (keycode == 65289)
@@ -106,12 +95,6 @@ int				is_one_key_pressed(t_pressedkeys *keys)
 
 void				check_pressed_keys(t_pressedkeys *keys)
 {
-	/*
-	**	Use dedicated Key Structure with Callback ?
-	**	(Better Perfomance, Less Lines)
-	**	Maybe do this in is_one_key_pressed function
-	*/
-
 	if (keys->up)
 		cam_rot_y(&env->scene->camera, -KEYBOARD_ROT_PLOT);
 	if (keys->down)
@@ -165,9 +148,6 @@ void				check_pressed_keys(t_pressedkeys *keys)
 
 int			keyrelease_hook(int keycode, t_pressedkeys *keys)
 {
-	/*
-	**	Use allocated table here with Callbacks, Better Performance, Less lines
-	*/
 	if (keycode == 65363)
 		keys->right = 0;
 	else if (keycode == 65361)
@@ -196,8 +176,6 @@ int			keyrelease_hook(int keycode, t_pressedkeys *keys)
 		keys->del = 0;
 	else if (keycode == 32)
 		keys->space = 0;
-	else if (keycode == 65505 || keycode == 65506)
-		env->fast_mode = 0;
 	else if (keycode == 65507)
 		keys->ctrl = 0;
 	else if (keycode == 65289)

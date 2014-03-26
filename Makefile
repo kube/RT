@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/23 22:56:20 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 00:25:44 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -31,11 +31,21 @@ SOURCES =	rt.c								\
 			interpreter/command_remove.c		\
 			interpreter/command_add.c			\
 			interpreter/command_export.c		\
+			interpreter/command_antialias.c		\
+			interpreter/command_render.c		\
+			interpreter/command_editmode.c		\
+			interpreter/command_recursivity.c	\
+			interpreter/command_unblock.c	\
 			export/export_image.c				\
 			mouse/mouse.c						\
 			ray_throw.c							\
-			equations.c							\
-			equations/cylinder.c				\
+			equations/equation_cone.c			\
+			equations/equation_cylinder.c		\
+			equations/equation_sphere.c			\
+			equations/equation_plane.c			\
+			equations/positive_smallest.c		\
+			equations/matrix.c					\
+			equations/change_ray.c				\
 			phong_shading.c						\
 			matter.c							\
 			render_thread.c						\

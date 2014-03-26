@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 00:47:38 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/23 15:51:29 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 00:25:33 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,16 @@ static void			interpreter_add_command(t_command **commands, char *token,
 static void			interpreter_init_commands(t_interpreter *interpreter)
 {
 	interpreter->commands = NULL;
-	interpreter_add_command(&interpreter->commands, "list", command_list);
-	interpreter_add_command(&interpreter->commands, "remove", command_remove);
-	interpreter_add_command(&interpreter->commands, "add", command_add);
-	interpreter_add_command(&interpreter->commands, "export", command_export);
-
+	interpreter_add_command(&interpreter->commands, "list", cmd_list);
+	interpreter_add_command(&interpreter->commands, "remove", cmd_remove);
+	interpreter_add_command(&interpreter->commands, "add", cmd_add);
+	interpreter_add_command(&interpreter->commands, "export", cmd_export);
+	interpreter_add_command(&interpreter->commands, "antialias", cmd_antialias);
+	interpreter_add_command(&interpreter->commands, "render", cmd_render);
+	interpreter_add_command(&interpreter->commands, "edit_mode", cmd_editmode);
+	interpreter_add_command(&interpreter->commands, "recursivity",
+							cmd_recursivity);
+	interpreter_add_command(&interpreter->commands, "unblock", cmd_unblock);
 	// add_command("modify", command_list);
 	// add_command("	", command_tab);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/07 16:30:00 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/24 23:50:02 by kube             ###   ########.fr       */
+/*   Updated: 2014/03/26 19:23:26 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void		throw_ray(t_ray *ray, int calculate_light,
 						t_object *to_ignore, int recursivity);
 void		throw_ray_predefined(t_ray *ray, int calculate_light,
 								t_object *obj);
+void		change_ray(t_ray *ray, t_ray *new_ray, t_object *obj);
 void		phong_shading(t_ray *ray);
-
 float		sphere_equation(t_object *sphere, t_ray *ray);
 float		plane_equation(t_object *plane, t_ray *ray);
-float		cylinder_equation(t_object *cylinder, t_ray * ray);
+float		cylinder_equation(t_object *cylinder, t_ray *ray);
 float		cone_equation(t_object *cone, t_ray *ray);
 float		positive_smallest(float a, float b);
 

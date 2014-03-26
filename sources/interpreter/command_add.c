@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 03:27:02 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/22 00:05:40 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 00:01:26 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void			add_light()
 	env->last_scene_change = clock();
 }
 
-void				command_add(char **line)
+void				cmd_add(char **line)
 {
 	if (*line && !line[1])
 	{

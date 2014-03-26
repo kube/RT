@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/21 23:09:19 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/26 23:54:25 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,11 @@ static float	phong_lighting(t_ray *ray)
 	{
 		if (is_point_exposed_to_light(ray->closest, intersection, light))
 		{
-			/*
-			**	Diffuse Lighting
-			*/
 			light_vector.x = light->origin.x - intersection.x;
 			light_vector.y = light->origin.y - intersection.y;
 			light_vector.z = light->origin.z - intersection.z;
 			normalize_vector(&light_vector);
 			lambert = vect_dot(&normal, &light_vector);
-			lambert *= lambert * lambert;
 			if (lambert > 0)
 			{
 				ray->color.red += lambert * ((float)ray->closest->color.red

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/13 02:33:19 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/24 01:33:20 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 00:23:29 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include <stdio.h>
-
 int				mousepress_ev(int button, int x, int y)
 {
 	t_ray		ray;
 
-	printf("Pressed Button %d at %d, %d\n", button, x, y);
+	if (env->block_events)
+		return (0);
 	ray = get_ray_from_point(x, y);
 	throw_ray(&ray, 0, NULL, 0);
 	if (button == 1)
@@ -34,7 +33,6 @@ int				mousepress_ev(int button, int x, int y)
 		{
 			remove_object(env->scene, ray.closest);
 			update_image(env);
-			printf("Removed %p\n", ray.closest);
 		}
 		else
 		{
@@ -52,12 +50,15 @@ int				mousepress_ev(int button, int x, int y)
 
 int				mouserelease_ev(int button, int x, int y)
 {
+	(void)x;
+	(void)y;
+	if (env->block_events)
+		return (0);
 	if (button == 1 || button == 0)
 	{
 		env->selected_object = NULL;
 		env->pressed_mouse = 0;
 	}
-	printf("Released Button %d at %d, %d\n", button, x, y);
 	return (0);
 }
 
@@ -65,6 +66,8 @@ int				motionnotify_ev(int x, int y)
 {
 	float		coeff;
 
+	if (env->block_events)
+		return (0);
 	if (env->pressed_mouse)
 	{
 		if (env->selected_object)

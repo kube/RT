@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/25 17:04:15 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/26 17:32:15 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ int					main(int argc, char **argv)
 
 	env->scene->view_width = RENDER_WIDTH;
 	env->scene->view_height = RENDER_HEIGHT;
-	env->scene->recursivity = 2;
-	env->scene->antialiasing = 10;
+	env->scene->recursivity = 4;
+	env->scene->antialiasing = 4;
 
 	env->selected_object = NULL;
 	env->pressed_mouse = 0;

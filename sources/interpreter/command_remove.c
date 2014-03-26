@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 03:01:57 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/19 18:50:29 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 00:01:52 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <ft_print.h>
 #include <ft_convert.h>
 
-void				command_remove(char **line)
+void				cmd_remove(char **line)
 {
 	int				search;
 	t_object		*object;

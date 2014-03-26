@@ -1,45 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_list.c                                     :+:      :+:    :+:   */
+/*   command_editmode.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 03:01:57 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 00:01:45 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 00:16:33 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <ft_print.h>
+#include <ft_convert.h>
 
-#include <stdio.h>
-
-void				cmd_list(char **line)
+void				cmd_editmode(char **line)
 {
-	t_object		*object;
-	t_light			*light;
-
 	(void)line;
-	object = env->scene->objects;
-	ft_putendl("OBJECTS:");
-	while (object)
-	{
-		if (object->type == OBJ_SPHERE)
-			ft_putstr("Sphere ");
-		else if (object->type == OBJ_PLANE)
-			ft_putstr("Plane ");
-		printf("\t%u\n", (unsigned int)object);
-		ft_putendl("");
-		object = object->next;
-	}
-	light = env->scene->lights;
-	ft_putendl("\nLIGHTS:");
-	while (light)
-	{
-		ft_putstr("Light ");
-		printf("\t%u\n", (unsigned int)light);
-		ft_putendl("");
-		light = light->next;
-	}
+	env->fast_mode = 1;
+	env->last_scene_change = clock();
+	env->block_events = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/25 16:19:22 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/26 18:34:51 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static float	intersection(t_object *obj, t_ray *ray)
 		return (plane_equation(obj, ray));
 	else if (obj->type == OBJ_CYLINDER)
 		return (cylinder_equation(obj, ray));
-	// if (obj->type == OBJ_CONE)
-	// 	return (cone_equation(obj, ray));
+	else if (obj->type == OBJ_CONE)
+		return (cone_equation(obj, ray));
 	return (INFINITY);
 }
 
