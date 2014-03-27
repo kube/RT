@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 19:58:21 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 20:00:37 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -95,7 +95,7 @@ SILENT_COLOR =	\x1b[30;01m
 
 .PHONY: all re clean fclean
 
-all: $(NAME)
+all: complibs $(NAME)
 
 linux :
 	@$(eval INCLUDEFOLDERS := -I./includes/ -I./libft/includes/ -I/usr/X11/include/ -I/usr/include/X11)
