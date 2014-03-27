@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 00:42:37 by kube              #+#    #+#             */
-/*   Updated: 2014/03/27 19:20:26 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 21:21:28 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static void		parse_scene(int file)
 
 	line_number = 0;
 	init_scene_parser(&parser);
-	parser.last_type = 0;
+	parser.last_type = LAST_NONE;
 	while (get_next_line(file, &line)*1)
 	{
 		remove_comments(line);

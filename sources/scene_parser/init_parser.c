@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/27 18:44:18 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 19:22:21 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 21:17:41 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ void					parser_add_command(t_parser_command **commands,
 void					init_scene_parser(t_parser *parser)
 {
 	parser->commands = NULL;
+
+	parser_add_command(&parser->commands, 0, "diaphragm", cmd_define_diaphragm);
+	parser_add_command(&parser->commands, 0, "recursivity", cmd_define_recursivity);
+	parser_add_command(&parser->commands, 0, "antialias", cmd_define_antialias);
+	parser_add_command(&parser->commands, 0, "width", cmd_define_width);
+	parser_add_command(&parser->commands, 0, "height", cmd_define_height);
+
+
 	parser_add_command(&parser->commands, 0, "camera", cmd_camera);
 	parser_add_command(&parser->commands, 0, "light", cmd_add_light);
 	parser_add_command(&parser->commands, 0, "plane", cmd_add_plane);
@@ -64,4 +72,21 @@ void					init_scene_parser(t_parser *parser)
 	parser_add_command(&parser->commands, 1, "refraction", cmd_define_refraction);
 	parser_add_command(&parser->commands, 1, "color", cmd_define_color);
 	parser_add_command(&parser->commands, 1, "intensity", cmd_define_intensity);
+
+
+
+
+	parser_add_command(&parser->commands, 1, "x_axisX", cmd_define_x_axisx);
+	parser_add_command(&parser->commands, 1, "x_axisY", cmd_define_x_axisy);
+	parser_add_command(&parser->commands, 1, "x_axisZ", cmd_define_x_axisz);
+
+	parser_add_command(&parser->commands, 1, "y_axisX", cmd_define_y_axisx);
+	parser_add_command(&parser->commands, 1, "y_axisY", cmd_define_y_axisy);
+	parser_add_command(&parser->commands, 1, "y_axisZ", cmd_define_y_axisz);
+
+	parser_add_command(&parser->commands, 1, "z_axisX", cmd_define_z_axisx);
+	parser_add_command(&parser->commands, 1, "z_axisY", cmd_define_z_axisy);
+	parser_add_command(&parser->commands, 1, "z_axisZ", cmd_define_z_axisz);
+
+
 }

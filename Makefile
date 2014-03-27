@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 20:25:42 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 21:18:44 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -21,64 +21,75 @@ CFLAGS = -Wall  -Werror -Wextra -O3
 SOURCES_FOLDER = sources/
 OBJECTS_FOLDER = objects/
 
-SOURCES =	rt.c									\
-			camera/camera_transformations.c			\
-			camera/camera_init.c					\
-			object/creation.c						\
-			scene_parser/parser.c					\
-			scene_parser/init_parser.c				\
-			scene_parser/command_camera.c			\
-			scene_parser/command_add_sphere.c		\
-			scene_parser/command_add_cone.c			\
-			scene_parser/command_add_cylinder.c		\
-			scene_parser/command_add_plane.c		\
-			scene_parser/command_add_light.c		\
-			scene_parser/command_define_xyz.c		\
-			scene_parser/command_define_rotxyz.c	\
-			scene_parser/command_define_normxyz.c	\
-			scene_parser/command_define_rgb.c		\
-			scene_parser/command_define_radius.c	\
-			scene_parser/command_define_ambient.c	\
-			scene_parser/command_define_opacity.c	\
-			scene_parser/command_define_diffuse.c	\
-			scene_parser/command_define_specular.c	\
-			scene_parser/command_define_refraction.c\
-			scene_parser/command_define_reflection.c\
-			scene_parser/command_define_intensity.c	\
-			scene_parser/command_define_color.c		\
-			interpreter/interpreter.c				\
-			interpreter/command_list.c				\
-			interpreter/command_remove.c			\
-			interpreter/command_add.c				\
-			interpreter/command_export.c			\
-			interpreter/command_antialias.c			\
-			interpreter/command_render.c			\
-			interpreter/command_editmode.c			\
-			interpreter/command_recursivity.c		\
-			interpreter/command_unblock.c			\
-			interpreter/init_interpreter.c			\
-			export/export_image.c					\
-			export/export_scene.c					\
-			mouse/mouse.c							\
-			mouse/motion_notify.c					\
-			ray_throw.c								\
-			equations/get_normal.c					\
-			equations/equation_cone.c				\
-			equations/equation_cylinder.c			\
-			equations/equation_sphere.c				\
-			equations/equation_plane.c				\
-			equations/positive_smallest.c			\
-			equations/matrix.c						\
-			equations/change_ray.c					\
-			phong_shading.c							\
-			render_thread.c							\
-			render_to_image.c						\
-			light_diaphragm.c						\
-			keyboard/keyboard.c						\
-			keyboard/keypress_hook.c				\
-			keyboard/keyrelease_hook.c				\
-			keyboard/check_pressed_keys.c			\
-			pixel.c									\
+SOURCES =	rt.c										\
+			camera/camera_transformations.c				\
+			camera/camera_init.c						\
+			object/creation.c							\
+			\
+			scene_parser/parser.c						\
+			scene_parser/init_parser.c					\
+			scene_parser/command_camera.c				\
+			scene_parser/command_add_sphere.c			\
+			scene_parser/command_add_cone.c				\
+			scene_parser/command_add_cylinder.c			\
+			scene_parser/command_add_plane.c			\
+			scene_parser/command_add_light.c			\
+			scene_parser/command_define_xyz.c			\
+			scene_parser/command_define_rotxyz.c		\
+			scene_parser/command_define_normxyz.c		\
+			scene_parser/command_define_rgb.c			\
+			scene_parser/command_define_radius.c		\
+			scene_parser/command_define_ambient.c		\
+			scene_parser/command_define_opacity.c		\
+			scene_parser/command_define_diffuse.c		\
+			scene_parser/command_define_specular.c		\
+			scene_parser/command_define_refraction.c	\
+			scene_parser/command_define_reflection.c	\
+			scene_parser/command_define_intensity.c		\
+			scene_parser/command_define_color.c			\
+			\
+			scene_parser/command_define_axisx.c			\
+			scene_parser/command_define_axisy.c			\
+			scene_parser/command_define_axisz.c			\
+			scene_parser/command_define_antialias.c		\
+			scene_parser/command_define_recursivity.c	\
+			scene_parser/command_define_diaphragm.c		\
+			scene_parser/command_define_width.c			\
+			scene_parser/command_define_height.c		\
+			\
+			interpreter/interpreter.c					\
+			interpreter/command_list.c					\
+			interpreter/command_remove.c				\
+			interpreter/command_add.c					\
+			interpreter/command_export.c				\
+			interpreter/command_antialias.c				\
+			interpreter/command_render.c				\
+			interpreter/command_editmode.c				\
+			interpreter/command_recursivity.c			\
+			interpreter/command_unblock.c				\
+			interpreter/init_interpreter.c				\
+			export/export_image.c						\
+			export/export_scene.c						\
+			mouse/mouse.c								\
+			mouse/motion_notify.c						\
+			ray_throw.c									\
+			equations/get_normal.c						\
+			equations/equation_cone.c					\
+			equations/equation_cylinder.c				\
+			equations/equation_sphere.c					\
+			equations/equation_plane.c					\
+			equations/positive_smallest.c				\
+			equations/matrix.c							\
+			equations/change_ray.c						\
+			phong_shading.c								\
+			render_thread.c								\
+			render_to_image.c							\
+			light_diaphragm.c							\
+			keyboard/keyboard.c							\
+			keyboard/keypress_hook.c					\
+			keyboard/keyrelease_hook.c					\
+			keyboard/check_pressed_keys.c				\
+			pixel.c										\
 
 OBJECTS =	$(SOURCES:.c=.o)
 

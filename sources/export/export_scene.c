@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/27 19:42:39 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 20:47:18 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 21:15:02 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,8 @@ void				export_scene(int file)
 	t_object		*object;
 	t_light			*light;
 
-	dprintf(file, "render_width: %d\n", env->scene->view_width);
-	dprintf(file, "render_height: %d\n", env->scene->view_height);
+	dprintf(file, "width: %d\n", env->scene->view_width);
+	dprintf(file, "height: %d\n", env->scene->view_height);
 	dprintf(file, "recursivity: %d\n", env->scene->recursivity);
 	dprintf(file, "antialias: %d\n", env->scene->antialias);
 	dprintf(file, "diaphragm: %f\n", env->scene->diaphragm);

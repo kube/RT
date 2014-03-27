@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 00:50:05 by kube              #+#    #+#             */
-/*   Updated: 2014/03/27 19:10:43 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 20:58:58 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,21 @@ void		cmd_define_reflection(t_parser *parser, char **line);
 void		cmd_define_refraction(t_parser *parser, char **line);
 void		cmd_define_intensity(t_parser *parser, char **line);
 void		cmd_define_color(t_parser *parser, char **line);
+
+void		cmd_define_diaphragm(t_parser *parser, char **line);
+void		cmd_define_recursivity(t_parser *parser, char **line);
+void		cmd_define_antialias(t_parser *parser, char **line);
+void		cmd_define_width(t_parser *parser, char **line);
+void		cmd_define_height(t_parser *parser, char **line);
+
+void		cmd_define_x_axisx(t_parser *parser, char **line);
+void		cmd_define_x_axisy(t_parser *parser, char **line);
+void		cmd_define_x_axisz(t_parser *parser, char **line);
+void		cmd_define_y_axisx(t_parser *parser, char **line);
+void		cmd_define_y_axisy(t_parser *parser, char **line);
+void		cmd_define_y_axisz(t_parser *parser, char **line);
+void		cmd_define_z_axisx(t_parser *parser, char **line);
+void		cmd_define_z_axisy(t_parser *parser, char **line);
+void		cmd_define_z_axisz(t_parser *parser, char **line);
 
 #endif

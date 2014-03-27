@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 17:11:02 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 21:24:32 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,13 @@ static void			init_main()
 	env->render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
 						* sizeof(pthread_t));
 	env->last_scene_change = clock();
-	env->rendering = (t_light_color*)ft_memalloc(env->scene->view_width
-					* env->scene->view_height * sizeof(t_light_color));
 	init_pressed_keys(&env->pressed_keys);
 }
 
 static void			init_graphics()
 {
+	env->rendering = (t_light_color*)ft_memalloc(env->scene->view_width
+					* env->scene->view_height * sizeof(t_light_color));
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, env->scene->view_width,
 				env->scene->view_height, "RT");

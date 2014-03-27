@@ -1,0 +1,117 @@
+width: 1600
+height: 1200
+recursivity: 2
+antialias: 4
+diaphragm: 0.710681
+camera:
+	x: -14.040037
+	y: -7.703359
+	z: 0.045000
+	x_axisX: 0.939910
+	x_axisY: 0.341423
+	x_axisZ: 0.000000
+	y_axisX: -0.341423
+	y_axisY: 0.939910
+	y_axisZ: 0.000000
+	z_axisX: 0.000000
+	z_axisY: 0.000000
+	z_axisZ: 1.000000
+light:
+	x: 4.000000
+	y: 0.000000
+	z: -0.955000
+	intensity: 1.000000
+	red: 1.000000
+	green: 1.000000
+	blue: 1.000000
+light:
+	x: 4.000000
+	y: 0.000000
+	z: -1.000000
+	intensity: 1.000000
+	red: 1.000000
+	green: 1.000000
+	blue: 1.000000
+plane:
+	x: 4.000000
+	y: 0.343251
+	z: -5.497012
+	normX: 0.000000
+	normY: 0.000000
+	normZ: 1.000000
+	color: FFFFFFFF
+	ambient: 0.100000
+	diffuse: 0.100000
+	specular: 0.400000
+	reflection: 0.700000
+	refraction: 0.000000
+cone:
+	x: 4.000000
+	y: 0.486113
+	z: -0.092423
+	normX: 0.000000
+	normY: 0.000000
+	normZ: 1.000000
+	color: FFFFFFFF
+	radius: 14.404363
+	ambient: 0.100000
+	diffuse: 0.100000
+	specular: 0.400000
+	reflection: 0.700000
+	refraction: 0.000000
+cylinder:
+	x: 4.000000
+	y: -1.623457
+	z: 0.249768
+	normX: 0.000000
+	normY: 0.000000
+	normZ: 1.000000
+	radius: 0.291999
+	color: FFFFFFFF
+	ambient: 0.100000
+	diffuse: 0.100000
+	specular: 0.400000
+	reflection: 0.700000
+	refraction: 0.000000
+sphere:
+	x: 5.585626
+	y: 2.211634
+	z: -0.737426
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 0.524000
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.200000
+	reflection: 0.700000
+	refraction: 0.000000
+sphere:
+	x: 5.585626
+	y: 2.332977
+	z: 0.859020
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 0.524000
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.200000
+	reflection: 0.700000
+	refraction: 0.000000
+sphere:
+	x: 5.585626
+	y: 1.107243
+	z: -0.159394
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 0.147552
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.200000
+	reflection: 0.700000
+	refraction: 0.000000
