@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 19:43:45 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 19:58:21 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -111,15 +111,8 @@ $(NAME) : $(OBJECTS)
 	@$(CC) $(OBJECTS) $(INCLUDEFOLDERS) $(LIBFOLDERS) $(LIBS) $(CFLAGS) -o $(NAME)
 	@echo " $(OK_COLOR)Successful ✓$(NO_COLOR)"
 
-getlibs :
-	git clone https://github.com/kubekhrm/libft.git
-
-updatelibs :
-	@echo "$(SILENT_COLOR)Searching LibFt updates...$(NO_COLOR)"
-	@cd libft/ && git pull
-
 complibs :
-	@make -C libft/ usemath nothing addmath addconvert addprint addinput addmemory addstrings addcolors re
+	@make -C libft/ usemath all
 
 clean :
 	@rm -f $(OBJECTS)
@@ -128,6 +121,6 @@ clean :
 fclean : clean
 	@rm -f $(NAME)
 	@echo "$(SILENT_COLOR)$(NAME) : Cleaned Program$(NO_COLOR)"
-	# @make -C "libft/" fclean
+	@make -C "libft" fclean
 
-re : fclean all
+re : fclean complibs all
