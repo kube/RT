@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/27 16:58:16 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 20:11:36 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,25 @@
 
 static float	intersection(t_object *obj, t_ray *ray)
 {
+	t_ray		new_ray;
+	t_object	new_obj;
+
+	new_ray = *ray;
+	new_obj = *obj;
 	if (obj->type == OBJ_SPHERE)
 		return (sphere_equation(obj, ray));
 	else if (obj->type == OBJ_PLANE)
 		return (plane_equation(obj, ray));
-	else if (obj->type == OBJ_CYLINDER)
-		return (cylinder_equation(obj, ray));
-	else if (obj->type == OBJ_CONE)
-		return (cone_equation(obj, ray));
+	if (obj->type == OBJ_CYLINDER)
+	{
+		change_ray(ray, &new_ray, obj, &new_obj);
+		return (cylinder_equation(&new_obj, &new_ray));
+	}
+	if (obj->type == OBJ_CONE)
+	{
+		change_ray(ray, &new_ray, obj, &new_obj);
+		return (cone_equation(&new_obj, &new_ray));
+	}
 	return (INFINITY);
 }
 
@@ -43,14 +54,14 @@ static void		calculate_reflected(t_ray *a, t_ray *b)
 		n.y = intersection.y - a->closest->origin.y;
 		n.z = intersection.z - a->closest->origin.z;
 	}
+	else if (ray->closest->type == OBJ_CYLINDER)
+		get_cylinder_normal(&n, ray->closest, &intersection);
+	else if (ray->closest->type == OBJ_CONE)
+		get_cone_normal(&n, ray->closest, &intersection);
 	else
 		n = a->closest->normal;
-	b->origin.x = intersection.x;
-	b->origin.y = intersection.y;
-	b->origin.z = intersection.z;
-	a->direction.x = -a->direction.x;
-	a->direction.y = -a->direction.y;
-	a->direction.z = -a->direction.z;
+	b->origin = intersection;
+	vect_scale(a->direction, -1);
 	b->direction.x = 2 * (vect_dot(&n, &a->direction)) * n.x - a->direction.x;
 	b->direction.y = 2 * (vect_dot(&n, &a->direction)) * n.y - a->direction.y;
 	b->direction.z = 2 * (vect_dot(&n, &a->direction)) * n.z - a->direction.z;

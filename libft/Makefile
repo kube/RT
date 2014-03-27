@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/11/24 16:52:10 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 19:56:45 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 20:12:23 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,13 +126,9 @@ SOURCES_COLORS = \
 SOURCES_HASHMAP = \
 			hashmap/hashmap.c				\
 
-SOURCES_DYNAMIC_ARRAY = \
-			dynamic_array/dynamic_array.c	\
-
 SOURCES = 	$(SOURCES_CONVERT) $(SOURCES_INPUT) $(SOURCES_LISTS) \
 			$(SOURCES_MATH) $(SOURCES_MEMORY) $(SOURCES_PRINT) \
-			$(SOURCES_STRINGS) $(SOURCES_COLORS) $(SOURCES_HASHMAP) \
-			$(SOURCES_DYNAMIC_ARRAY)
+			$(SOURCES_STRINGS) $(SOURCES_COLORS) $(SOURCES_HASHMAP)
 
 OBJECTS = $(SOURCES:.c=.o)
 OBJECTS := $(subst /,__,$(OBJECTS))
