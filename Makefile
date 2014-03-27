@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 00:25:44 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 14:32:08 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -26,6 +26,7 @@ SOURCES =	rt.c								\
 			camera/camera_init.c				\
 			object/creation.c					\
 			scene_parser/parser.c				\
+			scene_parser/command_add_sphere.c	\
 			interpreter/interpreter.c			\
 			interpreter/command_list.c			\
 			interpreter/command_remove.c		\

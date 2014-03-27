@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/26 17:32:15 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 14:45:00 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,10 @@ int					main(int argc, char **argv)
 {
 	if (argc == 2)
 	{
+
+		env = (t_env*)ft_memalloc(sizeof(t_env));
+		env->scene = (t_scene*)malloc(sizeof(t_scene));
+
 		parse_file(argv[1]);
 		return (0);
 	}
