@@ -6,7 +6,7 @@
 /*   By: acollin <acollin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/27 19:49:44 by acollin           #+#    #+#             */
-/*   Updated: 2014/03/27 19:51:39 by acollin          ###   ########.fr       */
+/*   Updated: 2014/03/27 20:29:57 by acollin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <parser.h>
 #include <rt.h>
 #include <object.h>
-#include <libft.h>
 #include <stdlib.h>
 
 void				cmd_define_diaphragm(t_parser *parser, char **line)
