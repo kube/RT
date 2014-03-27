@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 00:50:04 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 00:25:16 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 01:43:38 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct				s_interpreter
 typedef struct				s_command
 {
 	char					*token;
-	struct s_command		*child;
 	void					(*callback)(char**);
 	struct s_command		*next;
 }							t_command;

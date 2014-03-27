@@ -41,88 +41,88 @@
 
 
 # Scene Description
-scene:
-    title: "Trinity"
-    width: 1200
-    height: 800
 
-    # Camera
-    camera:
-        x: 0
-        y: 50
-        z: 10
-        rotZ: 0
-        rotY: -20
-        rotX: 0
+title: "Trinity"
+width: 1200
+height: 800
 
-    # Lights
-    light:
-        x: 255
-        y: 2
-        z: 1
-        type: spot
-        color: #45F4C2
+# Camera
+camera:
+    x: 0
+    y: 50
+    z: 10
+    rotZ: 0
+    rotY: -20
+    rotX: 0
 
-    # Defining a skybox
-    sphere:
-        x: 0
-        y: 0
-        z: 0
-        radius: 60000
-        rotX: 0
-        rotY: 0
-        rotZ: 40
-        matter: "sky"
+# Lights
+light:
+    x: 255
+    y: 2
+    z: 1
+    type: spot
+    color: #45F4C2
 
-    # Defining a ground
-    plane:
-        x: 0
-        y: 0
-        z: 0
-        normX: 0
-        normY: 0
-        normZ: 1
-        # texture: "./textures/grass.xpm"
-        matter: "sky"
-        diffuse 0.5
-        specular: 1.0
+# Defining a skybox
+sphere:
+    x: 0
+    y: 0
+    z: 0
+    radius: 60000
+    rotX: 0
+    rotY: 0
+    rotZ: 40
+    matter: "sky"
 
-    # This will make an object with default properties
-    plane:
+# Defining a ground
+plane:
+    x: 0
+    y: 0
+    z: 0
+    normX: 0
+    normY: 0
+    normZ: 1
+    # texture: "./textures/grass.xpm"
+    matter: "sky"
+    diffuse 0.5
+    specular: 1.0
 
-    cone:
-        x: 255
-        y: 2
-        z: 1
-        aperture: 120
-        rotX: 320
-        rotY: 120
-        rotZ: 0
+# This will make an object with default properties
+plane:
 
-    plane:
-        x: 255
-        y: 2
-        z: 1
-        rotX: 320
-        rotY: 120
-        rotZ: 0
-        color: #4F5F6F
+cone:
+    x: 255
+    y: 2
+    z: 1
+    aperture: 120
+    rotX: 320
+    rotY: 120
+    rotZ: 0
 
-    cylinder:
-        x: 255
-        y: 2
-        z: 1
-        rotX: 320
-        rotY: 120
-        rotZ: 0
-        color: #4F5F6F
-        texture: "./textures/sky.xpm"
+plane:
+    x: 255
+    y: 2
+    z: 1
+    rotX: 320
+    rotY: 120
+    rotZ: 0
+    color: #4F5F6F
 
-    object:
-        url: "./bottle.obj"
-        x: 23
-        y: 65
-        z: 54
-        rotX: 320
-        rotY: 120
-        rotZ: 0
+cylinder:
+    x: 255
+    y: 2
+    z: 1
+    rotX: 320
+    rotY: 120
+    rotZ: 0
+    color: #4F5F6F
+    texture: "./textures/sky.xpm"
+
+object:
+    url: "./bottle.obj"
+    x: 23
+    y: 65
+    z: 54
+    rotX: 320
+    rotY: 120
+    rotZ: 0
