@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 00:36:27 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 13:48:47 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 {
 	if (keycode == 65307)
 		exit(0);
+	else if (keycode == 61)
+	{
+		env->scene->diaphragm *= 1.05;
+		env->last_light_refresh = clock();
+	}
+	else if (keycode == 45)
+	{
+		env->scene->diaphragm /= 1.05;
+		env->last_light_refresh = clock();
+	}
 	else if (env->block_events)
 		return (0);
 	else if (keycode == 65363)
@@ -61,16 +71,6 @@ int			keypress_hook(int keycode, t_pressedkeys *keys)
 	{
 		if (env->selected_object)
 			duplicate_object(env->selected_object);
-	}
-	else if (keycode == 61)
-	{
-		env->scene->diaphragm *= 1.05;
-		env->last_light_refresh = clock();
-	}
-	else if (keycode == 45)
-	{
-		env->scene->diaphragm /= 1.05;
-		env->last_light_refresh = clock();
 	}
 	else if (keycode == 65406 || keycode == 65513)
 		keys->alt = 1;
