@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 00:50:05 by kube              #+#    #+#             */
-/*   Updated: 2014/03/27 02:06:29 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 14:05:27 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 typedef struct				s_parser_command
 {
 	char					*token;
+	int						indent_level;
 	void					(*callback)(char**);
 	struct s_parser_command	*next;
 }							t_parser_command;

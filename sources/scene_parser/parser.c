@@ -6,12 +6,13 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 00:42:37 by kube              #+#    #+#             */
-/*   Updated: 2014/03/27 02:47:05 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 14:08:56 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_input.h>
 #include <ft_print.h>
+#include <ft_strings.h>
 #include <parser.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -69,26 +70,67 @@ static int	is_empty_line(char *line)
 	return (1);
 }
 
-
-static void		init_scene_parser()
+static void			check_command(int indent_level, t_parser_command *commands,
+									char **command_line)
 {
-	// parser_add_command(&interpreter->commands, "list", cmd_list);
-	// parser_add_command(&interpreter->commands, "remove", cmd_remove);
-	// parser_add_command(&interpreter->commands, "add", cmd_add);
-	// parser_add_command(&interpreter->commands, "export", cmd_export);
-	// parser_add_command(&interpreter->commands, "antialias", cmd_antialias);
-	// parser_add_command(&interpreter->commands, "render", cmd_render);
-	// parser_add_command(&interpreter->commands, "edit_mode", cmd_editmode);
-	// parser_add_command(&interpreter->commands, "recursivity",
-	// 						cmd_recursivity);
-	// parser_add_command(&interpreter->commands, "unblock", cmd_unblock);	
+	while (commands)
+	{
+		if (indent_level == commands->indent_level
+			&& ft_strequ(commands->token, *command_line))
+		{
+			commands->callback(command_line + 1);
+			return ;
+		}
+		commands = commands->next;
+	}
+	ft_putendl_fd("ERROR! Unrecognized parser command.", 2);
 }
+
+static void			parser_add_command(t_parser_command **commands, int indent_level,
+										char *token, void (*callback)(char**))
+{
+	t_parser_command		*new_command;
+
+	new_command = (t_parser_command*)malloc(sizeof(t_parser_command));
+	new_command->token = ft_strdup(token);
+	new_command->indent_level = indent_level;
+	new_command->callback = callback;
+	new_command->next = *commands;
+	*commands = new_command;
+}
+
+
+// ADD COMMANDS HERE
+static void		init_scene_parser(t_parser *parser)
+{
+	parser->commands = NULL;
+	parser_add_command(&parser->commands, 0, "sphere", NULL);
+	// parser_add_command(&parser->commands, 1, "radius", cmd_define_radius);
+}
+
+
+
+void				parse_line(t_parser *parser, int indent_level, char *line)
+{
+	char			**splited;
+
+	splited = ft_strsplit(line, ':');
+	if (*splited)
+	{
+		check_command(indent_level, parser->commands, splited);
+		// free(splited);
+		// free(line);
+	}
+}
+
+
 
 static void		parse_scene(int file)
 {
 	char		*line;
 	t_parser	parser;
 
+	init_scene_parser(&parser);
 	parser.last_type = 0;
 	while (get_next_line(file, &line)*1)
 	{
@@ -96,8 +138,8 @@ static void		parse_scene(int file)
 		if (!is_empty_line(line))
 		{
 			ft_putendl(line);
-			(void)count_indentation;
-			// parse_line(parser, line, count_indentation(line));
+			// (void)count_indentation;
+			parse_line(&parser, count_indentation(line), line);
 		}
 		free(line);
 	}
