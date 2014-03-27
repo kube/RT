@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 14:32:08 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 16:05:55 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -36,7 +36,7 @@ SOURCES =	rt.c								\
 			interpreter/command_render.c		\
 			interpreter/command_editmode.c		\
 			interpreter/command_recursivity.c	\
-			interpreter/command_unblock.c	\
+			interpreter/command_unblock.c		\
 			export/export_image.c				\
 			mouse/mouse.c						\
 			ray_throw.c							\
@@ -48,14 +48,14 @@ SOURCES =	rt.c								\
 			equations/matrix.c					\
 			equations/change_ray.c				\
 			phong_shading.c						\
-			matter.c							\
 			render_thread.c						\
 			render_to_image.c					\
 			light_diaphragm.c					\
-			keyboard.c							\
+			keyboard/keyboard.c					\
+			keyboard/keypress_hook.c			\
+			keyboard/keyrelease_hook.c			\
+			keyboard/check_pressed_keys.c		\
 			pixel.c								\
-			\
-			tests.c								\
 
 OBJECTS =	$(SOURCES:.c=.o)
 

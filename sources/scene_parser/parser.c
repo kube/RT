@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 00:42:37 by kube              #+#    #+#             */
-/*   Updated: 2014/03/27 14:53:41 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 15:43:31 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	count_indentation(char *line, int line_number)
 		{
 			ft_putstr_fd("Line ", 2);
 			ft_putnbr_fd(line_number, 2);
-			ft_putendl_fd(":\tERROR! Bad Indentation.", 2);
+			ft_putendl_fd(": ERROR! Bad Indentation.", 2);
 			exit(1);
 		}
 		else
@@ -90,7 +90,7 @@ static void				check_command(int indent_level, t_parser *parser,
 	}
 	ft_putstr_fd("Line ", 2);
 	ft_putnbr_fd(line, 2);
-	ft_putstr_fd(":\tERROR! Unrecognized parser command : ", 2);
+	ft_putstr_fd(": ERROR! Unrecognized parser command : ", 2);
 	ft_putendl_fd(command_line[0], 2);
 }
 
@@ -141,7 +141,7 @@ static void		parse_scene(int file)
 	t_parser	parser;
 	int			line_number;
 
-	line_number = 0;
+	line_number = 1;
 	init_scene_parser(&parser);
 	parser.last_type = 0;
 	while (get_next_line(file, &line)*1)

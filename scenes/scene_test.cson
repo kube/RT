@@ -2,49 +2,12 @@
 # Python-like indentation
 # ****************************
 
-# - Angles are in degrees
-# - Can define matters
-# - Can attach a matter to an element
-# - Can override properties from attached matter
-# - If no specified matter, use DEFAULT matter
-
-
-# Position and Transformation
-# x
-# y
-# z
-# rotX
-# rotY
-# rotZ
-
-
-# Specific Properties
-
-# radius
-# aperture
-# width
-# height
-# depth
-# faces
-
-
-# Matter Properties
-# color
-# opacity
-# texture
-# reflection
-# refraction
-# refract_index
-# ambient
-# diffuse
-# specular
-
-
 # Scene Description
-
-title: "Trinity"
 width: 1200
 height: 800
+antialias: 4
+recursivity: 4
+diaphragm: 1.0
 
 # Camera
 camera:
@@ -60,18 +23,30 @@ light:
 	x: 255
 	y: 2
 	z: 1
-	color: 45F4C2
+	intensity: 1.0
+	red: 1.0
+	blue: 0.5
+	green: 0.2
+
+light:
+	x: -25
+	y: 20
+	z: 10
+	intensity: 9.0
+	red: 0.1
+	blue: 0.5
+	green: 0.2
 
 # Defining a skybox
- 	sphere:
+	sphere:
 	x: 0
 	y: 0
 	z: 0
 	radius: 60000
+	color: 
 	rotX: 0
 	rotY: 0
 	rotZ: 40
-	matter: "sky"
 
 # Defining a ground
 plane:
@@ -81,9 +56,7 @@ plane:
 	normX: 0
 	normY: 0
 	normZ: 1
-	# texture: "./textures/grass.xpm"
-	matter: "sky"
-	diffuse 0.5
+	diffuse: 0.5
 	specular: 1.0
 
 # This will make an object with default properties
@@ -105,7 +78,7 @@ plane:
 	rotX: 320
 	rotY: 120
 	rotZ: 0
-	color: #4F5F6F
+	color: 4F5F6F
 
 cylinder:
 	x: 255
@@ -114,14 +87,4 @@ cylinder:
 	rotX: 320
 	rotY: 120
 	rotZ: 0
-	color: #4F5F6F
-	texture: "./textures/sky.xpm"
-
-object:
-	url: "./bottle.obj"
-	x: 23
-	y: 65
-	z: 54
-	rotX: 320
-	rotY: 120
-	rotZ: 0
+	color: 4F5F6F

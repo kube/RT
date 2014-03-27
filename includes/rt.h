@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/25 16:05:28 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 15:48:42 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@
 # include <scene.h>
 # include <object.h>
 # include <light.h>
-# include <matter.h>
 # include <interpreter.h>
 # include <keyboard.h>
 # include <time.h>
 # include <pthread.h>
 
-# define VIEWPLANE_PLOT 1000
-# define RENDER_SPLIT	2
+# define DEFAULT_VIEW_WIDTH		1300
+# define DEFAULT_VIEW_HEIGHT	900
+# define VIEWPLANE_PLOT 		1000
+# define RENDER_SPLIT			2
 
 typedef struct				s_env
 {

@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.h                                            :+:      :+:    :+:   */
+/*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/19 23:03:03 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 15:24:57 by cfeijoo          ###   ########.fr       */
+/*   Created: 2014/03/08 15:50:12 by cfeijoo           #+#    #+#             */
+/*   Updated: 2014/03/27 16:00:27 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCENE_H
-# define SCENE_H
+#include <rt.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ft_memory.h>
 
-typedef struct				s_scene
+void		init_pressed_keys(t_pressedkeys *keys)
 {
-	struct s_camera			camera;
-	struct s_camera			render_cam;
-	unsigned int			view_width;
-	unsigned int			view_height;
-	struct s_object			*objects;
-	struct s_light			*lights;
-	float					diaphragm;
-	int						recursivity;
-	unsigned int			antialiasing;
-}							t_scene;
+	ft_bzero(keys, sizeof(*keys));
+}
 
-#endif
+int			is_one_key_pressed(t_pressedkeys *keys)
+{
+	int		i;
+	int		*key;
+
+	i = 0;
+	key = (int*)keys;
+	while ((size_t)key - (size_t)(keys) < sizeof(*keys))
+	{
+		if (*key)
+			return (1);
+		key++;
+	}
+	return (0);
+}

@@ -6,13 +6,14 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 14:45:00 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 15:49:16 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_print.h>
 #include <ft_math.h>
 #include <ft_colors.h>
+#include <ft_strings.h>
 #include <ft_convert.h>
 #include <ft_memory.h>
 #include <unistd.h>
@@ -26,20 +27,7 @@
 #include <mouse.h>
 #include <interpreter.h>
 #include <pthread.h>
-
-/*
-**	Development Libraries
-*/
 #include <time.h>
-#include <stdio.h>
-#include <tests.h>
-
-/*
-**	This is just for development, render dimensions will be parsed in File
-*/
-#define RENDER_WIDTH			1100
-#define RENDER_HEIGHT			670
-
 
 static int			view_loop()
 {
@@ -61,7 +49,6 @@ static int			view_loop()
 	usleep(4000);
 	return (0);
 }
-
 
 t_ray				get_ray_from_point(float i, float j)
 {
@@ -118,48 +105,42 @@ static int			expose_hook()
 	return (0);
 }
 
-int					main(int argc, char **argv)
+static void			init_main()
 {
-	if (argc == 2)
-	{
-
-		env = (t_env*)ft_memalloc(sizeof(t_env));
-		env->scene = (t_scene*)malloc(sizeof(t_scene));
-
-		parse_file(argv[1]);
-		return (0);
-	}
-
 	env = (t_env*)ft_memalloc(sizeof(t_env));
-
 	env->scene = (t_scene*)malloc(sizeof(t_scene));
-
-	env->scene->view_width = RENDER_WIDTH;
-	env->scene->view_height = RENDER_HEIGHT;
+	env->block_events = 0;
+	env->fast_mode = 0;
+	env->scene->view_width = DEFAULT_VIEW_WIDTH;
+	env->scene->view_height = DEFAULT_VIEW_HEIGHT;
 	env->scene->recursivity = 4;
 	env->scene->antialiasing = 4;
-
+	env->scene->diaphragm = 1.0;
+	init_cam(&env->scene->camera, 0, 0, 0);
+	init_cam_angle(&env->scene->camera, 0, 0);
 	env->selected_object = NULL;
 	env->pressed_mouse = 0;
 	env->running_threads = 0;
-
-	env->fast_mode = 1;
-
+	env->interpreter_thread = 0;
+	env->render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
+						* sizeof(pthread_t));
 	env->last_scene_change = clock();
 	env->last_light_refresh = 0;
 	env->last_image_refresh = 0;
-
-	env->scene->diaphragm = 1.0;
-	env->scene->matters = NULL;
-
-	env->interpreter_thread = 0;
-	env->block_events = 0;
-
-	env->render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
-						* sizeof(pthread_t));
 	env->rendering = (t_light_color*)ft_memalloc(env->scene->view_width
 					* env->scene->view_height * sizeof(t_light_color));
+	init_pressed_keys(&env->pressed_keys);
+}
 
+int					main(int argc, char **argv)
+{
+	init_main();
+	if (argc > 1 && ft_strequ(argv[1], "-edit"))
+		env->fast_mode = 1;
+	else
+		env->block_events = 1;
+	if (argc == 2 + (env->fast_mode == 1))
+		parse_file(argv[1 + (env->fast_mode == 1)]);
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, env->scene->view_width,
 				env->scene->view_height, "RT");
@@ -167,17 +148,12 @@ int					main(int argc, char **argv)
 				env->scene->view_height);
 	env->data = (int*)mlx_get_data_addr(env->img, &(env->bpp),
 				&(env->size_line), &(env->endian));
-
-	init_cam(&env->scene->camera, 0, 0, 0);
-	init_cam_angle(&env->scene->camera, 0, 0);
-	create_test_objects(env->scene);
-	init_pressed_keys(&env->pressed_keys);
-
 	create_interpreter_thread(&env);
-
 	mlx_expose_hook(env->win, expose_hook, NULL);
-	mlx_hook(env->win, KeyPress, KeyPressMask, keypress_hook, &env->pressed_keys);
-	mlx_hook(env->win, KeyRelease, KeyReleaseMask, keyrelease_hook, &env->pressed_keys);
+	mlx_hook(env->win, KeyPress, KeyPressMask, keypress_hook,
+		&env->pressed_keys);
+	mlx_hook(env->win, KeyRelease, KeyReleaseMask, keyrelease_hook,
+		&env->pressed_keys);
 	mlx_hook(env->win, ButtonPress, ButtonPressMask, mousepress_ev, NULL);
 	mlx_hook(env->win, ButtonRelease, ButtonReleaseMask, mouserelease_ev, NULL);
 	mlx_hook(env->win, MotionNotify, PointerMotionMask, motionnotify_ev, NULL);
