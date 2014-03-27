@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 03:27:02 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 00:01:26 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 20:34:15 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,44 @@ static void			add_sphere()
 	env->scene->objects->ambient = 0.2;
 	env->scene->objects->diffuse = 0.4;
 	env->scene->objects->specular = 0.2;
+	env->scene->objects->reflection = 0.7;
+	env->last_scene_change = clock();
+}
+
+static void			add_cylinder()
+{
+	add_object(env->scene, new_object(OBJ_CYLINDER));
+	env->scene->objects->origin.x = env->scene->camera.origin.x
+							+ env->scene->camera.x_axis.x * 4;
+	env->scene->objects->origin.y = env->scene->camera.origin.y
+							+ env->scene->camera.x_axis.y * 4;
+	env->scene->objects->origin.z = env->scene->camera.origin.z
+							+ env->scene->camera.x_axis.z * 4;
+	env->scene->objects->normal.z = 1;
+	env->scene->objects->color.color = 0xFFFFFFFF;
+	env->scene->objects->radius = 2.2;
+	env->scene->objects->ambient = 0.1;
+	env->scene->objects->diffuse = 0.8;
+	env->scene->objects->specular = 0.4;
+	env->scene->objects->reflection = 0.7;
+	env->last_scene_change = clock();
+}
+
+static void			add_cone()
+{
+	add_object(env->scene, new_object(OBJ_CONE));
+	env->scene->objects->origin.x = env->scene->camera.origin.x
+							+ env->scene->camera.x_axis.x * 4;
+	env->scene->objects->origin.y = env->scene->camera.origin.y
+							+ env->scene->camera.x_axis.y * 4;
+	env->scene->objects->origin.z = env->scene->camera.origin.z
+							+ env->scene->camera.x_axis.z * 4;
+	env->scene->objects->normal.z = 1;
+	env->scene->objects->color.color = 0xFFFFFFFF;
+	env->scene->objects->aperture = 22;
+	env->scene->objects->ambient = 0.1;
+	env->scene->objects->diffuse = 0.8;
+	env->scene->objects->specular = 0.4;
 	env->scene->objects->reflection = 0.7;
 	env->last_scene_change = clock();
 }
@@ -84,6 +122,10 @@ void				cmd_add(char **line)
 			add_sphere();
 		else if (ft_strequ("plane", *line))
 			add_plane();
+		else if (ft_strequ("cylinder", *line))
+			add_cylinder();
+		else if (ft_strequ("cone", *line))
+			add_cone();
 		else if (ft_strequ("light", *line))
 			add_light();
 		else

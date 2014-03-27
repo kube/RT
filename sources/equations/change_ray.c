@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/26 13:08:39 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/27 17:17:33 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 20:18:25 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include <math.h>
 #include <matrix.h>
 
-void			change_ray(t_ray *ray, t_ray *new_ray, t_object *obj)
+void			change_ray(t_ray *ray, t_ray *new_ray, t_object *obj,
+							t_object *new_obj)
 {
 	float		matrix[9];
 	float		inverted_matrix[9];
@@ -26,7 +27,7 @@ void			change_ray(t_ray *ray, t_ray *new_ray, t_object *obj)
 
 	z = obj->normal;
 	if (z.x == 0 && z.y == 0 && (z.z == 1 || z.z == -1))
-		return ;
+		return;
 	if ((z.x == 1 || z.x == -1) && z.y == 0 && z.y == 0)
 	{
 		x.x = 0;
@@ -47,7 +48,7 @@ void			change_ray(t_ray *ray, t_ray *new_ray, t_object *obj)
 	}
 	else
 	{
-		normalize_vector(&z);
+		normalize_vector(&z);	
 		y.x = -z.y;
 		y.y = z.x;
 		y.z = 0;
@@ -55,8 +56,9 @@ void			change_ray(t_ray *ray, t_ray *new_ray, t_object *obj)
 		x = vect_product(&y, &z);
 		normalize_vector(&x);
 	}
-	transformation_matrix(matrix, &x, &y, &z);
-	invert_matrix(matrix, inverted_matrix);
-	new_ray->origin = matrix_point_product(inverted_matrix, &ray->origin);
-	new_ray->direction = matrix_vector_product(inverted_matrix, &ray->direction);
+		transformation_matrix(matrix, &x, &y, &z);
+		invert_matrix(matrix, inverted_matrix);
+		new_ray->origin = matrix_point_product(inverted_matrix, &ray->origin);
+		new_obj->origin = matrix_point_product(inverted_matrix, &obj->origin);
+		new_ray->direction = matrix_vector_product(inverted_matrix, &ray->direction);
 }

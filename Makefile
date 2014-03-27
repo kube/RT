@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 20:00:37 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 20:25:42 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -62,6 +62,7 @@ SOURCES =	rt.c									\
 			mouse/mouse.c							\
 			mouse/motion_notify.c					\
 			ray_throw.c								\
+			equations/get_normal.c					\
 			equations/equation_cone.c				\
 			equations/equation_cylinder.c			\
 			equations/equation_sphere.c				\
@@ -95,7 +96,7 @@ SILENT_COLOR =	\x1b[30;01m
 
 .PHONY: all re clean fclean
 
-all: complibs $(NAME)
+all: $(NAME)
 
 linux :
 	@$(eval INCLUDEFOLDERS := -I./includes/ -I./libft/includes/ -I/usr/X11/include/ -I/usr/include/X11)
@@ -121,6 +122,6 @@ clean :
 fclean : clean
 	@rm -f $(NAME)
 	@echo "$(SILENT_COLOR)$(NAME) : Cleaned Program$(NO_COLOR)"
-	@make -C "libft" fclean
+	# @make -C "libft" fclean
 
-re : fclean complibs all
+re : fclean all

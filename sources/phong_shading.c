@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 19:10:43 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/26 23:54:25 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 20:14:38 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ static float	phong_lighting(t_ray *ray)
 		normal.y = intersection.y - ray->closest->origin.y;
 		normal.z = intersection.z - ray->closest->origin.z;
 	}
+	else if (ray->closest->type == OBJ_CYLINDER)
+		get_cylinder_normal(&normal, ray->closest, &intersection);
+	else if (ray->closest->type == OBJ_CONE)
+		get_cone_normal(&normal, ray->closest, &intersection);
 	else
 		normal = ray->closest->normal;
 	normalize_vector(&normal);

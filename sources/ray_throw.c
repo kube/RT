@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/27 20:11:36 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 20:23:04 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ static void		calculate_reflected(t_ray *a, t_ray *b)
 		n.y = intersection.y - a->closest->origin.y;
 		n.z = intersection.z - a->closest->origin.z;
 	}
-	else if (ray->closest->type == OBJ_CYLINDER)
-		get_cylinder_normal(&n, ray->closest, &intersection);
-	else if (ray->closest->type == OBJ_CONE)
-		get_cone_normal(&n, ray->closest, &intersection);
+	else if (a->closest->type == OBJ_CYLINDER)
+		get_cylinder_normal(&n, a->closest, &intersection);
+	else if (a->closest->type == OBJ_CONE)
+		get_cone_normal(&n, a->closest, &intersection);
 	else
 		n = a->closest->normal;
 	b->origin = intersection;
-	vect_scale(a->direction, -1);
+	vect_scale(&a->direction, -1);
 	b->direction.x = 2 * (vect_dot(&n, &a->direction)) * n.x - a->direction.x;
 	b->direction.y = 2 * (vect_dot(&n, &a->direction)) * n.y - a->direction.y;
 	b->direction.z = 2 * (vect_dot(&n, &a->direction)) * n.z - a->direction.z;

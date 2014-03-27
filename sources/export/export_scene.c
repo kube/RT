@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/27 19:42:39 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 19:51:04 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 20:47:18 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,24 @@ static void			display_sphere_properties(t_object *sphere, int file)
 	dprintf(file, "	refraction: %f\n", sphere->refraction);
 }
 
+static void			display_cone_properties(t_object *cone, int file)
+{
+	ft_putendl_fd("cone:", file);
+	dprintf(file, "	x: %f\n", cone->origin.x);
+	dprintf(file, "	y: %f\n", cone->origin.y);
+	dprintf(file, "	z: %f\n", cone->origin.z);
+	dprintf(file, "	normX: %f\n", cone->normal.x);
+	dprintf(file, "	normY: %f\n", cone->normal.y);
+	dprintf(file, "	normZ: %f\n", cone->normal.z);
+	dprintf(file, "	color: %X\n", cone->color.color);
+	dprintf(file, "	radius: %f\n", cone->radius);
+	dprintf(file, "	ambient: %f\n", cone->ambient);
+	dprintf(file, "	diffuse: %f\n", cone->ambient);
+	dprintf(file, "	specular: %f\n", cone->specular);
+	dprintf(file, "	reflection: %f\n", cone->reflection);
+	dprintf(file, "	refraction: %f\n", cone->refraction);
+}
+
 static void			display_plane_properties(t_object *plane, int file)
 {
 	ft_putendl_fd("plane:", file);
@@ -61,13 +79,30 @@ static void			display_plane_properties(t_object *plane, int file)
 	dprintf(file, "	normX: %f\n", plane->normal.x);
 	dprintf(file, "	normY: %f\n", plane->normal.y);
 	dprintf(file, "	normZ: %f\n", plane->normal.z);
-	dprintf(file, "	radius: %f\n", plane->radius);
 	dprintf(file, "	color: %X\n", plane->color.color);
 	dprintf(file, "	ambient: %f\n", plane->ambient);
 	dprintf(file, "	diffuse: %f\n", plane->ambient);
 	dprintf(file, "	specular: %f\n", plane->specular);
 	dprintf(file, "	reflection: %f\n", plane->reflection);
 	dprintf(file, "	refraction: %f\n", plane->refraction);
+}
+
+static void			display_cylinder_properties(t_object *cylinder, int file)
+{
+	ft_putendl_fd("cylinder:", file);
+	dprintf(file, "	x: %f\n", cylinder->origin.x);
+	dprintf(file, "	y: %f\n", cylinder->origin.y);
+	dprintf(file, "	z: %f\n", cylinder->origin.z);
+	dprintf(file, "	normX: %f\n", cylinder->normal.x);
+	dprintf(file, "	normY: %f\n", cylinder->normal.y);
+	dprintf(file, "	normZ: %f\n", cylinder->normal.z);
+	dprintf(file, "	radius: %f\n", cylinder->radius);
+	dprintf(file, "	color: %X\n", cylinder->color.color);
+	dprintf(file, "	ambient: %f\n", cylinder->ambient);
+	dprintf(file, "	diffuse: %f\n", cylinder->ambient);
+	dprintf(file, "	specular: %f\n", cylinder->specular);
+	dprintf(file, "	reflection: %f\n", cylinder->reflection);
+	dprintf(file, "	refraction: %f\n", cylinder->refraction);
 }
 
 static void			display_light_properties(t_light *light, int file)
@@ -106,6 +141,10 @@ void				export_scene(int file)
 			display_sphere_properties(object, file);
 		else if (object->type == OBJ_PLANE)
 			display_plane_properties(object, file);
+		else if (object->type == OBJ_CONE)
+			display_cone_properties(object, file);
+		else if (object->type == OBJ_CYLINDER)
+			display_cylinder_properties(object, file);
 		object = object->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/26 18:27:36 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/26 19:24:22 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 20:24:49 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <math.h>
 #include <matrix.h>
 
-float			cone_equation(t_object *cone, t_ray *origin_ray)
+float			cone_equation(t_object *cone, t_ray *ray)
 {
 	double	a;
 	double	b;
@@ -24,21 +24,16 @@ float			cone_equation(t_object *cone, t_ray *origin_ray)
 	double	det;
 	double	angle;
 
-	t_ray		ray;
-
-
-	change_ray(origin_ray, &ray, cone);
-
 	angle = cone->aperture * (M_PI / 180);
-	a = ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y - ray.direction.z * ray.direction.z
+	a = ray->direction.x * ray->direction.x + ray->direction.y * ray->direction.y - ray->direction.z * ray->direction.z
 		* tan(angle) * tan(angle);
-	b = 2 * (ray.origin.x * ray.direction.x + ray.origin.y * ray.direction.y - ray.direction.x * cone->origin.x
-		- ray.direction.y * cone->origin.y + (ray.direction.z * (cone->origin.z - ray.origin.z))
-		* tan(angle) * tan(angle));
-	c = ray.origin.x * ray.origin.x + ray.origin.y * ray.origin.y + cone->origin.x * cone->origin.x
-		+ cone->origin.y * cone->origin.y - 2 * (ray.origin.x * cone->origin.x + ray.origin.y * cone->origin.y)
-		- (ray.origin.z * ray.origin.z - 2 * (ray.origin.z * cone->origin.z) + cone->origin.z * cone->origin.z)
-		* tan(angle) * tan(angle);
+	b = 2 * (ray->origin.x * ray->direction.x + ray->origin.y * ray->direction.y - ray->direction.x * cone->origin.x
+		- ray->direction.y * cone->origin.y + (ray->direction.z * (cone->origin.z - ray->origin.z))
+			* tan(angle) * tan(angle));
+	c = ray->origin.x * ray->origin.x + ray->origin.y * ray->origin.y + cone->origin.x * cone->origin.x
+		+ cone->origin.y * cone->origin.y - 2 * (ray->origin.x * cone->origin.x + ray->origin.y * cone->origin.y)
+			- (ray->origin.z * ray->origin.z - 2 * (ray->origin.z * cone->origin.z) + cone->origin.z * cone->origin.z)
+				* tan(angle) * tan(angle);
 	det = b * b - 4 * a * c;
 	if (det >= 0)
 	{
