@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 00:50:04 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 01:43:38 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 18:14:25 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct				s_command
 }							t_command;
 
 int			create_interpreter_thread();
+void		interpreter_init_commands(t_interpreter *interpreter);
 void		cmd_list(char **line);
 void		cmd_remove(char **line);
 void		cmd_add(char **line);

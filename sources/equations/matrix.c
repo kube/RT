@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/25 04:31:53 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/26 18:09:55 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 17:15:28 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void			invert_matrix(float matrix[9], float inverted_matrix[9])
 			- matrix[1] * (matrix[3] * matrix[8] - matrix[6] * matrix[5])
 			+ matrix[2] * (matrix[3] * matrix[7] - matrix[6] * matrix[4]);
 	if (fabs(det) < 0.0005)
-		return;
+		return ;
 	inverted_matrix[0] = matrix[4] * matrix[8] - matrix[5] * matrix[7] / det;
 	inverted_matrix[1] = -(matrix[1] * matrix[8] - matrix[7] * matrix[2]) / det;
 	inverted_matrix[2] = matrix[1] * matrix[5] - matrix[4] * matrix[2] / det;

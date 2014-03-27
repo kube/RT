@@ -10,13 +10,6 @@ recursivity: 4
 diaphragm: 1.0
 
 # Camera
-camera:
-	x: 0
-	y: 50
-	z: 10
-	rotZ: 0
-	rotY: -20
-	rotX: 0
 
 # Lights
 light:
@@ -38,7 +31,7 @@ light:
 	green: 0.2
 
 # Defining a skybox
-	sphere:
+sphere:
 	x: 0
 	y: 0
 	z: 0

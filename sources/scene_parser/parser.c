@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/11 00:42:37 by kube              #+#    #+#             */
-/*   Updated: 2014/03/27 15:43:31 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 19:20:26 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <parser.h>
 #include <fcntl.h>
 #include <stdlib.h>
+
+
 
 static int	is_space(char c)
 {
@@ -35,7 +37,7 @@ static int	count_indentation(char *line, int line_number)
 		{
 			ft_putstr_fd("Line ", 2);
 			ft_putnbr_fd(line_number, 2);
-			ft_putendl_fd(": ERROR! Bad Indentation.", 2);
+			ft_putendl_fd(":\tERROR! Bad Indentation.", 2);
 			exit(1);
 		}
 		else
@@ -90,34 +92,9 @@ static void				check_command(int indent_level, t_parser *parser,
 	}
 	ft_putstr_fd("Line ", 2);
 	ft_putnbr_fd(line, 2);
-	ft_putstr_fd(": ERROR! Unrecognized parser command : ", 2);
+	ft_putstr_fd(":\tERROR! Unrecognized parser command : ", 2);
 	ft_putendl_fd(command_line[0], 2);
 }
-
-static void			parser_add_command(t_parser_command **commands,
-										int indent_level, char *token,
-										void (*callback)(t_parser*, char**))
-{
-	t_parser_command		*new_command;
-
-	new_command = (t_parser_command*)malloc(sizeof(t_parser_command));
-	new_command->token = ft_strdup(token);
-	new_command->indent_level = indent_level;
-	new_command->callback = callback;
-	new_command->next = *commands;
-	*commands = new_command;
-}
-
-
-// ADD COMMANDS HERE
-static void		init_scene_parser(t_parser *parser)
-{
-	parser->commands = NULL;
-	parser_add_command(&parser->commands, 0, "sphere", cmd_add_sphere);
-	// parser_add_command(&parser->commands, 1, "radius", cmd_define_radius);
-}
-
-
 
 void				parse_line(t_parser *parser, int indent_level, char *line,
 								int line_number)
@@ -133,15 +110,13 @@ void				parse_line(t_parser *parser, int indent_level, char *line,
 	}
 }
 
-
-
 static void		parse_scene(int file)
 {
 	char		*line;
 	t_parser	parser;
 	int			line_number;
 
-	line_number = 1;
+	line_number = 0;
 	init_scene_parser(&parser);
 	parser.last_type = 0;
 	while (get_next_line(file, &line)*1)

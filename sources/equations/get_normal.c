@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/26 17:59:22 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/26 17:59:43 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 18:09:53 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ void			get_cylinder_normal(t_vector *normal, t_ray *ray,
 	t_vector	project;
 
 	(void)ray;
-	// intersection->x = ray->origin.x + ray->direction.x * ray->inter_t;
-	// intersection->y = ray->origin.y + ray->direction.y * ray->inter_t;
-	// intersection->z = ray->origin.z + ray->direction.z * ray->inter_t;
 	v.x = intersection->x - cylinder->origin.x;
 	v.y = intersection->y - cylinder->origin.y;
 	v.z = intersection->z - cylinder->origin.z;
