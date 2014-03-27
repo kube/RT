@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 19:11:42 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 19:43:45 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -58,6 +58,7 @@ SOURCES =	rt.c									\
 			interpreter/command_unblock.c			\
 			interpreter/init_interpreter.c			\
 			export/export_image.c					\
+			export/export_scene.c					\
 			mouse/mouse.c							\
 			mouse/motion_notify.c					\
 			ray_throw.c								\
