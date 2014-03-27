@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 03:01:57 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 00:18:45 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 17:14:01 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void				cmd_antialias(char **line)
 	if (*line)
 		value = ft_atoi(*line);
 	if (value < 1 || value > 40 || !line[1])
-		env->scene->antialiasing = (unsigned int)value;
+		env->scene->antialias = (unsigned int)value;
 	else
 		ft_putendl_fd("usage: antialias <value:1-40>", 2);
 }

@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 15:49:16 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 17:11:02 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int			view_loop()
 	{
 		update_render_cam(&env->scene->render_cam, &env->scene->camera);
 		if (env->last_image_refresh < env->last_light_refresh)
-		{	
+		{
 			if (env->fast_mode)
 				mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 			else
@@ -50,26 +50,6 @@ static int			view_loop()
 	return (0);
 }
 
-t_ray				get_ray_from_point(float i, float j)
-{
-	t_ray			ray;
-
-	ray.origin.x = env->scene->render_cam.origin.x;
-	ray.origin.y = env->scene->render_cam.origin.y;
-	ray.origin.z = env->scene->render_cam.origin.z;
-	ray.direction.x = env->scene->render_cam.x_axis.x;
-	ray.direction.y = env->scene->render_cam.x_axis.y;
-	ray.direction.z = env->scene->render_cam.x_axis.z;
-	i -= env->scene->view_width / 2;
-	j -= env->scene->view_height / 2;
-	ray.direction.x -= (env->scene->render_cam.y_axis.x / VIEWPLANE_PLOT) * i;
-	ray.direction.y -= (env->scene->render_cam.y_axis.y / VIEWPLANE_PLOT) * i;
-	ray.direction.z -= (env->scene->render_cam.y_axis.z / VIEWPLANE_PLOT) * i;
-	ray.direction.x -= (env->scene->render_cam.z_axis.x / VIEWPLANE_PLOT) * j;
-	ray.direction.y -= (env->scene->render_cam.z_axis.y / VIEWPLANE_PLOT) * j;
-	ray.direction.z -= (env->scene->render_cam.z_axis.z / VIEWPLANE_PLOT) * j;
-	return (ray);
-}
 
 int					update_image()
 {
@@ -108,28 +88,30 @@ static int			expose_hook()
 static void			init_main()
 {
 	env = (t_env*)ft_memalloc(sizeof(t_env));
-	env->scene = (t_scene*)malloc(sizeof(t_scene));
-	env->block_events = 0;
-	env->fast_mode = 0;
+	env->scene = (t_scene*)ft_memalloc(sizeof(t_scene));
 	env->scene->view_width = DEFAULT_VIEW_WIDTH;
 	env->scene->view_height = DEFAULT_VIEW_HEIGHT;
-	env->scene->recursivity = 4;
-	env->scene->antialiasing = 4;
+	env->scene->recursivity = 2;
+	env->scene->antialias = 1;
 	env->scene->diaphragm = 1.0;
 	init_cam(&env->scene->camera, 0, 0, 0);
-	init_cam_angle(&env->scene->camera, 0, 0);
-	env->selected_object = NULL;
-	env->pressed_mouse = 0;
-	env->running_threads = 0;
-	env->interpreter_thread = 0;
 	env->render_threads = (pthread_t*)ft_memalloc(RENDER_SPLIT * RENDER_SPLIT
 						* sizeof(pthread_t));
 	env->last_scene_change = clock();
-	env->last_light_refresh = 0;
-	env->last_image_refresh = 0;
 	env->rendering = (t_light_color*)ft_memalloc(env->scene->view_width
 					* env->scene->view_height * sizeof(t_light_color));
 	init_pressed_keys(&env->pressed_keys);
+}
+
+static void			init_graphics()
+{
+	env->mlx = mlx_init();
+	env->win = mlx_new_window(env->mlx, env->scene->view_width,
+				env->scene->view_height, "RT");
+	env->img = mlx_new_image(env->mlx, env->scene->view_width,
+				env->scene->view_height);
+	env->data = (int*)mlx_get_data_addr(env->img, &(env->bpp),
+				&(env->size_line), &(env->endian));
 }
 
 int					main(int argc, char **argv)
@@ -141,14 +123,8 @@ int					main(int argc, char **argv)
 		env->block_events = 1;
 	if (argc == 2 + (env->fast_mode == 1))
 		parse_file(argv[1 + (env->fast_mode == 1)]);
-	env->mlx = mlx_init();
-	env->win = mlx_new_window(env->mlx, env->scene->view_width,
-				env->scene->view_height, "RT");
-	env->img = mlx_new_image(env->mlx, env->scene->view_width,
-				env->scene->view_height);
-	env->data = (int*)mlx_get_data_addr(env->img, &(env->bpp),
-				&(env->size_line), &(env->endian));
 	create_interpreter_thread(&env);
+	init_graphics();
 	mlx_expose_hook(env->win, expose_hook, NULL);
 	mlx_hook(env->win, KeyPress, KeyPressMask, keypress_hook,
 		&env->pressed_keys);

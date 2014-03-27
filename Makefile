@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 16:05:55 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 16:42:43 by cfeijoo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -39,6 +39,7 @@ SOURCES =	rt.c								\
 			interpreter/command_unblock.c		\
 			export/export_image.c				\
 			mouse/mouse.c						\
+			mouse/motion_notify.c				\
 			ray_throw.c							\
 			equations/equation_cone.c			\
 			equations/equation_cylinder.c		\

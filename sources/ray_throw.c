@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/05 18:07:34 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/26 18:34:51 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 16:58:16 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,27 @@ static void		calculate_reflected(t_ray *a, t_ray *b)
 	b->direction.y = 2 * (vect_dot(&n, &a->direction)) * n.y - a->direction.y;
 	b->direction.z = 2 * (vect_dot(&n, &a->direction)) * n.z - a->direction.z;
 	normalize_vector(&b->direction);
+}
+
+t_ray			get_ray_from_point(float i, float j)
+{
+	t_ray		ray;
+
+	ray.origin.x = env->scene->render_cam.origin.x;
+	ray.origin.y = env->scene->render_cam.origin.y;
+	ray.origin.z = env->scene->render_cam.origin.z;
+	ray.direction.x = env->scene->render_cam.x_axis.x;
+	ray.direction.y = env->scene->render_cam.x_axis.y;
+	ray.direction.z = env->scene->render_cam.x_axis.z;
+	i -= env->scene->view_width / 2;
+	j -= env->scene->view_height / 2;
+	ray.direction.x -= (env->scene->render_cam.y_axis.x / VIEWPLANE_PLOT) * i;
+	ray.direction.y -= (env->scene->render_cam.y_axis.y / VIEWPLANE_PLOT) * i;
+	ray.direction.z -= (env->scene->render_cam.y_axis.z / VIEWPLANE_PLOT) * i;
+	ray.direction.x -= (env->scene->render_cam.z_axis.x / VIEWPLANE_PLOT) * j;
+	ray.direction.y -= (env->scene->render_cam.z_axis.y / VIEWPLANE_PLOT) * j;
+	ray.direction.z -= (env->scene->render_cam.z_axis.z / VIEWPLANE_PLOT) * j;
+	return (ray);
 }
 
 void			throw_ray(t_ray *ray, int calculate_light,

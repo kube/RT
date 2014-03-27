@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/19 23:03:03 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 15:24:57 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 17:09:54 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct				s_scene
 	struct s_light			*lights;
 	float					diaphragm;
 	int						recursivity;
-	unsigned int			antialiasing;
+	unsigned int			antialias;
 }							t_scene;
 
 #endif

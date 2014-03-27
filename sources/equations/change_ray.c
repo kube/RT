@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/26 13:08:39 by lbinet            #+#    #+#             */
-/*   Updated: 2014/03/26 19:30:02 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/03/27 16:45:12 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			change_ray(t_ray *ray, t_ray *new_ray, t_object *obj)
 	}
 	else
 	{
-		normalize_vector(&z);	
+		normalize_vector(&z);
 		y.x = -z.y;
 		y.y = z.x;
 		y.z = 0;
