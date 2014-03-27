@@ -6,7 +6,7 @@
 #    By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/03/02 14:37:36 by cfeijoo           #+#    #+#              #
-#    Updated: 2014/03/27 14:32:08 by cfeijoo          ###   ########.fr        #
+#    Updated: 2014/03/27 17:50:17 by acollin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = rt
@@ -21,12 +21,28 @@ CFLAGS = -Wall  -Werror -Wextra -O3
 SOURCES_FOLDER = sources/
 OBJECTS_FOLDER = objects/
 
-SOURCES =	rt.c								\
-			camera/camera_transformations.c		\
-			camera/camera_init.c				\
-			object/creation.c					\
-			scene_parser/parser.c				\
-			scene_parser/command_add_sphere.c	\
+SOURCES =	rt.c									\
+			camera/camera_transformations.c			\
+			camera/camera_init.c					\
+			object/creation.c						\
+			scene_parser/parser.c					\
+			scene_parser/command_add_sphere.c		\
+			scene_parser/command_add_cone.c			\
+			scene_parser/command_add_cylinder.c		\
+			scene_parser/command_add_plane.c		\
+			scene_parser/command_add_light.c		\
+			scene_parser/command_define_xyz.c		\
+			scene_parser/command_define_rotxyz.c	\
+			scene_parser/command_define_normxyz.c	\
+			scene_parser/command_define_rgb.c		\
+			scene_parser/command_define_radius.c	\
+			scene_parser/command_define_ambient.c	\
+			scene_parser/command_define_opacity.c	\
+			scene_parser/command_define_diffuse.c	\
+			scene_parser/command_define_specular.c	\
+			scene_parser/command_define_refraction.c\
+			scene_parser/command_define_intensity.c	\
+			scene_parser/command_define_color.c		\
 			interpreter/interpreter.c			\
 			interpreter/command_list.c			\
 			interpreter/command_remove.c		\
