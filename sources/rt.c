@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 14:30:35 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 21:24:32 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/04/19 09:04:59 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,13 @@ static int			view_loop()
 	{
 		update_render_cam(&env->scene->render_cam, &env->scene->camera);
 		if (env->last_image_refresh < env->last_light_refresh)
-		{
-			if (env->fast_mode)
-				mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
-			else
-				render_to_image();
-		}
+			render_to_image();
 		if (env->last_light_refresh < env->last_scene_change)
 			update_image();
 	}
 	usleep(4000);
 	return (0);
 }
-
 
 int					update_image()
 {

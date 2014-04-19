@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_thread.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/17 19:53:59 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 17:14:06 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/04/19 09:07:54 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,11 @@ static void			send_fast_rays(unsigned int x, unsigned int y)
 {
 	t_ray			ray;
 
+	if (x % FAST_RENDER_PRECISION || y % FAST_RENDER_PRECISION)
+		return ;
 	ray = get_ray_from_point((float)x, (float)y);
-	throw_ray(&ray, 0, 0, 0);
-
-	if (ray.inter_t != INFINITY)
-		pixel_to_image(x, y, blend_colors(ray.closest->color.color,
-			0x000000, 1 / ray.inter_t, COLOR_BLEND_OVER));
-	else
-		pixel_to_image(x, y, 0x00000000);
+	throw_ray(&ray, 1, 0, 0);
+	fast_light_to_render(x, y, &ray.color);
 }
 
 static void			*throw_view_plane(void *thread_input)

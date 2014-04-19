@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 15:48:42 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/04/19 09:07:10 by kube             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # define DEFAULT_VIEW_WIDTH		1300
 # define DEFAULT_VIEW_HEIGHT	900
 # define VIEWPLANE_PLOT 		1000
-# define RENDER_SPLIT			2
+# define RENDER_SPLIT			4
+# define FAST_RENDER_PRECISION	3
 
 typedef struct				s_env
 {
@@ -74,6 +75,8 @@ int			create_render_thread(t_thread_input *input);
 void		pixel_to_image(int x, int y, int color);
 int			light_diaphragm(t_light_color *light, float diaphragm);
 void		light_to_render(int x, int y,
+							t_light_color *light);
+void		fast_light_to_render(int x, int y,
 							t_light_color *light);
 void		clean_light_on_render(int x, int y);
 void		render_to_image();
