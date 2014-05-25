@@ -6,7 +6,7 @@
 /*   By: kube <kube@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/02 17:42:13 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/04/19 09:07:10 by kube             ###   ########.fr       */
+/*   Updated: 2014/05/15 01:47:04 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define DEFAULT_VIEW_HEIGHT	900
 # define VIEWPLANE_PLOT 		1000
 # define RENDER_SPLIT			4
-# define FAST_RENDER_PRECISION	3
+# define FAST_RENDER_PRECISION	2
 
 typedef struct				s_env
 {

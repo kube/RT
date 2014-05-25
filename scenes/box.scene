@@ -1,0 +1,127 @@
+width: 1300
+height: 900
+recursivity: 4
+antialias: 2
+diaphragm: 0.310068
+camera:
+	x: -14.718150
+	y: 0.270296
+	z: 1.125000
+	x_axisX: 0.999935
+	x_axisY: -0.011424
+	x_axisZ: 0.000000
+	y_axisX: 0.011424
+	y_axisY: 0.999935
+	y_axisZ: 0.000000
+	z_axisX: 0.000000
+	z_axisY: 0.000000
+	z_axisZ: 1.000000
+light:
+	x: 4.000000
+	y: 0.000000
+	z: 6.000000
+	intensity: 1.000000
+	red: 1.000000
+	green: 1.000000
+	blue: 1.000000
+light:
+	x: 4.000000
+	y: -4.000000
+	z: -1.000000
+	intensity: 0.200000
+	red: 0.700000
+	green: 0.700000
+	blue: 1.000000
+plane:
+	x: 4.039666
+	y: 1.942919
+	z: -4.177931
+	normX: 0.000000
+	normY: 0.000000
+	normZ: 1.000000
+	color: FFFFFFFF
+	ambient: 0.100000
+	diffuse: 0.100000
+	specular: 0.400000
+	reflection: 0.200000
+	refraction: 0.000000
+plane:
+	x: 4.001061
+	y: -1.484403
+	z: 7.176445
+	normX: 0.000000
+	normY: 0.000000
+	normZ: -1.000000
+	color: FFFFFFFF
+	ambient: 0.100000
+	diffuse: 0.100000
+	specular: 0.400000
+	reflection: 0.050000
+	refraction: 0.000000
+plane:
+	x: 16.779247
+	y: 1.781017
+	z: 3.107174
+	normX: -1.000000
+	normY: 0.000000
+	normZ: 0.000000
+	color: FFFFFFFF
+	ambient: 0.100000
+	diffuse: 0.100000
+	specular: 0.400000
+	reflection: 0.000000
+	refraction: 0.000000
+plane:
+	x: 4.516369
+	y: 8.922555
+	z: 1.658445
+	normX: 0.000000
+	normY: -1.000000
+	normZ: 0.000000
+	color: FFAA1155
+	ambient: 0.100000
+	diffuse: 0.100000
+	specular: 0.400000
+	reflection: 0.000000
+	refraction: 0.000000
+plane:
+	x: 4.150281
+	y: -5.513648
+	z: 1.659167
+	normX: 0.000000
+	normY: 1.000000
+	normZ: 0.000000
+	color: FF116688
+	ambient: 0.100000
+	diffuse: 0.100000
+	specular: 0.400000
+	reflection: 0.000000
+	refraction: 0.000000
+sphere:
+	x: 2.710964
+	y: -1.604077
+	z: 1.090994
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 1.612497
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.700000
+	reflection: 0.800000
+	refraction: 0.000000
+sphere:
+	x: 9.079467
+	y: 5.889544
+	z: -2.583072
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 1.831293
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.200000
+	reflection: 1.000000
+	refraction: 0.000000

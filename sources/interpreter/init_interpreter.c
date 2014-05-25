@@ -6,7 +6,7 @@
 /*   By: cfeijoo <cfeijoo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/27 18:12:41 by cfeijoo           #+#    #+#             */
-/*   Updated: 2014/03/27 18:17:17 by cfeijoo          ###   ########.fr       */
+/*   Updated: 2014/05/15 02:03:00 by cfeijoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		interpreter_init_commands(t_interpreter *interpreter)
 	interpreter_add_command(&interpreter->commands, "antialias", cmd_antialias);
 	interpreter_add_command(&interpreter->commands, "render", cmd_render);
 	interpreter_add_command(&interpreter->commands, "edit_mode", cmd_editmode);
-	interpreter_add_command(&interpreter->commands, "recursivity",
+	interpreter_add_command(&interpreter->commands, "recursion",
 							cmd_recursivity);
 	interpreter_add_command(&interpreter->commands, "unblock", cmd_unblock);
 }
