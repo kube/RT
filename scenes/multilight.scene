@@ -1,0 +1,239 @@
+width: 1300
+height: 900
+recursivity: 4
+antialias: 2
+diaphragm: 0.783527
+camera:
+	x: -14.011980
+	y: 1.786183
+	z: 2.263426
+	x_axisX: 0.999509
+	x_axisY: -0.027124
+	x_axisZ: -0.015706
+	y_axisX: 0.027128
+	y_axisY: 0.999632
+	y_axisZ: 0.000000
+	z_axisX: 0.015700
+	z_axisY: -0.000426
+	z_axisZ: 0.999877
+light:
+	x: 4.000000
+	y: 0.000000
+	z: 6.000000
+	intensity: 1.000000
+	red: 1.000000
+	green: 1.000000
+	blue: 1.000000
+light:
+	x: 4.000000
+	y: -4.000000
+	z: -1.000000
+	intensity: 0.200000
+	red: 0.700000
+	green: 0.700000
+	blue: 1.000000
+light:
+	x: -12.961480
+	y: -3.285264
+	z: 0.125000
+	intensity: 11.000000
+	red: 0.000000
+	green: 1.000000
+	blue: 1.000000
+light:
+	x: -12.326885
+	y: 5.722587
+	z: 1.250000
+	intensity: 4.000000
+	red: 1.000000
+	green: 1.000000
+	blue: 0.000000
+light:
+	x: 1.151403
+	y: -7.373279
+	z: 1.250000
+	intensity: 9.000000
+	red: 1.000000
+	green: 0.000000
+	blue: 1.000000
+sphere:
+	x: 8.685635
+	y: -8.743726
+	z: -2.374675
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 1.010763
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+sphere:
+	x: 8.783635
+	y: -6.633269
+	z: 0.217113
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 1.281896
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+sphere:
+	x: 8.876230
+	y: -4.902652
+	z: 3.121099
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 1.608307
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+sphere:
+	x: 8.979179
+	y: -2.719095
+	z: 5.901871
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 1.675938
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+sphere:
+	x: 9.088774
+	y: 0.560290
+	z: 7.212609
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 1.533002
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+sphere:
+	x: 9.172013
+	y: 4.010726
+	z: 6.550945
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 1.154359
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+sphere:
+	x: 9.213248
+	y: 6.478643
+	z: 4.913200
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 0.893158
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+sphere:
+	x: 9.217255
+	y: 8.084202
+	z: 2.395411
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 0.675188
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+sphere:
+	x: 9.163013
+	y: 7.844108
+	z: -0.641722
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 0.528979
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+sphere:
+	x: 9.089611
+	y: 6.585255
+	z: -3.138957
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 0.213228
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
+plane:
+	x: 4.039666
+	y: 1.942919
+	z: -4.177931
+	normX: 0.000000
+	normY: 0.000000
+	normZ: 1.000000
+	color: FFFFFFFF
+	ambient: 0.100000
+	diffuse: 0.100000
+	specular: 0.400000
+	reflection: 0.200000
+	refraction: 0.000000
+sphere:
+	x: 8.751883
+	y: 1.084621
+	z: 0.797025
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 1.958164
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 0.800000
+	refraction: 0.000000
+sphere:
+	x: 8.603152
+	y: -11.020479
+	z: -3.692013
+	rotX: 0.000000
+	rotY: 0.000000
+	rotZ: 0.000000
+	radius: 0.655054
+	color: FFFAEFFF
+	ambient: 0.200000
+	diffuse: 0.200000
+	specular: 0.900000
+	reflection: 1.000000
+	refraction: 0.000000
