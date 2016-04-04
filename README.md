@@ -1,6 +1,6 @@
 RT
 ==
 
-RayTracer
+RayTracer with Live Editing capability.
 
-Check a demo at https://www.youtube.com/watch?v=1JoTZg4Ulo0
+Check a demo at https://youtu.be/1JoTZg4Ulo0
