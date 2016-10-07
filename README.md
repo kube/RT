@@ -1,6 +1,9 @@
 RT
 ==
 
-RayTracer with Live Editing capability.
+> A Simple RayTracer written in C with Live-Edition capability.
 
-Check a demo at https://youtu.be/1JoTZg4Ulo0
+Check demo on YouTube:
+
+[![42 Raytracer demo](https://img.youtube.com/vi/1JoTZg4Ulo0/0.jpg)](https://www.youtube.com/watch?v=1JoTZg4Ulo0)
+
